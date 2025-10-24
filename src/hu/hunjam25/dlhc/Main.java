@@ -16,8 +16,8 @@ public class Main {
         } catch (Exception e) {
             System.err.println("Failed to set look and feel");
         }
-        Renderer.addRenderable(new RatView());
 
+        Game.objects.add(GameObject.makeRat());
 
         JFrame f = new JFrame("Don't let him cook");
 
@@ -50,7 +50,6 @@ public class Main {
             // Utils.setRenderingHints(g);
 
 
-            Renderer.render(g);
 
             bs.show();
             g.dispose();

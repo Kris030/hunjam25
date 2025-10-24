@@ -1,5 +1,9 @@
 package hu.hunjam25.dlhc;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -30,7 +34,7 @@ public class Main {
 
             Graphics2D g2d = (Graphics2D) bs.getDrawGraphics();
 
-            draw();
+            g2d.draw();
 
             g2d.dispose();
 

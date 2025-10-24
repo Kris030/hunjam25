@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Created-By: hunjam25
+Main-Class: hu.hunjam25.dlhc.Main

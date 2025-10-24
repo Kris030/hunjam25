@@ -34,7 +34,6 @@ public class Main {
 
             Graphics2D g2d = (Graphics2D) bs.getDrawGraphics();
 
-            g2d.draw();
 
             g2d.dispose();
 

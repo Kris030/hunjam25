@@ -10,13 +10,6 @@ public class GameObject implements IRenderable{
     public GameObject(){
     }
 
-    static GameObject makeRat(){
-        var rat = new GameObject();
-        rat.view = new RatView();
-
-        return rat;
-    }
-
     protected Point.Float position = new Point.Float(0f,0f);
 
     protected IRenderable view;

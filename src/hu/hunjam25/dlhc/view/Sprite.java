@@ -5,16 +5,16 @@ import java.awt.image.BufferedImage;
 
 public class Sprite implements IRenderable {
 
-    private BufferedImage[] images;
+    private BufferedImage image;
 
-    public Sprite(BufferedImage[] images) {
-        this.images = images;
+    public Sprite(BufferedImage image) {
+        this.image = image;
     }
 
     // itt egy frame select valahogy jó lenne
     // (dt vagy tárolja a jelenlegit és inkrementál)
     @Override
     public void render(Graphics2D gd) {
-        gd.drawImage(images[0], 30, 0, null);
+        gd.drawImage(image, 0, 0, null);
     }
 }

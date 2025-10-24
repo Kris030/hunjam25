@@ -7,6 +7,7 @@ import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Rat;
 import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.view.Sprite;
 
 public class Kitchen {
 
@@ -34,6 +35,7 @@ public class Kitchen {
 
     public static void init() {
         background = new GameObject();
+        background.view = new Sprite(Game.getImage("tiles"));
         rat = new Rat();
     }
 }

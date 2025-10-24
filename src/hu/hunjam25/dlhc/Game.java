@@ -22,7 +22,8 @@ public class Game {
     static void init() throws IOException {
         // TODO: better
         imageStorage = new HashMap<>();
-        imageStorage.put("rat", ImageIO.read(Path.of("art", "rat.png").toFile()));
+        imageStorage.put("rat", ImageIO.read(Path.of("art", "rat.jpg").toFile()));
+        imageStorage.put("tiles", ImageIO.read(Path.of("art", "tiles.png").toFile()));
     }
 
     public static BufferedImage getImage(String name) {

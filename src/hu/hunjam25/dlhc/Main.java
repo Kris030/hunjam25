@@ -25,19 +25,36 @@ public class Main {
 
         f.setVisible(true);
 
-        while (true) {
-            BufferStrategy bs = c.getBufferStrategy();
+        double FPS = 60;
+
+        boolean running = true;
+        while (running) {
+            double wait = 1000 / FPS;
+            long start = System.nanoTime();
+
+            BufferStrategy bs = canvas.getBufferStrategy();
             if (bs == null) {
-                c.createBufferStrategy(2);
+                canvas.createBufferStrategy(2);
                 continue;
             }
 
-            Graphics2D g2d = (Graphics2D) bs.getDrawGraphics();
+            Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+            Utils.setRenderingHints(g);
 
+            Renderer.render(g);
 
-            g2d.dispose();
+            bs.show();
+            g.dispose();
 
-            // sleep
+            long realWait = Math.round(wait - (System.nanoTime() - start) / 1_000_000);
+
+            if (realWait > 0) {
+                try {
+                    Thread.sleep(realWait);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

@@ -13,9 +13,10 @@ public class Rat extends GameObject {
 
     private boolean mirrored = false;
 
-
     public Rat(){
         view = new RatView();
+        position.x = 100f;
+        position.y = 100f;
     }
 
     @Override

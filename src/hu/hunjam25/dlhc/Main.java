@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 import hu.hunjam25.dlhc.model.Rat;
-import hu.hunjam25.dlhc.view.RatView;
-import hu.hunjam25.dlhc.view.Renderer;
-import hu.hunjam25.dlhc.view.ViewModule;
 
 public class Main {
 
@@ -22,7 +19,10 @@ public class Main {
 
         JFrame f = new JFrame("Don't let him cook");
 
-        f.setBounds(10,10,600,500);
+        //f.setUndecorated(true); // removes title bar & borders
+        f.setBounds(10,10,1920,1080);
+        //f.setExtendedState(JFrame.MAXIMIZED_BOTH); // maximize
+
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));

@@ -2,7 +2,9 @@ package hu.hunjam25.dlhc.model;
 
 import java.util.Deque;
 
-public class Chef {
+import hu.hunjam25.dlhc.GameObject;
+
+public class Chef extends GameObject {
 
     Deque<Food> foodTodo;
 
@@ -12,4 +14,8 @@ public class Chef {
     // null if not at workstation
     Workstation currWorkstation;
 
+    @Override
+    public void tick(float dt) {
+
+    }
 }

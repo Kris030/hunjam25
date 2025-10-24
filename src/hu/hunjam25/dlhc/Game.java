@@ -7,11 +7,7 @@ import hu.hunjam25.dlhc.gameplay.Minigame;
 
 class Game {
 
-    static class Motion{
-
-    }
-
-    static ArrayList<GameObject> objects = new ArrayList<>();
+    static ArrayList<GameObject> objects;
 
     static Minigame minigame;
 
@@ -24,7 +20,6 @@ class Game {
     }
 
     static void render(Graphics2D g) {
-        objects.forEach( o -> o.render(g));
+        objects.forEach(o -> o.render(g));
     }
-
 }

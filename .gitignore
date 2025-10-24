@@ -29,3 +29,8 @@ replay_pid*
 target
 out
 
+/.idea/vcs.xml
+/.idea/modules.xml
+/.idea/misc.xml
+/jam.iml
+/.idea/.gitignore

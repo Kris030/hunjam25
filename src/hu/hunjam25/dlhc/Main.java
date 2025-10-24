@@ -15,7 +15,7 @@ public class Main {
             System.err.println("Failed to set look and feel");
         }
 
-        Game.objects.add(new Rat());
+        Kitchen.init();
 
         JFrame f = new JFrame("Don't let him cook");
 
@@ -38,6 +38,8 @@ public class Main {
 
         double FPS = 60;
 
+        long gameStart = System.nanoTime();
+
         boolean running = true;
         while (running) {
             double wait = 1000 / FPS;
@@ -49,7 +51,7 @@ public class Main {
                 continue;
             }
 
-
+            Game.now = (start - gameStart) * 0.000000001f;
             Game.tick((float) wait);
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();

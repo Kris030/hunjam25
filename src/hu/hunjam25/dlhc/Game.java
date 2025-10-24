@@ -1,17 +1,36 @@
 package hu.hunjam25.dlhc;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import hu.hunjam25.dlhc.gameplay.Minigame;
 
-class Game {
+public class Game {
 
-    static class Motion{
+    public static KeyListener listener = new KeyListener() {
+        @Override
+        public void keyTyped(KeyEvent e) {
 
-    }
+        }
 
-    static ArrayList<GameObject> objects = new ArrayList<>();
+        @Override
+        public void keyPressed(KeyEvent e) {
+            keysPressed.add(e.getKeyCode());
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            keysPressed.remove((Integer) e.getKeyCode());
+        }
+    };
+
+    public static Set<Integer> keysPressed = new HashSet<>();
+
+    public static ArrayList<GameObject> objects = new ArrayList<>();
 
     static Minigame minigame;
 
@@ -26,5 +45,4 @@ class Game {
     static void render(Graphics2D g) {
         objects.forEach( o -> o.render(g));
     }
-
 }

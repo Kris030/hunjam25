@@ -17,9 +17,9 @@ public class GameObject implements IRenderable{
         return rat;
     }
 
-    private Point.Float position = new Point.Float(0f,0f);
+    protected Point.Float position = new Point.Float(0f,0f);
 
-    private IRenderable view;
+    protected IRenderable view;
 
 
     public void tick(float dt){

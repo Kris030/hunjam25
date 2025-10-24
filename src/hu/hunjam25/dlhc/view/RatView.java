@@ -2,6 +2,7 @@ package hu.hunjam25.dlhc.view;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,7 +21,7 @@ public class RatView implements IRenderable{
 
     @Override
     public void render(Graphics2D gd) {
-        gd.scale(0.1,0.1);
-        gd.drawImage(image,30,0,null);
+        //gd.scale(0.1,0.1);
+        gd.drawImage(image,0,0,null);
     }
 }

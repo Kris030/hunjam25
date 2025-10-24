@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+import hu.hunjam25.dlhc.model.Rat;
 import hu.hunjam25.dlhc.view.RatView;
 import hu.hunjam25.dlhc.view.Renderer;
 import hu.hunjam25.dlhc.view.ViewModule;
@@ -17,7 +18,7 @@ public class Main {
             System.err.println("Failed to set look and feel");
         }
 
-        Game.objects.add(GameObject.makeRat());
+        Game.objects.add(new Rat());
 
         JFrame f = new JFrame("Don't let him cook");
 
@@ -30,6 +31,8 @@ public class Main {
 
         Canvas c = new Canvas();
         f.add(c);
+
+        c.addKeyListener(Game.listener);
 
         f.setVisible(true);
 
@@ -46,9 +49,13 @@ public class Main {
                 continue;
             }
 
+
+            Game.tick((float) wait);
+
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             // Utils.setRenderingHints(g);
 
+            Game.render(g);
 
 
             bs.show();

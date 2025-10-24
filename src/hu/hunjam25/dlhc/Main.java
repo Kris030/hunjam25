@@ -1,8 +1,11 @@
 package hu.hunjam25.dlhc;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
 
@@ -15,7 +18,10 @@ public class Main {
 
         JFrame f = new JFrame("Don't let him cook");
 
-        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+
+
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));
         // f.setLayout(new FlowLayout());
         f.setLocationRelativeTo(null);
@@ -40,6 +46,7 @@ public class Main {
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             // Utils.setRenderingHints(g);
+
 
             Renderer.render(g);
 

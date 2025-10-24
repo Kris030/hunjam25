@@ -9,12 +9,14 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
 public class Rat extends GameObject {
-    static float SPEED = 0.1f;
+    static float SPEED = 0.01f;
 
     private boolean mirrored = false;
 
     public Rat() {
         view = new RatView();
+        position.x = 3;
+        position.y = 7;
     }
 
     @Override
@@ -55,7 +57,8 @@ public class Rat extends GameObject {
 
     @Override
     public void render(Graphics2D gd) {
-        gd.translate(position.x, -position.y);
+        var screen = Game.gameToScreen(position);
+        gd.translate(screen.x,screen.y);
         gd.scale(mirrored ? 1f : -1f, 1f);
         view.render(gd);
     }

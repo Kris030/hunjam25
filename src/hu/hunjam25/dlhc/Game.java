@@ -3,6 +3,7 @@ package hu.hunjam25.dlhc;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -18,6 +19,14 @@ import hu.hunjam25.dlhc.model.Workstation;
 public class Game {
 
     private static HashMap<String, BufferedImage> imageStorage;
+
+    public static Point2D.Float gameToScreen(Point2D.Float game){
+        return new Point2D.Float(game.x * 120f, (9 -game.y) * 120f);
+    }
+
+    public static Point2D.Float screenToGame(Point2D.Float screen){
+        return new Point2D.Float(screen.x / 120f, (1080-screen.y) / 120f);
+    }
 
     static void init() throws IOException {
         // TODO: better
@@ -37,10 +46,14 @@ public class Game {
         if (lastBounds == null) {
             lastBounds = Main.frame.getBounds();
 
+            Main.frame.setVisible(false);
+            Main.frame.setUndecorated(true); // removes title bar & borders
+            Main.frame.setVisible(true);
             GraphicsEnvironment.getLocalGraphicsEnvironment()
                     .getDefaultScreenDevice()
                     .setFullScreenWindow(Main.frame);
         } else {
+            Main.frame.setUndecorated(false); // removes title bar & borders
             GraphicsEnvironment.getLocalGraphicsEnvironment()
                     .getDefaultScreenDevice()
                     .setFullScreenWindow(null);

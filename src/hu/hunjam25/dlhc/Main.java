@@ -21,9 +21,9 @@ public class Main {
 
         frame = new JFrame("Don't let him cook");
 
-        //f.setUndecorated(true); // removes title bar & borders
-        frame.setBounds(10, 10, 1920, 1080);
-        //f.setExtendedState(JFrame.MAXIMIZED_BOTH); // maximize
+        frame.setUndecorated(true); // removes title bar & borders
+        frame.setBounds(0, 0, 1920, 1080);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // maximize
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

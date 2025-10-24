@@ -11,7 +11,7 @@ class Game {
 
     }
 
-    static ArrayList<GameObject> objects;
+    static ArrayList<GameObject> objects = new ArrayList<>();
 
     static Minigame minigame;
 

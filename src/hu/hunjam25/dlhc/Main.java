@@ -1,11 +1,9 @@
 package hu.hunjam25.dlhc;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.io.File;
-import java.io.IOException;
+import hu.hunjam25.dlhc.view.Renderer;
 
 public class Main {
 
@@ -18,8 +16,7 @@ public class Main {
 
         JFrame f = new JFrame("Don't let him cook");
 
-
-
+        f.setBounds(10,10,600,500);
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));

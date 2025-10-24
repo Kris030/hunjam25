@@ -1,13 +1,13 @@
-package hu.hunjam25.dlhc;
+package hu.hunjam25.dlhc.view;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-class Renderer {
+public class Renderer {
 
-    static void render(Graphics2D g) {
+    public static void render(Graphics2D g) {
         drawImage(g);
     }
 

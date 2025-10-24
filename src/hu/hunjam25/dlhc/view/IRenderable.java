@@ -1,4 +1,4 @@
-package hu.hunjam25.dlhc;
+package hu.hunjam25.dlhc.view;
 
 import java.awt.*;
 

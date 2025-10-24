@@ -11,6 +11,9 @@ import java.awt.geom.Point2D;
 public class Rat extends GameObject {
     static float SPEED = 0.1f;
 
+    private boolean mirrored = false;
+
+
     public Rat(){
         view = new RatView();
     }
@@ -43,6 +46,9 @@ public class Rat extends GameObject {
             velocity.x /=  velocity.distance(0,0);
             velocity.y /=  velocity.distance(0,0);
         }
+        if(velocity.x != 0f){
+            mirrored = velocity.x < 0f;
+        }
 
 
         position.x +=  velocity.x * SPEED * dt;
@@ -52,6 +58,7 @@ public class Rat extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         gd.translate(position.x, -position.y);
+        gd.scale( mirrored ? 0.1f: -0.1f ,0.1f);
         view.render(gd);
     }
 }

@@ -1,6 +1,7 @@
 package hu.hunjam25.dlhc;
 
 import hu.hunjam25.dlhc.view.IRenderable;
+import hu.hunjam25.dlhc.view.RatView;
 
 import java.awt.*;
 
@@ -9,13 +10,19 @@ public class GameObject implements IRenderable{
     public GameObject(){
     }
 
+    static GameObject makeRat(){
+        var rat = new GameObject();
+        rat.view = new RatView();
+
+        return rat;
+    }
 
     private Point.Float position = new Point.Float(0f,0f);
 
     private IRenderable view;
 
 
-    public void tick(Double dt){
+    public void tick(float dt){
 
     }
 
@@ -33,6 +40,8 @@ public class GameObject implements IRenderable{
 
     @Override
     public void render(Graphics2D gd) {
-
+        if(view != null){
+            view.render(gd);
+        }
     }
 }

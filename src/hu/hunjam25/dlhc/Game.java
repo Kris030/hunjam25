@@ -7,21 +7,24 @@ import hu.hunjam25.dlhc.gameplay.Minigame;
 
 class Game {
 
-    ArrayList<GameObject> objects;
+    static class Motion{
 
-    Minigame minigame;
+    }
+
+    static ArrayList<GameObject> objects;
+
+    static Minigame minigame;
 
     static void tick(float dt) {
         if (minigame != null) {
-            minigame.tick();
+            minigame.tick(dt);
         }
 
-        for (GameObject g : objects) {
-            g.tick();
-        }
+        objects.forEach(o -> o.tick(dt));
     }
 
     static void render(Graphics2D g) {
+        objects.forEach( o -> o.render(g));
     }
 
 }

@@ -13,7 +13,7 @@ class Renderer {
 
     static private void drawImage(Graphics2D g){
         try {
-            var image = ImageIO.read(new File("C:\\projects\\Javaprog\\jam\\art\\fungorium.png"));
+            var image = ImageIO.read(new File("art\\fungorium.png"));
             g.drawImage(image,0,0,null);
 
         } catch (IOException e) {

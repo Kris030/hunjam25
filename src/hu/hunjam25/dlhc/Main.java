@@ -3,7 +3,10 @@ package hu.hunjam25.dlhc;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+
+import hu.hunjam25.dlhc.view.RatView;
 import hu.hunjam25.dlhc.view.Renderer;
+import hu.hunjam25.dlhc.view.ViewModule;
 
 public class Main {
 
@@ -13,6 +16,8 @@ public class Main {
         } catch (Exception e) {
             System.err.println("Failed to set look and feel");
         }
+        Renderer.addRenderable(new RatView());
+
 
         JFrame f = new JFrame("Don't let him cook");
 

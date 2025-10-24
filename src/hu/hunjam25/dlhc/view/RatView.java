@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class RatView implements IRenderable{
-    static private final Path path = Path.of("art\\rat.png");
+    static private final Path path = Path.of("art\\rat.jpg");
     static private BufferedImage image;
 
     public RatView(){

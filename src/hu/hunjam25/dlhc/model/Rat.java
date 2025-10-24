@@ -15,8 +15,8 @@ public class Rat extends GameObject {
 
     public Rat(){
         view = new RatView();
-        position.x = 100f;
-        position.y = 100f;
+        //position.x = 100f;
+        //position.y = 100f;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Rat extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         gd.translate(position.x, -position.y);
-        gd.scale( mirrored ? 0.1f: -0.1f ,0.1f);
+        gd.scale( mirrored ? 1f: -1f ,1f);
         view.render(gd);
     }
 }

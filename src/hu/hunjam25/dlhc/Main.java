@@ -3,18 +3,20 @@ package hu.hunjam25.dlhc;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 
 import hu.hunjam25.dlhc.model.Rat;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             System.err.println("Failed to set look and feel");
         }
 
+        Game.init();
         Kitchen.init();
 
         JFrame f = new JFrame("Don't let him cook");

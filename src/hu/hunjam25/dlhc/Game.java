@@ -3,13 +3,31 @@ package hu.hunjam25.dlhc;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Workstation;
 
 public class Game {
+
+    private static HashMap<String, BufferedImage> imageStorage;
+
+    static void init() throws IOException {
+        // TODO: better
+        imageStorage = new HashMap<>();
+        imageStorage.put("rat", ImageIO.read(Path.of("art", "rat.png").toFile()));
+    }
+
+    public static BufferedImage getImage(String name) {
+        return imageStorage.get(name);
+    }
 
     public static Set<Integer> keysPressed = new HashSet<>();
 

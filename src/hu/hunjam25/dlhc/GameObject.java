@@ -5,17 +5,16 @@ import hu.hunjam25.dlhc.view.RatView;
 
 import java.awt.*;
 
-public class GameObject implements IRenderable{
+public class GameObject implements IRenderable {
 
-    public GameObject(){
+    public GameObject() {
     }
 
-    protected Point.Float position = new Point.Float(0f,0f);
+    protected Point.Float position = new Point.Float(0f, 0f);
 
     protected IRenderable view;
 
-
-    public void tick(float dt){
+    public void tick(float dt) {
 
     }
 
@@ -33,7 +32,7 @@ public class GameObject implements IRenderable{
 
     @Override
     public void render(Graphics2D gd) {
-        if(view != null){
+        if (view != null) {
             view.render(gd);
         }
     }

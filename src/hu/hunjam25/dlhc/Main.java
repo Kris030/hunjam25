@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 
-import hu.hunjam25.dlhc.model.Rat;
-
 public class Main {
+
+    static JFrame frame;
 
     public static void main(String[] args) throws IOException {
         try {
@@ -19,24 +19,24 @@ public class Main {
         Game.init();
         Kitchen.init();
 
-        JFrame f = new JFrame("Don't let him cook");
+        frame = new JFrame("Don't let him cook");
 
         //f.setUndecorated(true); // removes title bar & borders
-        f.setBounds(10,10,1920,1080);
+        frame.setBounds(10, 10, 1920, 1080);
         //f.setExtendedState(JFrame.MAXIMIZED_BOTH); // maximize
 
 
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));
         // f.setLayout(new FlowLayout());
-        f.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(null);
 
         Canvas c = new Canvas();
-        f.add(c);
+        frame.add(c);
 
         c.addKeyListener(Game.listener);
 
-        f.setVisible(true);
+        frame.setVisible(true);
 
         double FPS = 60;
 
@@ -60,7 +60,7 @@ public class Main {
             // Utils.setRenderingHints(g);
 
             g.setColor(Color.WHITE); // background color
-            g.fillRect(0, 0, f.getWidth(), f.getHeight());
+            g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
             Game.render(g);
 
 

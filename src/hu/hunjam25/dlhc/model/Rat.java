@@ -13,10 +13,8 @@ public class Rat extends GameObject {
 
     private boolean mirrored = false;
 
-    public Rat(){
+    public Rat() {
         view = new RatView();
-        //position.x = 100f;
-        //position.y = 100f;
     }
 
     @Override
@@ -25,41 +23,40 @@ public class Rat extends GameObject {
         ratMotion(dt);
     }
 
-    private void ratMotion(float dt){
+    private void ratMotion(float dt) {
         var keys = Game.keysPressed;
 
-        Point2D.Float velocity = new Point2D.Float(0f,0f);
+        Point2D.Float velocity = new Point2D.Float(0f, 0f);
 
-        if(keys.contains(KeyEvent.VK_UP)){
+        if (keys.contains(KeyEvent.VK_UP)) {
             velocity.y += SPEED * dt;
         }
 
-        if(keys.contains(KeyEvent.VK_DOWN)){
+        if (keys.contains(KeyEvent.VK_DOWN)) {
             velocity.y -= SPEED * dt;
         }
-        if(keys.contains(KeyEvent.VK_LEFT)){
+        if (keys.contains(KeyEvent.VK_LEFT)) {
             velocity.x -= SPEED * dt;
         }
-        if(keys.contains(KeyEvent.VK_RIGHT)) {
+        if (keys.contains(KeyEvent.VK_RIGHT)) {
             velocity.x += SPEED * dt;
         }
-        if(velocity.x != 0f && velocity.y != 0f){
-            velocity.x /=  velocity.distance(0,0);
-            velocity.y /=  velocity.distance(0,0);
+        if (velocity.x != 0f && velocity.y != 0f) {
+            velocity.x /= velocity.distance(0, 0);
+            velocity.y /= velocity.distance(0, 0);
         }
-        if(velocity.x != 0f){
+        if (velocity.x != 0f) {
             mirrored = velocity.x < 0f;
         }
 
-
-        position.x +=  velocity.x * SPEED * dt;
-        position.y +=  velocity.y * SPEED * dt;
+        position.x += velocity.x * SPEED * dt;
+        position.y += velocity.y * SPEED * dt;
     }
 
     @Override
     public void render(Graphics2D gd) {
         gd.translate(position.x, -position.y);
-        gd.scale( mirrored ? 1f: -1f ,1f);
+        gd.scale(mirrored ? 1f : -1f, 1f);
         view.render(gd);
     }
 }

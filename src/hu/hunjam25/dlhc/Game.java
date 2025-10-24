@@ -30,11 +30,34 @@ public class Game {
         return imageStorage.get(name);
     }
 
+    // null if not in fullscreen
+    private static Rectangle lastBounds;
+
+    public static void toggleFullscreen() {
+        if (lastBounds == null) {
+            lastBounds = Main.frame.getBounds();
+
+            GraphicsEnvironment.getLocalGraphicsEnvironment()
+                    .getDefaultScreenDevice()
+                    .setFullScreenWindow(Main.frame);
+        } else {
+            GraphicsEnvironment.getLocalGraphicsEnvironment()
+                    .getDefaultScreenDevice()
+                    .setFullScreenWindow(null);
+
+            Main.frame.setBounds(lastBounds);
+        }
+    }
+
     public static Set<Integer> keysPressed = new HashSet<>();
 
     public static float now;
 
     static void tick(float dt) {
+        if (keysPressed.contains(KeyEvent.VK_F11)) {
+            toggleFullscreen();
+        }
+
         Kitchen.background.tick(dt);
 
         for (Workstation w : Kitchen.workstations) {

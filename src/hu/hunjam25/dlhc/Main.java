@@ -4,11 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-import hu.hunjam25.dlhc.model.Rat;
-import hu.hunjam25.dlhc.view.RatView;
-import hu.hunjam25.dlhc.view.Renderer;
-import hu.hunjam25.dlhc.view.ViewModule;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -18,11 +13,11 @@ public class Main {
             System.err.println("Failed to set look and feel");
         }
 
-        Game.objects.add(new Rat());
+        Kitchen.init();
 
         JFrame f = new JFrame("Don't let him cook");
 
-        f.setBounds(10,10,600,500);
+        f.setBounds(10, 10, 600, 500);
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));
@@ -38,6 +33,8 @@ public class Main {
 
         double FPS = 60;
 
+        long gameStart = System.nanoTime();
+
         boolean running = true;
         while (running) {
             double wait = 1000 / FPS;
@@ -49,7 +46,7 @@ public class Main {
                 continue;
             }
 
-
+            Game.now = (start - gameStart) * 0.000000001f;
             Game.tick((float) wait);
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
@@ -58,7 +55,6 @@ public class Main {
             g.setColor(Color.WHITE); // background color
             g.fillRect(0, 0, f.getWidth(), f.getHeight());
             Game.render(g);
-
 
             bs.show();
             g.dispose();
@@ -75,4 +71,3 @@ public class Main {
         }
     }
 }
-

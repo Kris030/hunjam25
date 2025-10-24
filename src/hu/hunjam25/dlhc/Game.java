@@ -15,7 +15,6 @@ public class Game {
         @Override
         public void keyTyped(KeyEvent e) {
 
-    static ArrayList<GameObject> objects;
         }
 
         @Override

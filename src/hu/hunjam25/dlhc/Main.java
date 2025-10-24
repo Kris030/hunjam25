@@ -55,6 +55,8 @@ public class Main {
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             // Utils.setRenderingHints(g);
 
+            g.setColor(Color.WHITE); // background color
+            g.fillRect(0, 0, f.getWidth(), f.getHeight());
             Game.render(g);
 
 

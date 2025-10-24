@@ -32,14 +32,14 @@ public class Main {
             double wait = 1000 / FPS;
             long start = System.nanoTime();
 
-            BufferStrategy bs = canvas.getBufferStrategy();
+            BufferStrategy bs = c.getBufferStrategy();
             if (bs == null) {
-                canvas.createBufferStrategy(2);
+                c.createBufferStrategy(2);
                 continue;
             }
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-            Utils.setRenderingHints(g);
+            // Utils.setRenderingHints(g);
 
             Renderer.render(g);
 

@@ -15,6 +15,7 @@ public class Game {
         @Override
         public void keyTyped(KeyEvent e) {
 
+    static ArrayList<GameObject> objects;
         }
 
         @Override
@@ -43,6 +44,6 @@ public class Game {
     }
 
     static void render(Graphics2D g) {
-        objects.forEach( o -> o.render(g));
+        objects.forEach(o -> o.render(g));
     }
 }

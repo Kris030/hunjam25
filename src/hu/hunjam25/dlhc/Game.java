@@ -3,6 +3,7 @@ package hu.hunjam25.dlhc;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -46,6 +47,7 @@ public class Game {
                     .setFullScreenWindow(null);
 
             Main.frame.setBounds(lastBounds);
+            lastBounds = null;
         }
     }
 
@@ -76,19 +78,24 @@ public class Game {
     }
 
     static void render(Graphics2D g) {
+        AffineTransform transform = g.getTransform();
         Kitchen.background.render(g);
 
         for (Workstation w : Kitchen.workstations) {
+            g.setTransform(transform);
             w.render(g);
         }
 
+        g.setTransform(transform);
         Kitchen.rat.render(g);
 
         for (Chef c : Kitchen.chefs) {
+            g.setTransform(transform);
             c.render(g);
         }
 
         if (Kitchen.minigame != null) {
+            g.setTransform(transform);
             // TODO: render frame, translate, clip, etc
             Kitchen.minigame.render(g);
         }

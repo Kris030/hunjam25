@@ -13,4 +13,9 @@ public enum Food {
         this.ingredients = ingredients;
     }
 
+    public static Food RandomFood() {
+        Food[] foods = Food.values();
+        int id = (int) (Math.random() * foods.length);
+        return foods[id];
+    }
 }

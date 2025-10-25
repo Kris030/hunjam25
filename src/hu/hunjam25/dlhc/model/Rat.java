@@ -17,9 +17,6 @@ public class Rat extends GameObject {
 
     static Point2D.Float velocity = new Point2D.Float(0f, 0f);
 
-    private final float width = 1.5f;
-    private final float height = 1f;
-
     private Sprite dot = new Sprite(Game.getImage("dot"));
     private Sprite ratView = new Sprite(Game.getImage("rat"));
 
@@ -45,20 +42,25 @@ public class Rat extends GameObject {
         if (keys.contains(KeyEvent.VK_UP)) {
             velocity.y += 1;
         }
+
         if (keys.contains(KeyEvent.VK_DOWN)) {
             velocity.y -= 1;
         }
+
         if (keys.contains(KeyEvent.VK_LEFT)) {
             velocity.x -= 1;
         }
+
         if (keys.contains(KeyEvent.VK_RIGHT)) {
             velocity.x += 1;
         }
+
         if (velocity.x != 0f && velocity.y != 0f) {
             var length = velocity.distance(0, 0);
             velocity.x /= length;
             velocity.y /= length;
         }
+
         if (velocity.x != 0f) {
             ratView.mirrored = velocity.x > 0f;
         }

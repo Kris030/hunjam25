@@ -20,14 +20,14 @@ public class Rat extends GameObject {
     static Point2D.Float velocity = new Point2D.Float(0f, 0f);
 
     private Sprite dot = new Sprite(Game.getImage("dot"));
-    private Sprite ratView = new Sprite(Game.getImage("rat"));
+    //private Sprite ratView = new Sprite(Game.getImage("rat"));
 
-    public static AnimatedSprite remi ;
+    private AnimatedSprite remi ;
 
 
     public Rat() {
         positionToCenter();
-        ratView.spriteScale = 0.25f;
+        //ratView.spriteScale = 0.25f;
 
         BufferedImage[] frames = new BufferedImage[]{
                 Game.getImage("remi1") ,
@@ -38,6 +38,8 @@ public class Rat extends GameObject {
                 Game.getImage("remi6")
         };
         remi = new AnimatedSprite(frames, 1f);
+        remi.spriteScale = 0.25f;
+
         remi.unFreeze();
         remi.start();
     }
@@ -76,7 +78,7 @@ public class Rat extends GameObject {
         }
 
         if (velocity.x != 0f) {
-            ratView.mirrored = velocity.x > 0f;
+            remi.mirrored = velocity.x > 0f;
         }
 
         position.x += velocity.x * SPEED * dt;
@@ -89,8 +91,8 @@ public class Rat extends GameObject {
     public void render(Graphics2D gd) {
         super.render(gd);
         //ratView.render(gd);
-        dot.render(gd);
 
         remi.render(gd);
+        dot.render(gd);
     }
 }

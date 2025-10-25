@@ -21,6 +21,8 @@ public class AnimatedSprite implements IRenderable {
 
     public float animStarted;
 
+    public float spriteScale = 1;
+
     public AnimatedSprite(BufferedImage[] images, float animLength) {
         this.images = images;
         this.animLength = animLength;
@@ -61,6 +63,7 @@ public class AnimatedSprite implements IRenderable {
         if (mirrored) {
             Sprite.mirrorX(gd);
         }
+        gd.scale(spriteScale, spriteScale);
 
         gd.drawImage(image, x, y, null);
     }

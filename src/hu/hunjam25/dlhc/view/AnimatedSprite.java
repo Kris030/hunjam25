@@ -15,6 +15,8 @@ public class AnimatedSprite implements IRenderable {
 
     public boolean frozen = true;
 
+    private int idx = 0;
+
     private float frozenAge;
 
     public float animLength;
@@ -37,6 +39,10 @@ public class AnimatedSprite implements IRenderable {
         frozenAge = getAge();
     }
 
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+
     public void unFreeze() {
         frozen = false;
     }
@@ -50,7 +56,9 @@ public class AnimatedSprite implements IRenderable {
     @Override
     public void render(Graphics2D gd) {
         float age = frozen ? frozenAge : getAge();
-        int idx = (int) (images.length * age / animLength);
+        if(!frozen){
+            idx = (int) (images.length * age / animLength);
+        }
         BufferedImage image = images[idx];
 
         int x = 0, y = 0;

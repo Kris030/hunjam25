@@ -42,4 +42,16 @@ public class Sprite implements IRenderable {
         gd.scale(spriteScale, spriteScale);
         gd.drawImage(image, x, y, null);
     }
+
+    public void scaleToTileMax() {
+        var width = image.getWidth();
+        var height = image.getHeight();
+        spriteScale = width > height ? 120f / width : 120f / height;
+    }
+
+    public void scaleToTileMin() {
+        var width = image.getWidth();
+        var height = image.getHeight();
+        spriteScale = width < height ? 120f / width : 120f / height;
+    }
 }

@@ -29,7 +29,8 @@ public class Workstation extends GameObject {
         this.workingOffset = workingOffset;
 
         this.sprite = new Sprite(Game.getImage(type.name()));
-        sprite.spriteScale = 0.4f;
+        //sprite.spriteScale = 0.4f;
+        sprite.scaleToTileMax();
     }
 
 

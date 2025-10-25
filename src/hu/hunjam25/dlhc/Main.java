@@ -39,6 +39,7 @@ public class Main {
         c.addKeyListener(Game.listener);
 
         frame.setVisible(true);
+        c.requestFocus();
 
         double FPS = 60;
 

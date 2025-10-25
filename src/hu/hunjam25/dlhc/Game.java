@@ -107,7 +107,9 @@ public class Game {
 
     static void render(Graphics2D g) {
         AffineTransform transform = g.getTransform();
+        g.translate(-TILE_SIZE * 0.5f, -TILE_SIZE * 0.5f);
         Kitchen.background.render(g);
+        g.translate(TILE_SIZE * 0.5f, TILE_SIZE * 0.5f);
 
         Kitchen.getGameObjects().forEach(o -> {
             g.setTransform(transform);

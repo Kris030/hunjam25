@@ -5,29 +5,24 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class Game {
 
-    public static final int SCREEN_WIDTH = 10;
-    public static final int SCREEN_HEIGHT = 8;
+    public static final int SCREEN_WIDTH = 16;
+    public static final int SCREEN_HEIGHT = 9;
 
     public static final int MAP_OFFSET_X = 1;
     public static final int MAP_OFFSET_Y = -1;
 
     // in tiles
-    public static final int MAP_WIDTH = 8;
-    public static final int MAP_HEIGHT = 6;
+    public static final int MAP_WIDTH = 14;
+    public static final int MAP_HEIGHT = 7;
 
     public static final Point2D.Float CENTER = new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
             Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
@@ -88,6 +83,7 @@ public class Game {
 
     static void render(Graphics2D g) {
         AffineTransform transform = g.getTransform();
+
         g.translate(-TILE_SIZE * 0.5f, -TILE_SIZE * 0.5f);
         Kitchen.background.render(g);
         g.translate(TILE_SIZE * 0.5f, TILE_SIZE * 0.5f);
@@ -96,10 +92,6 @@ public class Game {
             g.setTransform(transform);
             o.render(g);
         });
-
-        // Kitchen.remi.render(g);
-
-        g.setTransform(transform);
     }
 
     static KeyListener listener = new KeyListener() {

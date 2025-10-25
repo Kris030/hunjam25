@@ -29,6 +29,7 @@ public class Kitchen {
 
     public static ArrayList<ParticleEffect> particleEffectKillList = new ArrayList<>();
 
+    /// real number in [0;1]
     public static float rating = 1.0f;
 
     static {
@@ -81,12 +82,19 @@ public class Kitchen {
         return s;
     }
 
-    public static void increaseRating(float[] ingRatings, float timeDelay) {
-        /*
-         * TODO: create function for how time delay and minigames affect rating
-         */
+    public static void decreaseRating(float[] ingredientResults, float timeDelay) {
+        float deduction = -0.1f;
+        if (timeDelay > 6) {
+            deduction += (timeDelay - 6) / 100f;
+        }
+        float sum = 0f;
+        for (float ir : ingredientResults) {
+            sum += ir;
+        }
+        deduction += (sum / ingredientResults.length) / 100f;
 
+        rating -= deduction;
         // keep rating between 0 and 1
-        Math.clamp(rating, 0.0f, 1.0f);
+        rating = Math.clamp(rating, 0.0f, 1.0f);
     }
 }

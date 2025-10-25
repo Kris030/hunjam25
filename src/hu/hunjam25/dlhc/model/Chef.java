@@ -35,7 +35,7 @@ public class Chef extends GameObject {
         UiElement timer = new UiElement();
         timer.visible = true;
         timer.scale = 0.2f;
-        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("clock"), 2);
+        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
         timrSprite.frozen = false;
         timrSprite.start();
         timer.setAnimatedSprite(timrSprite);

@@ -1,5 +1,7 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.view.Sprite;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -29,6 +31,10 @@ public class Game {
     public static final int MAP_WIDTH = 8;
     public static final int MAP_HEIGHT = 5;
 
+    public static final Point2D.Float CENTER =
+            new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
+                            Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
+
     public static final int TILE_SIZE = 120;
 
     public static void keepOnMap(Point2D.Float position) {
@@ -53,7 +59,8 @@ public class Game {
         imageStorage = new HashMap<>();
         imageStorage.put("rat", ImageIO.read(Path.of("art", "rat.png").toFile()));
         imageStorage.put("tiles", ImageIO.read(Path.of("art", "tiles.png").toFile()));
-        imageStorage.put("dot", ImageIO.read(Path.of("art", "dot.png").toFile()));
+        imageStorage.put("dot", ImageIO.read(Path.of("art", "dot.png").toFile()) );
+        imageStorage.put("mark", ImageIO.read(Path.of("art","mark.png" ).toFile()));
     }
 
     public static BufferedImage getImage(String name) {
@@ -84,6 +91,7 @@ public class Game {
             lastBounds = null;
         }
     }
+    static GameObject dot;
 
     public static Set<Integer> keysPressed = new HashSet<>();
 
@@ -105,6 +113,9 @@ public class Game {
             g.setTransform(transform);
             o.render(g);
         });
+
+        g.setTransform(transform);
+        dot.render(g);
     }
 
     static KeyListener listener = new KeyListener() {

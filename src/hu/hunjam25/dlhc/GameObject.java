@@ -4,6 +4,7 @@ import hu.hunjam25.dlhc.view.IRenderable;
 
 import java.awt.Point;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 
 public class GameObject implements IRenderable {
 
@@ -12,18 +13,16 @@ public class GameObject implements IRenderable {
 
     protected Point.Float position = new Point.Float(0f, 0f);
 
-    protected IRenderable view;
-
     public void tick(float dt) {
 
     }
 
-    public void setPosition(Point.Float position) {
-        this.position = position;
+    public void positionToCenter(){
+        position = (Point.Float) Game.CENTER.clone();
     }
 
-    public IRenderable getView() {
-        return view;
+    public void setPosition(Point.Float position) {
+        this.position = position;
     }
 
     public Point.Float getPosition() {
@@ -32,8 +31,8 @@ public class GameObject implements IRenderable {
 
     @Override
     public void render(Graphics2D gd) {
-        if (view != null) {
-            view.render(gd);
-        }
+        var pos = new Point2D.Float(position.x, position.y);
+        var screen = Game.gameToScreen(pos);
+        gd.translate(screen.x,screen.y);
     }
 }

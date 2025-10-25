@@ -28,8 +28,7 @@ public class Rat extends GameObject {
         dot.centered = true;
         ratView.centered = true;
 
-        position.x = Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f;
-        position.y = Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f;
+        positionToCenter();
     }
 
     @Override
@@ -72,11 +71,7 @@ public class Rat extends GameObject {
 
     @Override
     public void render(Graphics2D gd) {
-        var pos = new Point2D.Float(position.x, position.y);
-        var screen = Game.gameToScreen(pos);
-        gd.translate(screen.x,screen.y);
-
-
+        super.render(gd);
         ratView.render(gd);
         dot.render(gd);
     }

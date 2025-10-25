@@ -29,9 +29,8 @@ public class Game {
     public static final int MAP_WIDTH = 8;
     public static final int MAP_HEIGHT = 6;
 
-    public static final Point2D.Float CENTER =
-            new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
-                            Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
+    public static final Point2D.Float CENTER = new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
+            Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
 
     public static final int TILE_SIZE = 120;
 
@@ -41,7 +40,6 @@ public class Game {
         position.y = max(Game.MAP_OFFSET_Y, position.y);
         position.y = min(Game.MAP_HEIGHT + Game.MAP_OFFSET_Y, position.y);
     }
-
 
     public static Point2D.Float gameToScreen(Point2D.Float game) {
         return new Point2D.Float(game.x * TILE_SIZE, (MAP_HEIGHT - game.y) * TILE_SIZE);
@@ -99,7 +97,7 @@ public class Game {
             o.render(g);
         });
 
-        //Kitchen.remi.render(g);
+        // Kitchen.remi.render(g);
 
         g.setTransform(transform);
     }

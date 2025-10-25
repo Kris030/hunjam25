@@ -8,8 +8,6 @@ import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
-import hu.hunjam25.dlhc.model.Ingredient;
-
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -80,6 +78,9 @@ public class Game {
         }
 
         Kitchen.getGameObjects().forEach(o -> o.tick(dt));
+
+        Kitchen.particleEffects.removeAll(Kitchen.particleEffectKillList);
+        Kitchen.particleEffectKillList.clear();
     }
 
     static void render(Graphics2D g) {

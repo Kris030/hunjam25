@@ -9,6 +9,7 @@ import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Rat;
 import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.view.ParticleEffect;
 import hu.hunjam25.dlhc.view.Sprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
@@ -23,6 +24,10 @@ public class Kitchen {
     public static Rat rat;
 
     public static Sprite background = new Sprite(AssetManager.getImage("tiles"));
+
+    public static ArrayList<ParticleEffect> particleEffects = new ArrayList<>();
+
+    public static ArrayList<ParticleEffect> particleEffectKillList = new ArrayList<>();
 
     public static float rating = 1.0f;
 
@@ -63,12 +68,20 @@ public class Kitchen {
 
     public static Stream<GameObject> getGameObjects() {
         // render order
-        return Stream.concat(
-                Stream.concat(workstations.stream(), chefs.stream()),
-                minigame == null ? Stream.of(rat) : Stream.of(rat, minigame));
+        Stream<GameObject> s = Stream.concat(workstations.stream(), chefs.stream());
+
+        s = Stream.concat(s, Stream.of(rat));
+
+        s = Stream.concat(s, particleEffectKillList.stream());
+
+        if (minigame != null) {
+            s = Stream.concat(s, Stream.of(minigame));
+        }
+
+        return s;
     }
 
-    public static void increaseRating(Float[] ingRatings, Float timeDelay) {
+    public static void increaseRating(float[] ingRatings, float timeDelay) {
         /*
          * TODO: create function for how time delay and minigames affect rating
          */

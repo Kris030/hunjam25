@@ -26,7 +26,7 @@ public class Chef extends GameObject {
         currentFood = foodTodo.remove();
         currIngredient = 0;
         todo = currentFood.ingredients;
-        results = new Float[todo.length];
+        results = new float[todo.length];
         Arrays.fill(results, 0f);
         pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
         startedCurrentFoodAt = Game.now;
@@ -42,7 +42,7 @@ public class Chef extends GameObject {
 
     int currIngredient;
     Ingredient[] todo;
-    Float[] results;
+    float[] results;
 
     // null if not at workstation
     Workstation currWorkstation;
@@ -64,6 +64,7 @@ public class Chef extends GameObject {
         if (finished) {
             return; // TODO: valami dispose
         }
+
         if (currWorkstation == null) {
             if (pathFindingTargetPosition == null) {
                 pathFindingTargetPosition = pathFindingTo.getPosition();

@@ -4,10 +4,10 @@ import java.util.Random;
 
 public enum Food {
 
-    Gulyas(new Ingredient[] { Ingredient.Tomato, Ingredient.Egg }),
-
-    Pori(new Ingredient[] { Ingredient.Tomato, Ingredient.Egg }),
-
+    Gulyas(new Ingredient[] { Ingredient.Water, Ingredient.Tomato, Ingredient.Chicken, Ingredient.Plating }),
+    Sandwich(new Ingredient[] { Ingredient.Tomato, Ingredient.Egg, Ingredient.Salad, Ingredient.Plating }),
+    Burg(new Ingredient[] { Ingredient.Tomato, Ingredient.Chicken, Ingredient.Salad, Ingredient.Plating }),
+    ScrambledEggs(new Ingredient[] { Ingredient.Egg, Ingredient.Water, Ingredient.Egg, Ingredient.Plating }),
     ;
 
     private static Random r = new Random(System.currentTimeMillis());

@@ -51,14 +51,24 @@ public class Kitchen {
 
     public static void init() {
         rat = new Rat();
+
         // trash workstation must be first in Kitchen.workstations!!!
         workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 2f),
                 new Vec2(0.5f, 0f)));
         // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(8f, 2f),
+        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(12f, 3f),
                 new Vec2(0f, -0.5f)));
         workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Vec2(5f, 3f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Sink, new Vec2(6f, 3f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2(8f, 3f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Oven, new Vec2(9f, 3f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Belt, new Vec2(12f, 1f),
                 new Vec2(-0.5f, 0f)));
+
         chefs.add(new Chef());
         chefs.add(new Chef());
         chefs.add(new Chef());

@@ -17,7 +17,9 @@ public class Workstation extends GameObject {
         Oven,
         Fridge,
         Stove,
+        Sink,
         Trash,
+        Belt,
 
         ;
     }

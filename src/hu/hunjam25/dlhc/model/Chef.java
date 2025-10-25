@@ -113,9 +113,7 @@ public class Chef extends GameObject {
         }
 
         if (currWorkstation == null) {
-            if(!searching(dt)){
-                return;
-            }
+            searching(dt);
         }
         else {
             working();
@@ -174,13 +172,12 @@ public class Chef extends GameObject {
     /***
      *
      * @param dt
-     * @return true if continue tick(), false if return
      */
-    private boolean searching(float dt) {
+    private void searching(float dt) {
         if (pathFindingTargetPosition == null) {
             if (pathFindingTo == null){
                 System.out.println("Nowhere to Go");
-                return false;
+                return;
             }
             pathFindingTargetPosition = pathFindingTo.getPosition().add(pathFindingTo.workingOffset);
         }
@@ -195,7 +192,6 @@ public class Chef extends GameObject {
             startedWorkAt = Game.now;
             startTimer(currIngredient);
         }
-        return true;
     }
 
     private void startTimer(int id) {
@@ -238,6 +234,12 @@ public class Chef extends GameObject {
         else
             animatedSprite.mirrored = false;
         animatedSprite.setIdx(spriteIdx);
+        //Workstation taken
+        if(pathFindingTo.hasWorker()){
+            pathFindingTo = Kitchen.findClosestFreeWorkStation(position,todo[currIngredient]);
+            pathFindingTargetPosition = null;
+            return false;
+        }
 
         return length <= 0.1f;
     }

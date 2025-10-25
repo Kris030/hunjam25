@@ -73,7 +73,6 @@ public class Rat extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         var pos = new Point2D.Float(position.x, position.y);
-        if (ratView.mirrored) {pos.x -= 1.25f;}
         var screen = Game.gameToScreen(pos);
         gd.translate(screen.x,screen.y);
 

@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.model.Workstation;
 import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import javax.imageio.ImageIO;
@@ -60,13 +61,26 @@ public class AssetManager {
                ImageIO.read(Path.of( "art", "organized", "stove", "stove_front_off.png").toFile() ),
                 ImageIO.read(Path.of( "art", "organized", "stove", "stove_front_on.png").toFile() ),
         };
-        animStorage.put("Stove",stove);
+        animStorage.put(Workstation.WorkstationType.Stove.name(), stove);
 
         BufferedImage[] fridge = new BufferedImage[]{
                 ImageIO.read( Path.of( "art", "organized", "fridge", "fridge_closed.png").toFile()),
                 ImageIO.read( Path.of( "art", "organized", "fridge", "fridge_open.png").toFile() )
         };
-        animStorage.put("Fridge",fridge);
+        animStorage.put(Workstation.WorkstationType.Fridge.name(), fridge);
+
+        BufferedImage[] sink = new BufferedImage[]{
+                ImageIO.read(Path.of("art", "organized", "sink", "sink_front_off.png").toFile()),
+                ImageIO.read(Path.of("art", "organized", "sink", "sink_front_on.png").toFile()),
+        };
+
+        animStorage.put(Workstation.WorkstationType.Trash.name(), sink);
+
+        BufferedImage[] choppingBoard = new BufferedImage[]{
+                ImageIO.read(Path.of("art", "organized", "counter", "counter_front.png").toFile())
+        };
+
+        animStorage.put(Workstation.WorkstationType.ChoppingBoard.name(), choppingBoard);
     }
 
     private static void addWorkStations() throws IOException {

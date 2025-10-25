@@ -25,6 +25,10 @@ public class Chef extends GameObject {
             foodTodo.add(Food.RandomFood());
         }
         startNewFood();
+
+        animatedSprite.frozen = true;
+        animatedSprite.setScale(0.375f);
+
         //TODO: real stuff here
         UiElement timr = new UiElement();
         timr.visible = true;
@@ -108,6 +112,7 @@ public class Chef extends GameObject {
                 startedWorkAt = Game.now;
             }
         } else {
+            animatedSprite.setIdx(0);
             // work at workstation
             if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds) {
                 currWorkstation.workers--;
@@ -141,20 +146,30 @@ public class Chef extends GameObject {
 
     /// return true if the chef has arrived at the target
     private boolean stepTowardsTarget(float dt) {
-        if (stopped())
+        if (stopped()) {
+            animatedSprite.setIdx(0);
             return false;
+        }
         Point.Float velocity = (Point.Float) pathFindingTargetPosition.clone();
         velocity.x -= position.x;
         velocity.y -= position.y;
 
         double length = velocity.distance(0, 0);
-        if (length == 0)
+        if (length == 0) {
+            animatedSprite.setIdx(0);
             return true;
+        }
         velocity.x /= length;
         velocity.y /= length;
 
         position.x += velocity.x * SPEED * dt;
         position.y += velocity.y * SPEED * dt;
+
+        int spriteIdx = facing(velocity);
+        if (confused) spriteIdx = spriteIdx + 3;
+        if (velocity.x < 0) animatedSprite.mirrored = true;
+        else animatedSprite.mirrored = false;
+        animatedSprite.setIdx(spriteIdx);
 
         return length <= 0.1f;
     }
@@ -177,8 +192,8 @@ public class Chef extends GameObject {
         results[currIngredient] += result;
     }
 
-    private AnimatedSprite animatedSprite =  new AnimatedSprite(AssetManager.getAnim("chef"), 0.5f);
-    private  boolean shocked = false;
+    private AnimatedSprite animatedSprite =  new AnimatedSprite(AssetManager.getAnim("chef1"), 0.5f);
+    private  boolean confused = false;
 
     @Override
     public void render(Graphics2D gd) {
@@ -188,6 +203,7 @@ public class Chef extends GameObject {
     }
 
     private static int facing(Point2D.Float vel) { //fentről óramutatóval 4 forgási fázis indexe
+        if (vel.x == 0.0f && vel.y == 0.0f) {return 0;}
         if (vel.y > 0.0f && abs(vel.y) > abs(vel.x)) {return 0;} //felfele gyorsabb -> 0. index
         if (vel.y < 0.0f && abs(vel.y) > abs(vel.x)) {return 2;} //lefele gyorsbb -> 2. index
         //if (vel.x > 0f && abs(vel.y) < abs(vel.x)) {return 1;} //jobbra gyorsabb -> 1. index

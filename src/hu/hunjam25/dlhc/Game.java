@@ -84,6 +84,7 @@ public class Game {
         AffineTransform transform = g.getTransform();
 
 
+        Kitchen.woodFrame.render(g);
         //g.translate(1f * Game.TILE_SIZE, 0f);
         Kitchen.wallpaper.render(g);
         g.setTransform(transform);

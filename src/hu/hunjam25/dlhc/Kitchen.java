@@ -24,7 +24,9 @@ public class Kitchen {
 
     public static Sprite floor = new Sprite(AssetManager.getImage("new_tiles2"));
     public static Sprite wallpaper = new Sprite(AssetManager.getImage("wallpaper"));
+    public static Sprite woodFrame = new Sprite(AssetManager.getImage("wood"));
     static {
+        woodFrame.centered = false;
         wallpaper.centered = false;
         wallpaper.spriteScale = 1.35f;
     }

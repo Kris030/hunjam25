@@ -31,7 +31,14 @@ public class Workstation extends GameObject {
 
 
         this.sprite = new Sprite(AssetManager.getImage(type.name()));
-        sprite.scaleToTileMin();
+        //sprite.scaleToTileMax();
+        sprite.scaleWidth();
+        float sc = sprite.getRatio();
+        //System.out.println(sc);
+        if (sc < 1)
+            this.position.y += (1f - (1f/sc))/2f;
+        else
+            this.position.y -= (1f - (1f/sc))/2f;
     }
 
 

@@ -33,7 +33,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));
         // f.setLayout(new FlowLayout());
-        frame.setLocationRelativeTo(null);
+        //frame.setLocationRelativeTo(null);
 
         Canvas c = new Canvas();
         frame.add(c);
@@ -66,7 +66,7 @@ public class Main {
 
             g.setColor(Color.ORANGE); // background color
             g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-            g.scale(0.8f,0.8f);
+            //g.scale(0.8f,0.8f);
             Game.render(g);
             //g.drawImage(AssetManager.getImage("tiles"),0,0, null);
 

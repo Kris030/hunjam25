@@ -54,4 +54,12 @@ public class Sprite implements IRenderable {
         var height = image.getHeight();
         spriteScale = width < height ? 120f / width : 120f / height;
     }
+
+    public void scaleWidth() {
+        spriteScale = 120f / image.getWidth();
+    }
+
+    public float getRatio() {
+        return image.getWidth() / (float) image.getHeight();
+    }
 }

@@ -31,7 +31,7 @@ public class Workstation extends GameObject {
 
 
         this.sprite = new Sprite(AssetManager.getImage(type.name()));
-        sprite.scaleToTileMax();
+        sprite.scaleToTileMin();
     }
 
 

@@ -24,7 +24,7 @@ public class Kitchen {
 
     public static Rat rat;
 
-    public static Sprite background = new Sprite(Game.getImage("tiles"));
+    public static Sprite background = new Sprite(AssetManager.getImage("tiles"));
 
 
     static {

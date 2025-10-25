@@ -21,7 +21,7 @@ public class Main {
             System.err.println("Failed to set look and feel");
         }
 
-        Game.init();
+        AssetManager.init();
         Kitchen.init();
 
         frame = new JFrame("Don't let him cook");

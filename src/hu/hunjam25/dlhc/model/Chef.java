@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Kitchen;
@@ -109,7 +110,7 @@ public class Chef extends GameObject {
         results.add(result);
     }
 
-    private Sprite sprite = new Sprite(Game.getImage("chef"));
+    private Sprite sprite = new Sprite(AssetManager.getImage("chef"));
 
     @Override
     public void render(Graphics2D gd) {

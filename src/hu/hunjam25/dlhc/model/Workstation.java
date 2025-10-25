@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc.model;
 
+import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.view.Sprite;
@@ -28,8 +29,8 @@ public class Workstation extends GameObject {
         this.position = position;
         this.workingOffset = workingOffset;
 
-        this.sprite = new Sprite(Game.getImage(type.name()));
-        //sprite.spriteScale = 0.4f;
+
+        this.sprite = new Sprite(AssetManager.getImage(type.name()));
         sprite.scaleToTileMax();
     }
 

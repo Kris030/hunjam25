@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc.model;
 
+import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
@@ -19,7 +20,7 @@ public class Rat extends GameObject {
 
     static Point2D.Float velocity = new Point2D.Float(0f, 0f);
 
-    private Sprite dot = new Sprite(Game.getImage("dot"));
+    private Sprite dot = new Sprite(AssetManager.getImage("dot"));
     //private Sprite ratView = new Sprite(Game.getImage("rat"));
 
     private AnimatedSprite remi ;
@@ -30,12 +31,12 @@ public class Rat extends GameObject {
         //ratView.spriteScale = 0.25f;
 
         BufferedImage[] frames = new BufferedImage[]{
-                Game.getImage("remi1") ,
-                Game.getImage("remi2") ,
-                Game.getImage("remi3") ,
-                Game.getImage("remi4") ,
-                Game.getImage("remi5") ,
-                Game.getImage("remi6")
+                AssetManager.getImage("remi1") ,
+                AssetManager.getImage("remi2") ,
+                AssetManager.getImage("remi3") ,
+                AssetManager.getImage("remi4") ,
+                AssetManager.getImage("remi5") ,
+                AssetManager.getImage("remi6")
         };
         remi = new AnimatedSprite(frames, 1f);
         remi.spriteScale = 0.25f;

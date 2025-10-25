@@ -42,7 +42,6 @@ public class Game {
         position.y = min(Game.MAP_HEIGHT + Game.MAP_OFFSET_Y, position.y);
     }
 
-    private static HashMap<String, BufferedImage> imageStorage;
 
     public static Point2D.Float gameToScreen(Point2D.Float game) {
         return new Point2D.Float(game.x * TILE_SIZE, (MAP_HEIGHT - game.y) * TILE_SIZE);
@@ -50,41 +49,6 @@ public class Game {
 
     public static Point2D.Float screenToGame(Point2D.Float screen) {
         return new Point2D.Float(screen.x / TILE_SIZE, (MAP_HEIGHT * TILE_SIZE - screen.y) / TILE_SIZE);
-    }
-
-    static void init() throws IOException {
-        // TODO: better
-        imageStorage = new HashMap<>();
-        imageStorage.put("rat", ImageIO.read(Path.of("art","gonosz_remi.png").toFile()));
-        imageStorage.put("tiles", ImageIO.read(Path.of("art","programmerArt", "tiles.png").toFile()));
-        imageStorage.put("dot", ImageIO.read(Path.of("art", "programmerArt","dot.png").toFile()) );
-        imageStorage.put("mark", ImageIO.read(Path.of("art","programmerArt","mark.png" ).toFile()));
-        imageStorage.put("chef", ImageIO.read(Path.of("art","programmerArt","chef.png").toFile()));
-
-        for (int i = 1; i <= 6; ++i){
-            imageStorage.put("remi" + i,ImageIO.read(Path.of("art","programmerArt","remi", "animalt_remi" + i + ".png").toFile()));
-        }
-        /*
-        imageStorage.put("stove_front", ImageIO.read(Path.of("art","organized", "stove", "stove_front_on.png").toFile()));
-        imageStorage.put("sink_front_on", ImageIO.read(Path.of("art","organized", "sink", "sink_front_on.png").toFile()));
-        imageStorage.put("sink_front_off", ImageIO.read(Path.of("art","organized", "sink", "sink_front_off.png").toFile()));
-        imageStorage.put("counter_front", ImageIO.read(Path.of("art","organized", "counter", "counter_front.png").toFile()));
-        imageStorage.put("sink_back_off", ImageIO.read(Path.of("art","organized", "sink", "sink_behind_off.png").toFile()));
-        imageStorage.put("sink_back_on", ImageIO.read(Path.of("art","organized", "sink", "sink_behind_on.png").toFile()));
-        imageStorage.put("stove_back_off", ImageIO.read(Path.of("art","organized", "stove", "stove_behind_off.png").toFile()));
-        imageStorage.put("stove_back_on", ImageIO.read(Path.of("art","organized", "stove", "stove_behind_on.png").toFile()));
-        imageStorage.put("counter_back", ImageIO.read(Path.of("art","organized", "counter", "counter_behind.png").toFile()));
-        imageStorage.put("fridge_closed", ImageIO.read(Path.of("art","organized", "fridge", "fridge_closed.png").toFile()));
-        imageStorage.put("fridge_open", ImageIO.read(Path.of("art","organized", "fridge", "fridge_open.png").toFile()));
-        */
-        imageStorage.put("Stove", ImageIO.read(Path.of("art","organized", "stove", "stove_front_on.png").toFile()));
-        imageStorage.put("Sink", ImageIO.read(Path.of("art","organized", "sink", "sink_front_off.png").toFile()));
-        imageStorage.put("Counter", ImageIO.read(Path.of("art","organized", "counter", "counter_front.png").toFile()));
-        imageStorage.put("Fridge", ImageIO.read(Path.of("art","organized", "fridge", "fridge_closed.png").toFile()));
-    }
-
-    public static BufferedImage getImage(String name) {
-        return imageStorage.get(name);
     }
 
     // null if not in fullscreen

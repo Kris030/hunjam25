@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc.view;
 
+import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ public class UiElement implements IRenderable{
 
     public float scale = 1f;
 
-    private Sprite mark = new Sprite(Game.getImage("mark"));
+    private Sprite mark = new Sprite(AssetManager.getImage("mark"));
 
     @Override
     public void render(Graphics2D gd) {

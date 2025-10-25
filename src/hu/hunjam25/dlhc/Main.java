@@ -10,6 +10,9 @@ public class Main {
     static JFrame frame;
 
     public static void main(String[] args) throws IOException {
+        // force enable hardware acceleration
+        System.setProperty("sun.java2d.opengl", "true");
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {

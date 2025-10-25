@@ -8,8 +8,11 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Rat extends GameObject {
-    static float SPEED = 0.01f;
+    static float SPEED = 0.005f;
 
     private boolean mirrored = false;
 
@@ -31,21 +34,21 @@ public class Rat extends GameObject {
         Point2D.Float velocity = new Point2D.Float(0f, 0f);
 
         if (keys.contains(KeyEvent.VK_UP)) {
-            velocity.y += SPEED * dt;
+            velocity.y += 1;
         }
-
         if (keys.contains(KeyEvent.VK_DOWN)) {
-            velocity.y -= SPEED * dt;
+            velocity.y -= 1;
         }
         if (keys.contains(KeyEvent.VK_LEFT)) {
-            velocity.x -= SPEED * dt;
+            velocity.x -= 1;
         }
         if (keys.contains(KeyEvent.VK_RIGHT)) {
-            velocity.x += SPEED * dt;
+            velocity.x += 1;
         }
         if (velocity.x != 0f && velocity.y != 0f) {
-            velocity.x /= velocity.distance(0, 0);
-            velocity.y /= velocity.distance(0, 0);
+            var length = velocity.distance(0, 0);
+            velocity.x /= length;
+            velocity.y /= length;
         }
         if (velocity.x != 0f) {
             mirrored = velocity.x < 0f;
@@ -53,6 +56,11 @@ public class Rat extends GameObject {
 
         position.x += velocity.x * SPEED * dt;
         position.y += velocity.y * SPEED * dt;
+
+        position.x = max(0,position.x);
+        position.x = min(Game.MAP_X,position.x);
+        position.y = max(0,position.y);
+        position.y = min(Game.MAP_Y,position.y);
     }
 
     @Override

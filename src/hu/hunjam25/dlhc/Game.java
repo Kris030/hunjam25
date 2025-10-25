@@ -18,15 +18,19 @@ import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Workstation;
 
 public class Game {
+    public static final int MAP_X = 10;
+    public static final int MAP_Y = 6;
+
+    public static final int TILE_SIZE = 120;
 
     private static HashMap<String, BufferedImage> imageStorage;
 
     public static Point2D.Float gameToScreen(Point2D.Float game){
-        return new Point2D.Float(game.x * 120f, (9 -game.y) * 120f);
+        return new Point2D.Float(game.x * TILE_SIZE, (MAP_Y -game.y) * TILE_SIZE);
     }
 
     public static Point2D.Float screenToGame(Point2D.Float screen){
-        return new Point2D.Float(screen.x / 120f, (1080-screen.y) / 120f);
+        return new Point2D.Float(screen.x / TILE_SIZE, (MAP_Y * TILE_SIZE -screen.y) / TILE_SIZE);
     }
 
     static void init() throws IOException {

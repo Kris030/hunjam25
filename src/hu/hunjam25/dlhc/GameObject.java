@@ -1,9 +1,9 @@
 package hu.hunjam25.dlhc;
 
 import hu.hunjam25.dlhc.view.IRenderable;
-import hu.hunjam25.dlhc.view.RatView;
 
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Graphics2D;
 
 public class GameObject implements IRenderable {
 

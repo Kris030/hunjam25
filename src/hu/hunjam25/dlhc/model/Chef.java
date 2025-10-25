@@ -67,6 +67,7 @@ public class Chef extends GameObject {
 
         if (currWorkstation == null) {
             if (pathFindingTargetPosition == null) {
+                if (pathFindingTo == null) return;
                 pathFindingTargetPosition = pathFindingTo.getPosition();
                 pathFindingTargetPosition.x += pathFindingTo.workingOffset.x;
                 pathFindingTargetPosition.y += pathFindingTo.workingOffset.y;

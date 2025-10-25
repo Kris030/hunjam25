@@ -40,6 +40,17 @@ public class AssetManager {
         addRemiAnim();
 
         addClockAnimation();
+
+        addRatMeter();
+    }
+
+    private static void addRatMeter() throws IOException {
+        BufferedImage[] ratMeter = new BufferedImage[5];
+
+        for (int i = 1 ; i <= 5; ++i){
+            ratMeter[i - 1] = ImageIO.read(Path.of("art","patkany","patkany_0" + i + ".png").toFile());
+        }
+        animStorage.put("ratMeter", ratMeter);
     }
 
     private static void img(String name, String pathFirst, String... pathRest) throws IOException {

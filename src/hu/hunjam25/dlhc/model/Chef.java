@@ -13,10 +13,10 @@ public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
     private final static float SPEED = 0.005f;
 
-    public Chef(int foodCount){
+    public Chef(int foodCount) {
         positionToCenter();
         foodTodo = new java.util.ArrayDeque<>();
-        for (int i = 0; i<foodCount; i++){
+        for (int i = 0; i < foodCount; i++) {
             foodTodo.add(Food.RandomFood());
         }
         results = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Chef extends GameObject {
         pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
     }
 
-    public Chef(){
+    public Chef() {
         this(DEFAULT_FOOD_COUNT);
     }
 
@@ -48,20 +48,17 @@ public class Chef extends GameObject {
 
     @Override
     public void tick(float dt) {
-        if (finished) return;
-        // TODO: fix incorrect behaviour if 2 of the same workstations follow each other
+        if (finished)
+            return;
         if (currWorkstation == null) {
-            if (pathFindingTargetPosition == null){
+            if (pathFindingTargetPosition == null) {
                 pathFindingTargetPosition = pathFindingTo.getPosition();
                 pathFindingTargetPosition.x += pathFindingTo.workingOffset.x;
                 pathFindingTargetPosition.y += pathFindingTo.workingOffset.y;
             }
 
             // we aren't at a station, go to pathFindingTargetPosition
-            stepTowardsTarget(dt);
-            
-            boolean close = position.distance(pathFindingTargetPosition) <= /*TODO exact distance?*/ 0.1f;
-            if (close) {
+            if (stepTowardsTarget(dt)) {
                 currWorkstation = pathFindingTo;
                 position = pathFindingTargetPosition;
                 pathFindingTargetPosition = null;
@@ -70,7 +67,6 @@ public class Chef extends GameObject {
             }
         } else {
             // work at workstation
-
             if (Game.now - startedWorkAt >= todo.get(currIngredient).durationSeconds) {
                 currWorkstation = null;
                 currIngredient++;
@@ -91,23 +87,27 @@ public class Chef extends GameObject {
         }
     }
 
-    private void stepTowardsTarget(float dt) {
+    /// return true if the chef has arrived at the target
+    private boolean stepTowardsTarget(float dt) {
         Point.Float velocity = (Point.Float) pathFindingTargetPosition.clone();
         velocity.x -= position.x;
         velocity.y -= position.y;
 
         double length = velocity.distance(0, 0);
+        if (length == 0)
+            return true;
         velocity.x /= length;
         velocity.y /= length;
 
         position.x += velocity.x * SPEED * dt;
         position.y += velocity.y * SPEED * dt;
+
+        return length <= /* TODO exact distance? */ 0.1f;
     }
 
     public void pushResult(float result) {
         results.add(result);
     }
-
 
     private Sprite sprite = new Sprite(Game.getImage("chef"));
 
@@ -115,6 +115,6 @@ public class Chef extends GameObject {
     public void render(Graphics2D gd) {
         super.render(gd);
         sprite.render(gd);
-        //System.out.println("chef drawn");
+        // System.out.println("chef drawn");
     }
 }

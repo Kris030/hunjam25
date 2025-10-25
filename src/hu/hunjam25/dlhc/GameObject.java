@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class GameObject implements IRenderable {
 
-    private ArrayList<IRenderable> uiElements = new ArrayList<>();
+    protected ArrayList<UiElement> uiElements = new ArrayList<>();
 
     protected Vec2 position = new Vec2(0f, 0f);
 

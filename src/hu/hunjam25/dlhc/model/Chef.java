@@ -1,6 +1,7 @@
 package hu.hunjam25.dlhc.model;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.*;
 
 import hu.hunjam25.dlhc.AssetManager;
@@ -206,7 +207,9 @@ public class Chef extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
+        AffineTransform t = gd.getTransform();
         animatedSprite.render(gd);
+        gd.setTransform(t);
         renderUiElements(gd);
     }
 

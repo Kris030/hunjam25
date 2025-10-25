@@ -17,7 +17,7 @@ public class UiElement implements IRenderable {
 
     public boolean animated = false;
 
-    private AnimatedSprite animatedSprite;
+    public AnimatedSprite animatedSprite;
 
     @Override
     public void render(Graphics2D gd) {

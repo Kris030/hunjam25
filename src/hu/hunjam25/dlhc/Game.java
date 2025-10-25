@@ -57,7 +57,7 @@ public class Game {
     static void init() throws IOException {
         // TODO: better
         imageStorage = new HashMap<>();
-        imageStorage.put("rat", ImageIO.read(Path.of("art","programmerArt", "rat.png").toFile()));
+        imageStorage.put("rat", ImageIO.read(Path.of("art","gonosz_remi.png").toFile()));
         imageStorage.put("tiles", ImageIO.read(Path.of("art","programmerArt", "tiles.png").toFile()));
         imageStorage.put("dot", ImageIO.read(Path.of("art", "programmerArt","dot.png").toFile()) );
         imageStorage.put("mark", ImageIO.read(Path.of("art","programmerArt","mark.png" ).toFile()));

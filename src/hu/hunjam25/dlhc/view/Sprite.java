@@ -11,6 +11,8 @@ public class Sprite implements IRenderable {
 
     public boolean mirrored = false;
 
+    public float spriteScale = 1;
+
     static void mirrorX(Graphics2D gd) {
         gd.scale(-1f, 1f);
     }
@@ -38,6 +40,7 @@ public class Sprite implements IRenderable {
             mirrorX(gd);
         }
 
+        gd.scale(spriteScale, spriteScale);
         gd.drawImage(image, x, y, null);
     }
 }

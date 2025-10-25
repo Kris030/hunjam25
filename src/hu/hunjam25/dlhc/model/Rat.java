@@ -22,10 +22,8 @@ public class Rat extends GameObject {
 
 
     public Rat() {
-        dot.centered = true;
-        ratView.centered = true;
-
         positionToCenter();
+        ratView.spriteScale = 0.25f;
     }
 
     @Override

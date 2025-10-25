@@ -39,7 +39,7 @@ public class AnimatedSprite implements IRenderable {
     }
 
     float getAge() {
-        return (Game.now - animStarted) % animLength;
+        return Game.now - animStarted;
     }
 
     public void freeze() {
@@ -63,10 +63,11 @@ public class AnimatedSprite implements IRenderable {
     // (dt vagy tárolja a jelenlegit és inkrementál)
     @Override
     public void render(Graphics2D gd) {
-        float age = frozen ? frozenAge : getAge();
-        if(!frozen){
+        float age = frozen ? frozenAge : getAge() % animLength;
+        if (!frozen) {
             idx = (int) (images.length * age / animLength);
         }
+
         BufferedImage image = images[idx];
 
         int x = 0, y = 0;
@@ -79,12 +80,14 @@ public class AnimatedSprite implements IRenderable {
         if (mirrored) {
             Sprite.mirrorX(gd);
         }
+        var tf = gd.getTransform();
         gd.scale(spriteScales[idx], spriteScales[idx]);
 
         gd.drawImage(image, x, y + (int) spriteOffsets[idx], null);
 
+        //gd.drawImage(image, x, y, null);
 
-        gd.scale(1/spriteScales[idx],1/ spriteScales[idx]);
+        gd.setTransform(tf);
     }
 
     public void scaleWidth() {

@@ -66,8 +66,16 @@ public class AssetManager {
         }
     }
 
-    private static void addChefAnimations(){
-
+    private static void addChefAnimations() throws IOException {
+        BufferedImage[] chef1 = new BufferedImage[]{
+                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "fel.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "oldal.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "le.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "fel_shocked.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "oldal_shocked.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "le_shocked.png").toFile() ),
+        };
+        animStorage.put("chef1", chef1);
     }
 
     private static void addWorkStationAnimations() throws IOException {

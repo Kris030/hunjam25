@@ -1,11 +1,16 @@
 package hu.hunjam25.dlhc.model;
 
+import java.util.Random;
+
 public enum Food {
 
-    Gulyas(new Ingredient[] {Ingredient.Tomato, Ingredient.Egg}),
-    Pori(new Ingredient[] {Ingredient.Tomato, Ingredient.Egg}),
+    Gulyas(new Ingredient[] { Ingredient.Tomato, Ingredient.Egg }),
+
+    Pori(new Ingredient[] { Ingredient.Tomato, Ingredient.Egg }),
 
     ;
+
+    private static Random r = new Random(System.currentTimeMillis());
 
     public Ingredient[] ingredients;
 
@@ -15,7 +20,7 @@ public enum Food {
 
     public static Food RandomFood() {
         Food[] foods = Food.values();
-        int id = (int) (Math.random() * foods.length);
+        int id = r.nextInt(foods.length);
         return foods[id];
     }
 }

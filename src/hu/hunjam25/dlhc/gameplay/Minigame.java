@@ -1,7 +1,5 @@
 package hu.hunjam25.dlhc.gameplay;
 
-import java.awt.Graphics2D;
-
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Kitchen;
 import hu.hunjam25.dlhc.model.Chef;
@@ -21,9 +19,5 @@ public abstract class Minigame extends GameObject {
         if (ended) {
             Kitchen.minigameEnded(-1);
         }
-    }
-
-    @Override
-    public void render(Graphics2D gd) {
     }
 }

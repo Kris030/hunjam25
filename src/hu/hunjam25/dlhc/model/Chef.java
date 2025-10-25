@@ -88,7 +88,8 @@ public class Chef extends GameObject {
 
         if (currWorkstation == null) {
             if (pathFindingTargetPosition == null) {
-                if (pathFindingTo == null) return;
+                if (pathFindingTo == null)
+                    return;
                 pathFindingTargetPosition = pathFindingTo.getPosition();
                 pathFindingTargetPosition.x += pathFindingTo.workingOffset.x;
                 pathFindingTargetPosition.y += pathFindingTo.workingOffset.y;
@@ -121,7 +122,7 @@ public class Chef extends GameObject {
                     for (var ing : todo)
                         ingredientSumTime += ing.durationSeconds;
                     Float timeDelay = Game.now - startedCurrentFoodAt - (float) ingredientSumTime;
-                    Kitchen.increaseRating(results, timeDelay);
+                    Kitchen.decreaseRating(results, timeDelay);
 
                     if (foodTodo.isEmpty()) {
                         currIngredient = 0;
@@ -163,6 +164,12 @@ public class Chef extends GameObject {
         return Game.now < stoppedUntil;
     }
 
+    /**
+     * add result handling for each ingredient, should be called by the minigame
+     * when it ends
+     * 
+     * @param result should be in {@code[0;0.10]} with the highend being rare
+     */
     public void pushResult(float result) {
         results[currIngredient] += result;
     }

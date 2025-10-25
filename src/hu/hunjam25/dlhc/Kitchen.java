@@ -55,7 +55,7 @@ public class Kitchen {
         rat = new Rat();
 
         // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 0f),
+        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 1f),
                 new Vec2(0f, 0.5f)));
         // trash workstation must be first in Kitchen.workstations!!!
         workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(12f, 3f),

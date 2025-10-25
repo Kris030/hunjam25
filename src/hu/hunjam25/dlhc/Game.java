@@ -21,19 +21,19 @@ public class Game {
     public static final int MAP_WIDTH = 14;
     public static final int MAP_HEIGHT = 5;
 
-    public static final Vec2 CENTER = new Vec2(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
-                    Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
+    public static final Vec2 CENTER = new Vec2(Game.MAP_WIDTH / 2f,
+                     Game.MAP_HEIGHT / 2f);
 
     public static final int TILE_SIZE = 120;
 
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
-                min(Game.MAP_WIDTH + Game.MAP_OFFSET_X, max(Game.MAP_OFFSET_X, position.x())),
-                min(Game.MAP_HEIGHT /*+ Game.MAP_OFFSET_Y*/, max(0 /*Game.MAP_OFFSET_Y*/, position.y())));
+                min(Game.MAP_WIDTH, max(0, position.x())),
+                min(Game.MAP_HEIGHT, max(0, position.y())));
     }
 
     public static Vec2 gameToScreen(Vec2 game) {
-        return new Vec2(game.x() * TILE_SIZE, (-MAP_OFFSET_Y + MAP_HEIGHT - game.y()) * TILE_SIZE);
+        return new Vec2((game.x() + MAP_OFFSET_X) * TILE_SIZE, (-MAP_OFFSET_Y + MAP_HEIGHT - game.y()) * TILE_SIZE);
     }
 
     public static Vec2 screenToGame(Vec2 screen) {

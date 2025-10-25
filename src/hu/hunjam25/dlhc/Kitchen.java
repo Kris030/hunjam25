@@ -22,7 +22,7 @@ public class Kitchen {
 
     public static Rat rat;
 
-    public static Sprite background = new Sprite(AssetManager.getImage("tiles"));
+    public static Sprite background = new Sprite(AssetManager.getImage("new_tiles2"));
 
     public static ArrayList<ParticleEffect> particleEffects = new ArrayList<>();
 

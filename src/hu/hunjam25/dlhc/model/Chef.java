@@ -7,7 +7,9 @@ import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Kitchen;
+import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
+import hu.hunjam25.dlhc.view.UiElement;
 
 public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
@@ -20,6 +22,14 @@ public class Chef extends GameObject {
             foodTodo.add(Food.RandomFood());
         }
         startNewFood();
+        UiElement timr = new UiElement();
+        timr.visible = true;
+        timr.scale = 0.5f;
+        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("remi"), 1);
+        timerSprite.frozen = false;
+        timerSprite.start();
+        timr.setAnimatedSprite(timerSprite);
+        addUiElement(timr);
     }
 
     private void startNewFood() {
@@ -152,6 +162,7 @@ public class Chef extends GameObject {
     public void render(Graphics2D gd) {
         super.render(gd);
         sprite.render(gd);
+        renderUiElements(gd);
     }
 
     public void addHazard(Workstation trash, Ingredient fire) {

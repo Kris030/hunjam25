@@ -16,6 +16,10 @@ public class UiElement implements IRenderable{
 
     private Sprite mark = new Sprite(AssetManager.getImage("mark"));
 
+    public boolean animated = false;
+
+    private AnimatedSprite animatedSprite;
+
     @Override
     public void render(Graphics2D gd) {
         if(!visible){
@@ -27,10 +31,16 @@ public class UiElement implements IRenderable{
         gd.translate(screenOffset.x,screenOffset.y);
 
         gd.scale(scale,scale);
-        mark.render(gd);
+        if (!animated)
+            mark.render(gd);
+        else
+            animatedSprite.render(gd);
         gd.scale(1/scale,1/scale);
         gd.translate(-screenOffset.x,-screenOffset.y);
+    }
 
-
+    public void setAnimatedSprite(AnimatedSprite animatedSprite) {
+        this.animatedSprite = animatedSprite;
+        animated = true;
     }
 }

@@ -83,10 +83,13 @@ public class Game {
     static void render(Graphics2D g) {
         AffineTransform transform = g.getTransform();
 
-        //g.translate(-TILE_SIZE * 0.5f, -TILE_SIZE * 0.5f);
+
+        Kitchen.wallpaper.render(g);
+        g.setTransform(transform);
+        //g.translate(-SCREEN_WIDTH/2f, -SCREEN_HEIGHT/2f);
+
         g.clipRect(MAP_OFFSET_X * TILE_SIZE, abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,MAP_HEIGHT*TILE_SIZE );
-        Kitchen.background.render(g);
-        //g.translate(TILE_SIZE * 0.5f, TILE_SIZE * 0.5f);
+        Kitchen.floor.render(g);
         g.setClip(0,0,SCREEN_WIDTH * TILE_SIZE,SCREEN_HEIGHT * TILE_SIZE );
 
         Kitchen.getGameObjects().forEach(o -> {

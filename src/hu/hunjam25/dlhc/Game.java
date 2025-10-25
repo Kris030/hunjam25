@@ -29,11 +29,11 @@ public class Game {
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
                 min(Game.MAP_WIDTH + Game.MAP_OFFSET_X, max(Game.MAP_OFFSET_X, position.x())),
-                min(Game.MAP_HEIGHT + Game.MAP_OFFSET_Y, max(Game.MAP_OFFSET_Y, position.y())));
+                min(Game.MAP_HEIGHT /*+ Game.MAP_OFFSET_Y*/, max(0 /*Game.MAP_OFFSET_Y*/, position.y())));
     }
 
     public static Vec2 gameToScreen(Vec2 game) {
-        return new Vec2(game.x() * TILE_SIZE, (MAP_HEIGHT - game.y()) * TILE_SIZE);
+        return new Vec2(game.x() * TILE_SIZE, (-MAP_OFFSET_Y + MAP_HEIGHT - game.y()) * TILE_SIZE);
     }
 
     public static Vec2 screenToGame(Vec2 screen) {

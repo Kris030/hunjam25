@@ -107,7 +107,7 @@ public class AssetManager {
     }
 
     public static BufferedImage getImage(String name) {
-        return imageStorage.get(name);
+        return imageStorage.getOrDefault(name, imageStorage.get("mark"));
     }
 
     public static BufferedImage[] getAnim(String name) {

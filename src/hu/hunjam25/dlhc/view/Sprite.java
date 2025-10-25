@@ -12,10 +12,7 @@ public class Sprite implements IRenderable {
     public boolean mirrored = false;
 
     void mirror(Graphics2D gd){
-        var width = image.getWidth();
-        gd.translate(width/2f, 0);
         gd.scale(-1f,1f);
-        gd.translate(-width/2f,0);
     }
 
     public Sprite(BufferedImage image) {

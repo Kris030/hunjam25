@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
+import static hu.hunjam25.dlhc.Game.keepOnMap;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -27,8 +28,8 @@ public class Rat extends GameObject {
         dot.centered = true;
         ratView.centered = true;
 
-        position.x = 5;
-        position.y = 3;
+        position.x = Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f;
+        position.y = Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f;
     }
 
     @Override
@@ -66,10 +67,7 @@ public class Rat extends GameObject {
         position.x += velocity.x * SPEED * dt;
         position.y += velocity.y * SPEED * dt;
 
-        position.x = max(0,position.x);
-        position.x = min(Game.MAP_X,position.x);
-        position.y = max(0,position.y);
-        position.y = min(Game.MAP_Y,position.y);
+        keepOnMap(position);
     }
 
     @Override

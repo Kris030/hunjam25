@@ -43,7 +43,9 @@ public class AssetManager {
 
         addRatMeter();
 
-        addChefAnimations();
+        addChefAnimations("chef1");
+        addChefAnimations("chef2");
+        addChefAnimations("chef3");
     }
 
     private static void addRatMeter() throws IOException {
@@ -66,16 +68,16 @@ public class AssetManager {
         }
     }
 
-    private static void addChefAnimations() throws IOException {
-        BufferedImage[] chef1 = new BufferedImage[]{
-                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "fel.png").toFile() ),
-                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "oldal.png").toFile() ),
-                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "le.png").toFile() ),
-                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "fel_shocked.png").toFile() ),
-                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "oldal_shocked.png").toFile() ),
-                ImageIO.read(Path.of( "art", "organized", "sefek", "chef1", "le_shocked.png").toFile() ),
+    private static void addChefAnimations(String name) throws IOException {
+        BufferedImage[] chef = new BufferedImage[]{
+                ImageIO.read(Path.of( "art", "organized", "sefek", name, "fel.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", name, "oldal.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", name, "le.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", name, "fel_shocked.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", name, "oldal_shocked.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "sefek", name, "le_shocked.png").toFile() ),
         };
-        animStorage.put("chef1", chef1);
+        animStorage.put(name, chef);
     }
 
     private static void addWorkStationAnimations() throws IOException {

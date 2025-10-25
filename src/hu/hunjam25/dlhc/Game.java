@@ -91,7 +91,6 @@ public class Game {
             lastBounds = null;
         }
     }
-    static GameObject dot;
 
     public static Set<Integer> keysPressed = new HashSet<>();
 
@@ -115,7 +114,6 @@ public class Game {
         });
 
         g.setTransform(transform);
-        dot.render(g);
     }
 
     static KeyListener listener = new KeyListener() {

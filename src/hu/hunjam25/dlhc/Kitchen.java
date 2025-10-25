@@ -36,7 +36,7 @@ public class Kitchen {
 
     public static void init() {
         rat = new Rat();
-        chefs.add(new Chef());
+        //chefs.add(new Chef());
         workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Point.Float(2f, 2f), new Point.Float(-0.5f, 0f)));
     }
 

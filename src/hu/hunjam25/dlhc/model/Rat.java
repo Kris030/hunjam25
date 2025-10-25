@@ -26,7 +26,7 @@ public class Rat extends GameObject {
     public Rat() {
         positionToCenter();
         //ratView.spriteScale = 0.25f;
-
+        //position =  new Vec2(5f, 4f);
         remi = new AnimatedSprite(AssetManager.getAnim("remi"), 2.5f);
         remi.setScale(0.25f);
 

@@ -71,7 +71,7 @@ public class AssetManager {
                 ImageIO.read(Path.of("art", "organized", "sink", "sink_front_on.png").toFile()),
         };
 
-        animStorage.put(Workstation.WorkstationType.Trash.name(), sink);
+        animStorage.put("Sink", sink);
 
         BufferedImage[] choppingBoard = new BufferedImage[]{
                 ImageIO.read(Path.of("art", "organized", "counter", "counter_front.png").toFile())
@@ -92,6 +92,12 @@ public class AssetManager {
         };
 
         animStorage.put("smoke", smoke);
+
+        BufferedImage[] bin = new BufferedImage[]{
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "kuka.png").toFile())
+        };
+
+        animStorage.put(Workstation.WorkstationType.Trash.name(), bin);
     }
 
     private static void addClockAnimation() throws IOException {

@@ -79,9 +79,9 @@ public class Kitchen {
                     new Vec2(0, 0.5f)));
         }
 
-        chefs.add(new Chef());
-        chefs.add(new Chef());
-        chefs.add(new Chef());
+        for(int i = 0; i < 10; ++i){
+            chefs.add(new Chef());
+        }
     }
 
     private static void defLaylout() {

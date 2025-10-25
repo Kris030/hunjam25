@@ -20,7 +20,7 @@ public class Chef extends GameObject {
 
     public Chef(int foodCount) {
         ++count;
-        animatedSprite = new AnimatedSprite(AssetManager.getAnim("chef" + count), 0.5f);
+        animatedSprite = new AnimatedSprite(AssetManager.getAnim("chef" + ((count % 3) + 1)), 0.5f);
         positionToCenter();
         foodTodo = new java.util.ArrayDeque<>();
         for (int i = 0; i < foodCount; i++) {
@@ -176,7 +176,12 @@ public class Chef extends GameObject {
     private void searching(float dt) {
         if (pathFindingTargetPosition == null) {
             if (pathFindingTo == null){
-                System.out.println("Nowhere to Go");
+                //System.out.println("Nowhere to Go");
+                confused = true;
+                findClosestWorkStation();
+                if(pathFindingTo != null){
+                    System.out.println("job found");
+                }
                 return;
             }
             pathFindingTargetPosition = pathFindingTo.getPosition().add(pathFindingTo.workingOffset);
@@ -227,8 +232,9 @@ public class Chef extends GameObject {
         position = position.add(velocity.mul(SPEED * dt));
 
         int spriteIdx = facing(velocity);
-        if (confused)
-            spriteIdx = spriteIdx + 3;
+        if (confused) {
+            spriteIdx = 5;
+        }
         if (velocity.x() < 0)
             animatedSprite.mirrored = true;
         else
@@ -236,12 +242,16 @@ public class Chef extends GameObject {
         animatedSprite.setIdx(spriteIdx);
         //Workstation taken
         if(pathFindingTo.hasWorker()){
-            pathFindingTo = Kitchen.findClosestFreeWorkStation(position,todo[currIngredient]);
-            pathFindingTargetPosition = null;
+            findClosestWorkStation();
             return false;
         }
 
         return length <= 0.1f;
+    }
+
+    private void findClosestWorkStation(){
+        pathFindingTo = Kitchen.findClosestFreeWorkStation(position,todo[currIngredient]);
+        pathFindingTargetPosition = null;
     }
 
     public void stopForDuration(float seconds) {

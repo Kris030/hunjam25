@@ -3,19 +3,19 @@ package hu.hunjam25.dlhc.model;
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
+import hu.hunjam25.dlhc.Kitchen;
+import hu.hunjam25.dlhc.Vec2;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 
 import static hu.hunjam25.dlhc.Game.keepOnMap;
 
 public class Rat extends GameObject {
-    static float SPEED = 0.005f;
 
-    static Point2D.Float velocity = new Point2D.Float(0f, 0f);
+    static float SPEED = 0.005f;
 
     private Sprite dot = new Sprite(AssetManager.getImage("dot"));
     //private Sprite ratView = new Sprite(Game.getImage("rat"));
@@ -38,41 +38,55 @@ public class Rat extends GameObject {
     public void tick(float dt) {
         super.tick(dt);
         ratMotion(dt);
+
+        if (Kitchen.minigame == null && Game.keysPressed.contains(KeyEvent.VK_M)) {
+            var w = Kitchen.workstations.stream()
+                    .min((w1, w2) -> Double.compare(
+                            w1.getPosition().dist(this.position),
+                            w2.getPosition().dist(this.position)))
+
+                    // there allways will be a workstation
+                    .orElse(null);
+
+            if (w.getPosition().dist(this.position) < 0.1f) {
+                Kitchen.startMinigame(w);
+                position = w.getPosition().add(w.workingOffset);
+            }
+        }
     }
 
     private void ratMotion(float dt) {
         var keys = Game.keysPressed;
 
-        velocity = new Point2D.Float(0f, 0f);
+        float xx = 0, yy = 0;
 
         if (keys.contains(KeyEvent.VK_UP) || keys.contains(KeyEvent.VK_W)) {
-            velocity.y += 1;
+            yy += 1;
         }
 
         if (keys.contains(KeyEvent.VK_DOWN) || keys.contains(KeyEvent.VK_S)) {
-            velocity.y -= 1;
+            yy -= 1;
         }
 
         if (keys.contains(KeyEvent.VK_LEFT) || keys.contains(KeyEvent.VK_A)) {
-            velocity.x -= 1;
+            xx -= 1;
         }
 
         if (keys.contains(KeyEvent.VK_RIGHT) || keys.contains(KeyEvent.VK_D)) {
-            velocity.x += 1;
+            xx += 1;
         }
 
-        if (velocity.x != 0f && velocity.y != 0f) {
-            var length = velocity.distance(0, 0);
-            velocity.x /= length;
-            velocity.y /= length;
+        Vec2 velocity = new Vec2(xx, yy);
+
+        if (velocity.x() != 0f && velocity.y() != 0f) {
+            velocity = velocity.norm();
         }
 
-        if (velocity.x != 0f) {
-            remi.mirrored = velocity.x > 0f;
+        if (velocity.x() != 0f) {
+            remi.mirrored = velocity.x() > 0f;
         }
 
-        position.x += velocity.x * SPEED * dt;
-        position.y += velocity.y * SPEED * dt;
+        position = position.add(velocity.mul(SPEED * dt));
 
         keepOnMap(position);
     }

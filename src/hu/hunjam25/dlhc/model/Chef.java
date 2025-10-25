@@ -8,6 +8,7 @@ import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Kitchen;
+import hu.hunjam25.dlhc.Vec2;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 import hu.hunjam25.dlhc.view.UiElement;
@@ -37,7 +38,7 @@ public class Chef extends GameObject {
         timerSprite.frozen = false;
         timerSprite.start();
         timr.setAnimatedSprite(timerSprite);
-        timr.addOffset(0.5f, 0.0f);
+        timr.addOffset(new Vec2(0.5f, 0.0f));
         addUiElement(timr);
         UiElement timer = new UiElement();
         timer.visible = true;
@@ -46,7 +47,7 @@ public class Chef extends GameObject {
         timrSprite.frozen = false;
         timrSprite.start();
         timer.setAnimatedSprite(timrSprite);
-        timer.addOffset(-0.5f, 0.0f);
+        timer.addOffset(new Vec2(-0.5f, 0.0f));
         addUiElement(timer);
     }
 
@@ -79,7 +80,7 @@ public class Chef extends GameObject {
     float startedCurrentFoodAt;
 
     Workstation pathFindingTo;
-    Point.Float pathFindingTargetPosition;
+    Vec2 pathFindingTargetPosition;
 
     float stoppedUntil = 0f;
 
@@ -97,9 +98,7 @@ public class Chef extends GameObject {
             if (pathFindingTargetPosition == null) {
                 if (pathFindingTo == null)
                     return;
-                pathFindingTargetPosition = pathFindingTo.getPosition();
-                pathFindingTargetPosition.x += pathFindingTo.workingOffset.x;
-                pathFindingTargetPosition.y += pathFindingTo.workingOffset.y;
+                pathFindingTargetPosition = pathFindingTo.getPosition().add(pathFindingTo.workingOffset);
             }
 
             boolean arrivedAtStation = stepTowardsTarget(dt);
@@ -150,24 +149,21 @@ public class Chef extends GameObject {
             animatedSprite.setIdx(0);
             return false;
         }
-        Point.Float velocity = (Point.Float) pathFindingTargetPosition.clone();
-        velocity.x -= position.x;
-        velocity.y -= position.y;
+        Vec2 velocity = pathFindingTargetPosition.sub(position);
 
-        double length = velocity.distance(0, 0);
-        if (length == 0) {
+        float length = velocity.length();
+        if (length == 0){
             animatedSprite.setIdx(0);
             return true;
         }
-        velocity.x /= length;
-        velocity.y /= length;
 
-        position.x += velocity.x * SPEED * dt;
-        position.y += velocity.y * SPEED * dt;
+        velocity = velocity.div(length);
+
+        position = position.add(velocity.mul(SPEED * dt));
 
         int spriteIdx = facing(velocity);
         if (confused) spriteIdx = spriteIdx + 3;
-        if (velocity.x < 0) animatedSprite.mirrored = true;
+        if (velocity.x() < 0) animatedSprite.mirrored = true;
         else animatedSprite.mirrored = false;
         animatedSprite.setIdx(spriteIdx);
 
@@ -202,10 +198,10 @@ public class Chef extends GameObject {
         renderUiElements(gd);
     }
 
-    private static int facing(Point2D.Float vel) { //fentről óramutatóval 4 forgási fázis indexe
-        if (vel.x == 0.0f && vel.y == 0.0f) {return 0;}
-        if (vel.y > 0.0f && abs(vel.y) > abs(vel.x)) {return 0;} //felfele gyorsabb -> 0. index
-        if (vel.y < 0.0f && abs(vel.y) > abs(vel.x)) {return 2;} //lefele gyorsbb -> 2. index
+    private static int facing(Vec2 vel) { //fentről óramutatóval 4 forgási fázis indexe
+        if (vel.x() == 0.0f && vel.y() == 0.0f) {return 0;}
+        if (vel.y() > 0.0f && abs(vel.y()) > abs(vel.x())) {return 0;} //felfele gyorsabb -> 0. index
+        if (vel.y() < 0.0f && abs(vel.y()) > abs(vel.x())) {return 2;} //lefele gyorsbb -> 2. index
         //if (vel.x > 0f && abs(vel.y) < abs(vel.x)) {return 1;} //jobbra gyorsabb -> 1. index
         return 1; //egyébként 3. index
     }

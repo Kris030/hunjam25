@@ -1,15 +1,15 @@
 package hu.hunjam25.dlhc.view;
 
 import hu.hunjam25.dlhc.AssetManager;
+import hu.hunjam25.dlhc.Vec2;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
-public class UiElement implements IRenderable{
+public class UiElement implements IRenderable {
 
     public boolean visible = true;
 
-    private Point2D.Float offset = new Point2D.Float(0f,1f);
+    private Vec2 offset = new Vec2(0f, 1f);
 
     public float scale = 1f;
 
@@ -21,21 +21,24 @@ public class UiElement implements IRenderable{
 
     @Override
     public void render(Graphics2D gd) {
-        if(!visible){
+        if (!visible) {
             return;
         }
 
-        var screenOffset = new Point2D.Float(offset.x * 120f, -offset.y * 120f);
-        //var screenOffset = Game.gameToScreen(offset);
-        gd.translate(screenOffset.x,screenOffset.y);
+        var screenOffset = new Vec2(offset.x() * 120f, -offset.y() * 120f);
+        // var screenOffset = Game.gameToScreen(offset);
 
-        gd.scale(scale,scale);
+        var tf = gd.getTransform();
+
+        gd.translate(screenOffset.x(), screenOffset.y());
+        gd.scale(scale, scale);
+
         if (!animated)
             mark.render(gd);
         else
             animatedSprite.render(gd);
-        gd.scale(1/scale,1/scale);
-        gd.translate(-screenOffset.x,-screenOffset.y);
+
+        gd.setTransform(tf);
     }
 
     public void setAnimatedSprite(AnimatedSprite animatedSprite) {
@@ -43,8 +46,7 @@ public class UiElement implements IRenderable{
         animated = true;
     }
 
-    public void addOffset(float x, float y) {
-        offset.x += x;
-        offset.y += y;
+    public void addOffset(Vec2 offs) {
+        offset = offset.add(offs);
     }
 }

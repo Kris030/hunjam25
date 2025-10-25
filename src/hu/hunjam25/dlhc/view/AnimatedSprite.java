@@ -94,13 +94,13 @@ public class AnimatedSprite implements IRenderable {
 
     public void scaleWidth() {
         for (int i = 0; i < images.length; i++) {
-            spriteScales[i] = 120f / images[i].getWidth();
+            spriteScales[i] = 2f * 120f / images[i].getWidth();
             var ratio = images[i].getWidth() / (float) images[i].getHeight();
-            spriteOffsets[i] = 0f;
+            spriteOffsets[i] = 0f; //-60f;
             if (ratio < 1)
-                spriteOffsets[i] += 120f * (1f - (1f/ratio))/2f;
+                spriteOffsets[i] += 1f * 120f * (1f - (1f/ratio))/2f;
             else
-                spriteOffsets[i] += 120f * (1f - (1f/ratio))/2f;
+                spriteOffsets[i] += 1f * 120f * (1f - (1f/ratio))/2f;
         }
     }
 

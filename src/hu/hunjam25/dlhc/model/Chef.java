@@ -40,7 +40,7 @@ public class Chef extends GameObject {
     private void addClockAndRatMeter() {
         UiElement timr = new UiElement();
         timr.visible = true;
-        timr.scale = 0.2f;
+        timr.scale = 0.15f;
         AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("clock"), 4);
         timerSprite.frozen = false;
         timerSprite.start();
@@ -49,7 +49,7 @@ public class Chef extends GameObject {
         addUiElement(timr);
         UiElement timer = new UiElement();
         timer.visible = true;
-        timer.scale = 0.2f;
+        timer.scale = 0.15f;
         AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
         timrSprite.frozen = false;
         timrSprite.start();

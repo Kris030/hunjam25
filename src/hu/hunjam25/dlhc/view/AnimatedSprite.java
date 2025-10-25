@@ -49,6 +49,7 @@ public class AnimatedSprite implements IRenderable {
 
     public void setIdx(int idx) {
         this.idx = idx;
+        idx %= images.length;
     }
 
     public void unFreeze() {

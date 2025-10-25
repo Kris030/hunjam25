@@ -29,6 +29,8 @@ public class AssetManager {
         animStorage = new HashMap<>();
         soundStorage = new HashMap<>();
 
+        img("no_texture", "art", "programmerArt", "no.png");
+
         addSounds();
 
         addProgramerArt();
@@ -108,10 +110,10 @@ public class AssetManager {
     }
 
     public static BufferedImage getImage(String name) {
-        return imageStorage.getOrDefault(name, imageStorage.get("mark"));
+        return imageStorage.getOrDefault(name, imageStorage.get("no_texture"));
     }
 
     public static BufferedImage[] getAnim(String name) {
-        return animStorage.get(name);
+        return animStorage.getOrDefault(name, new BufferedImage[]{imageStorage.get("no_texture")});
     }
 }

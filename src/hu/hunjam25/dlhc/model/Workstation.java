@@ -21,7 +21,7 @@ public class Workstation extends GameObject {
     }
 
     private AnimatedSprite animatedSprite;
-    //private Sprite sprite;
+    // private Sprite sprite;
     public WorkstationType type = WorkstationType.Stove;
 
     // relative to GameObject position

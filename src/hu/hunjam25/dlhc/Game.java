@@ -84,10 +84,10 @@ public class Game {
         AffineTransform transform = g.getTransform();
 
 
-        Kitchen.woodFrame.render(g);
         //g.translate(1f * Game.TILE_SIZE, 0f);
         Kitchen.wallpaper.render(g);
         g.setTransform(transform);
+        Kitchen.woodFrame.render(g);
 
         g.clipRect(MAP_OFFSET_X * TILE_SIZE, abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,MAP_HEIGHT*TILE_SIZE );
         Kitchen.floor.render(g);

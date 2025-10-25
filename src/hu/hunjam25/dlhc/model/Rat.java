@@ -98,7 +98,7 @@ public class Rat extends GameObject {
         //ratView.render(gd);
 
         remi.render(gd);
-        dot.render(gd);
+        //dot.render(gd);
 
         renderUiElements(gd);
     }

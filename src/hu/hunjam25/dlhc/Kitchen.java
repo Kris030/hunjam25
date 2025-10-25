@@ -83,10 +83,10 @@ public class Kitchen {
         chefs.add(new Chef());
         chefs.add(new Chef());
 
-        var element = new UiElement();
-        element.visible = true;
-        element.scale = 0.5f;
-        rat.addUiElement(element);
+        //var element = new UiElement();
+        //element.visible = true;
+        //element.scale = 0.5f;
+        //rat.addUiElement(element);
     }
 
     public static Stream<GameObject> getGameObjects() {

@@ -37,20 +37,21 @@ public class Rat extends GameObject {
     @Override
     public void tick(float dt) {
         super.tick(dt);
+
         ratMotion(dt);
 
         if (Kitchen.minigame == null && Game.keysPressed.contains(KeyEvent.VK_M)) {
             var w = Kitchen.workstations.stream()
                     .min((w1, w2) -> Double.compare(
-                            w1.getPosition().dist(this.position),
-                            w2.getPosition().dist(this.position)))
+                            w1.getOffsettedPosition().dist(this.position),
+                            w2.getOffsettedPosition().dist(this.position)))
 
                     // there allways will be a workstation
                     .orElse(null);
 
             if (w.getPosition().dist(this.position) < 0.1f) {
                 Kitchen.startMinigame(w);
-                position = w.getPosition().add(w.workingOffset);
+                position = w.getOffsettedPosition();
             }
         }
     }

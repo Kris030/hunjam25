@@ -35,12 +35,13 @@ public class Kitchen {
         background.centered = false;
     }
 
-    public static Workstation findClosestWorkStation(Vec2 position, Ingredient ingredient) {
-        var _ws = workstations.stream()
+    public static Workstation findClosestWorkStation(Vec2 pos, Ingredient ingredient) {
+        return workstations.stream()
                 .filter(ws -> ws.type.equals(ingredient.workstationType))
-                .min((ws1, ws2) -> Double.compare(position.dist(ws1.position), position.dist(ws2.position)))
+                .min((ws1, ws2) -> Double.compare(
+                        pos.dist(ws1.getOffsettedPosition()),
+                        pos.dist(ws2.getOffsettedPosition())))
                 .orElse(null);
-        return _ws;
     }
 
     public static void minigameEnded(float result) {

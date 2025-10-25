@@ -36,7 +36,7 @@ public class Workstation extends GameObject {
         this.position = position;
         this.workingOffset = workingOffset;
 
-        this.animatedSprite = new AnimatedSprite(AssetManager.getAnim(type.name()),0);
+        this.animatedSprite = new AnimatedSprite(AssetManager.getAnim(type.name()), 0);
         this.animatedSprite.scaleWidth();
         if (type == WorkstationType.Trash) {
             setOnFire();
@@ -109,5 +109,9 @@ public class Workstation extends GameObject {
 
         // FIXME
         return null;
+    }
+
+    public Vec2 getOffsettedPosition() {
+        return position.add(workingOffset);
     }
 }

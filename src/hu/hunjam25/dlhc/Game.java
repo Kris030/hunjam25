@@ -1,5 +1,8 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.view.DefaultMinigame;
+import hu.hunjam25.dlhc.view.Minigame;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,7 +10,8 @@ import java.awt.geom.AffineTransform;
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.lang.Math.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class Game {
 
@@ -88,7 +92,7 @@ public class Game {
         Kitchen.wallpaper.render(g);
         g.setTransform(transform);
 
-        g.clipRect(MAP_OFFSET_X * TILE_SIZE, abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,MAP_HEIGHT*TILE_SIZE );
+        g.clipRect(MAP_OFFSET_X * TILE_SIZE, Math.abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,MAP_HEIGHT*TILE_SIZE );
         g.shear(-0.3,0);
         Kitchen.floor.render(g);
         g.setTransform(transform);

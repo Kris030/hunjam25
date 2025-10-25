@@ -23,6 +23,7 @@ public class Main {
 
         AssetManager.init();
         Kitchen.init();
+        Game.init();
 
         frame = new JFrame("Don't let him cook");
 

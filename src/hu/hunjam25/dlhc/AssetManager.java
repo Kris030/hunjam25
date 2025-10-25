@@ -42,6 +42,8 @@ public class AssetManager {
         addClockAnimation();
 
         addRatMeter();
+
+        addChefAnimations();
     }
 
     private static void addRatMeter() throws IOException {
@@ -62,6 +64,10 @@ public class AssetManager {
         for (int i = 1; i <= 6; ++i) {
             img("remi" + i, "art", "programmerArt", "remi", "animalt_remi" + i + ".png");
         }
+    }
+
+    private static void addChefAnimations(){
+
     }
 
     private static void addWorkStationAnimations() throws IOException {

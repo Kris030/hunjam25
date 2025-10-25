@@ -78,6 +78,20 @@ public class AssetManager {
         };
 
         animStorage.put(Workstation.WorkstationType.ChoppingBoard.name(), choppingBoard);
+
+        BufferedImage[] fire = new BufferedImage[]{
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "tuz_1.png").toFile()),
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "tuz_2.png").toFile())
+        };
+
+        animStorage.put("fire", fire);
+
+        BufferedImage[] smoke = new BufferedImage[]{
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "fust_1.png").toFile()),
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "fust_2.png").toFile())
+        };
+
+        animStorage.put("smoke", smoke);
     }
 
     private static void addClockAnimation() throws IOException {

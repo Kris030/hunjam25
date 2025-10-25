@@ -20,7 +20,7 @@ public class Kitchen {
     public static Rat rat;
 
     // TODO:
-    public static GameObject background;
+    public static Sprite background = new Sprite(Game.getImage("tiles"));
 
     // TODO: BFS if the kitchen isn't a square?
     public static Workstation findClosestWorkStation(Ingredient ingredient) {
@@ -34,8 +34,6 @@ public class Kitchen {
     }
 
     public static void init() {
-        background = new GameObject();
-        background.view = new Sprite(Game.getImage("tiles"));
         rat = new Rat();
     }
 }

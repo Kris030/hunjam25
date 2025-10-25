@@ -22,7 +22,7 @@ public class Main {
         frame = new JFrame("Don't let him cook");
 
         frame.setUndecorated(true); // removes title bar & borders
-        frame.setBounds(0, 0, Game.MAP_X * Game.TILE_SIZE, Game.MAP_Y * Game.TILE_SIZE);
+        frame.setBounds(0, 0, Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,7 +58,7 @@ public class Main {
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             // Utils.setRenderingHints(g);
 
-            g.setColor(Color.WHITE); // background color
+            g.setColor(Color.ORANGE); // background color
             g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
             Game.render(g);
 

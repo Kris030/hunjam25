@@ -22,7 +22,13 @@ public class Kitchen {
 
     public static Rat rat;
 
-    public static Sprite background = new Sprite(AssetManager.getImage("new_tiles2"));
+    public static Sprite floor = new Sprite(AssetManager.getImage("new_tiles2"));
+    public static Sprite wallpaper = new Sprite(AssetManager.getImage("wallpaper"));
+    static {
+        wallpaper.centered = false;
+        wallpaper.spriteScale = 0.25f;
+    }
+
 
     public static ArrayList<ParticleEffect> particleEffects = new ArrayList<>();
 
@@ -34,7 +40,7 @@ public class Kitchen {
     public static boolean isOnFire = false;
 
     static {
-        background.centered = false;
+        floor.centered = false;
     }
 
     public static Workstation findClosestWorkStation(Vec2 pos, Ingredient ingredient) {

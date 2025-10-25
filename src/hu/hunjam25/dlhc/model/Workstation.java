@@ -15,24 +15,27 @@ public class Workstation extends GameObject {
         Stove,
 
         ;
+
     }
+    private Sprite sprite;
+    public WorkstationType type = WorkstationType.Stove;
+
+    // relative to GameObject position
+    Point.Float workingOffset;
 
     public Workstation(WorkstationType type, Point.Float position, Point.Float workingOffset) {
         this.type = type;
         this.position = position;
         this.workingOffset = workingOffset;
+
+        this.sprite = new Sprite(Game.getImage(type.name()));
+        sprite.spriteScale = 0.4f;
     }
 
-    public WorkstationType type;
-
-    // relative to GameObject position
-    Point.Float workingOffset;
-
-    private Sprite mark = new Sprite(Game.getImage("mark"));
 
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
-        mark.render(gd);
+        sprite.render(gd);
     }
 }

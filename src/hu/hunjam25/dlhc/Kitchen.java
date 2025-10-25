@@ -47,8 +47,8 @@ public class Kitchen {
 
     public static void init() {
         rat = new Rat();
-        workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Point.Float(0f, 2f), new Point.Float(0f, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(5f, 0f), new Point.Float(-0.5f, 0f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(2f, 5f), new Point.Float(0f, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(7f, 0f), new Point.Float(-0.5f, 0f)));
         chefs.add(new Chef());
 
         var element = new UiElement();

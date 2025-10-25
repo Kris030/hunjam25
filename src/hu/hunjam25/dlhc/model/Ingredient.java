@@ -4,10 +4,10 @@ import hu.hunjam25.dlhc.model.Workstation.WorkstationType;
 
 public enum Ingredient {
 
-    Tomato(WorkstationType.ChoppingBoard, 3),
+    Tomato(WorkstationType.Stove, 3),
     Egg(WorkstationType.Fridge, 2),
-    Beef(WorkstationType.ChoppingBoard, 10),
-    Carrots(WorkstationType.ChoppingBoard, 7),
+    Beef(WorkstationType.Stove, 10),
+    Carrots(WorkstationType.Stove, 7),
     ;
 
     public WorkstationType workstationType;

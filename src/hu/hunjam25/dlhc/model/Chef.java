@@ -22,14 +22,25 @@ public class Chef extends GameObject {
             foodTodo.add(Food.RandomFood());
         }
         startNewFood();
+        //TODO: real stuff here
         UiElement timr = new UiElement();
         timr.visible = true;
         timr.scale = 0.2f;
-        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("clock"), 1);
+        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("clock"), 4);
         timerSprite.frozen = false;
         timerSprite.start();
         timr.setAnimatedSprite(timerSprite);
+        timr.addOffset(0.5f, 0.0f);
         addUiElement(timr);
+        UiElement timer = new UiElement();
+        timer.visible = true;
+        timer.scale = 0.2f;
+        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("clock"), 2);
+        timrSprite.frozen = false;
+        timrSprite.start();
+        timer.setAnimatedSprite(timrSprite);
+        timer.addOffset(-0.5f, 0.0f);
+        addUiElement(timer);
     }
 
     private void startNewFood() {

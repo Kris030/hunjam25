@@ -43,4 +43,9 @@ public class UiElement implements IRenderable{
         this.animatedSprite = animatedSprite;
         animated = true;
     }
+
+    public void addOffset(float x, float y) {
+        offset.x += x;
+        offset.y += y;
+    }
 }

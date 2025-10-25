@@ -2,11 +2,13 @@ package hu.hunjam25.dlhc.model;
 
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
+import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 import static hu.hunjam25.dlhc.Game.keepOnMap;
 import static java.lang.Math.max;
@@ -20,10 +22,24 @@ public class Rat extends GameObject {
     private Sprite dot = new Sprite(Game.getImage("dot"));
     private Sprite ratView = new Sprite(Game.getImage("rat"));
 
+    public static AnimatedSprite remi ;
+
 
     public Rat() {
         positionToCenter();
         ratView.spriteScale = 0.25f;
+
+        BufferedImage[] frames = new BufferedImage[]{
+                Game.getImage("remi1") ,
+                Game.getImage("remi2") ,
+                Game.getImage("remi3") ,
+                Game.getImage("remi4") ,
+                Game.getImage("remi5") ,
+                Game.getImage("remi6")
+        };
+        remi = new AnimatedSprite(frames, 1f);
+        remi.unFreeze();
+        remi.start();
     }
 
     @Override
@@ -72,7 +88,9 @@ public class Rat extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
-        ratView.render(gd);
+        //ratView.render(gd);
         dot.render(gd);
+
+        remi.render(gd);
     }
 }

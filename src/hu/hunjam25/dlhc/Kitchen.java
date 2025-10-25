@@ -1,6 +1,7 @@
 package hu.hunjam25.dlhc;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -9,6 +10,7 @@ import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Rat;
 import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
 public class Kitchen {
@@ -22,6 +24,7 @@ public class Kitchen {
     public static Rat rat;
 
     public static Sprite background = new Sprite(Game.getImage("tiles"));
+
 
     static {
         background.centered = false;

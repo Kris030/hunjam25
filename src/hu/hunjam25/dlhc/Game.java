@@ -60,6 +60,10 @@ public class Game {
         imageStorage.put("dot", ImageIO.read(Path.of("art", "programmerArt","dot.png").toFile()) );
         imageStorage.put("mark", ImageIO.read(Path.of("art","programmerArt","mark.png" ).toFile()));
         imageStorage.put("chef", ImageIO.read(Path.of("art","programmerArt","chef.png").toFile()));
+
+        for (int i = 1; i <= 6; ++i){
+            imageStorage.put("remi" + i,ImageIO.read(Path.of("art","programmerArt","remi", "animalt_remi" + i + ".png").toFile()));
+        }
     }
 
     public static BufferedImage getImage(String name) {
@@ -113,6 +117,8 @@ public class Game {
             g.setTransform(transform);
             o.render(g);
         });
+
+        //Kitchen.remi.render(g);
 
         g.setTransform(transform);
     }

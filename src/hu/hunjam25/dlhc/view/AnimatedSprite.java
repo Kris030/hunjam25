@@ -21,8 +21,9 @@ public class AnimatedSprite implements IRenderable {
 
     public float animStarted;
 
-    public AnimatedSprite(BufferedImage[] images) {
+    public AnimatedSprite(BufferedImage[] images, float animLength) {
         this.images = images;
+        this.animLength = animLength;
     }
 
     float getAge() {

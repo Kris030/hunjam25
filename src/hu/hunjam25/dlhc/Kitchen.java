@@ -51,7 +51,7 @@ public class Kitchen {
     public static void init() {
         rat = new Rat();
         // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Point.Float(2f, 2f),
+            workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Point.Float(2f, 2f),
                 new Point.Float(0.5f, 0f)));
         // trash workstation must be first in Kitchen.workstations!!!
         workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(8f, 2f),

@@ -59,6 +59,7 @@ public class Workstation extends GameObject {
             animatedSprite.setIdx(0);
         }
         animatedSprite.render(gd);
+        renderUiElements(gd);
     }
 
     public boolean hasWorker() {
@@ -69,20 +70,20 @@ public class Workstation extends GameObject {
         UiElement timr = new UiElement();
         timr.visible = true;
         timr.scale = 0.2f;
-        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("fire"), 0.1f);
+        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("fire"), 0.2f);
         timerSprite.frozen = false;
         timerSprite.start();
         timr.setAnimatedSprite(timerSprite);
-        timr.addOffset(0.5f, 0.0f);
+        timr.addOffset(0.0f, 0.0f);
         addUiElement(timr);
         UiElement timer = new UiElement();
         timer.visible = true;
         timer.scale = 0.2f;
-        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("smoke"), 0.2f);
+        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("smoke"), 0.4f);
         timrSprite.frozen = false;
         timrSprite.start();
         timer.setAnimatedSprite(timrSprite);
-        timer.addOffset(-0.5f, 0.0f);
+        timer.addOffset(0.0f, 0.5f);
         addUiElement(timer);
     }
 }

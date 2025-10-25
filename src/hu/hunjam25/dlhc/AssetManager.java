@@ -5,11 +5,6 @@ import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import hu.hunjam25.dlhc.sound.Sound;
-import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -124,15 +119,6 @@ public class AssetManager {
 
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
         soundStorage.put("pipe", SoundBuffer.read(Path.of("art", "metal-pipe.wav")));
-
-        Sound s = new Sound(soundStorage.get("pipe"));
-
-        try {
-            var c = s.play();
-            c.drain();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
     }
 
     public static BufferedImage getImage(String name) {

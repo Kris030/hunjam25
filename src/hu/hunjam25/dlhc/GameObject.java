@@ -49,4 +49,8 @@ public class GameObject implements IRenderable {
     public void clearUiElements() {
         uiElements.clear();
     }
+
+    public float getY(){
+        return position.y();
+    }
 }

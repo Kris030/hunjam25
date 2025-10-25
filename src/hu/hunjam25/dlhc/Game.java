@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -114,7 +115,7 @@ public class Game {
         g.setTransform(transform);
         g.setClip(0, 0, SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE);
 
-        Kitchen.getGameObjects().forEach(o -> {
+        Kitchen.getGameObjects().sorted(Comparator.comparingDouble(GameObject::getY).reversed()).forEach(o -> {
             g.setTransform(transform);
             o.render(g);
         });

@@ -69,6 +69,7 @@ public class AnimatedSprite implements IRenderable {
             idx = (int) (images.length * age / animLength);
         }
 
+        idx %= images.length;
         BufferedImage image = images[idx];
 
         int x = 0, y = 0;

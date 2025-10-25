@@ -65,19 +65,25 @@ public class Kitchen {
             workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2((float)i, 5f),
                     new Vec2(0, -0.5f)));
         }
+
+        for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(1f,(float) i),
+                    new Vec2(0.5f, 0f)));
+        }
+
+        for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(Game.MAP_WIDTH-1,(float) i),
+                    new Vec2(-0.5f, 0f)));
+        }
+
         for (int i = 1; i < Game.MAP_WIDTH; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2((float)i, 1f),
-                    new Vec2(0, -0.5f)));
+            workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2((float)i, 0f),
+                    new Vec2(0, 0.5f)));
         }
 
         chefs.add(new Chef());
         chefs.add(new Chef());
         chefs.add(new Chef());
-
-        //var element = new UiElement();
-        //element.visible = true;
-        //element.scale = 0.5f;
-        //rat.addUiElement(element);
     }
 
     private static void defLaylout() {

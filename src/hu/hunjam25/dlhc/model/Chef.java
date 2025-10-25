@@ -19,6 +19,7 @@ public class Chef extends GameObject {
     private final static float SPEED = 0.005f;
 
     private static int count = 0;
+    private int workingIdx = 0;
 
     public Chef(int foodCount) {
         ++count;
@@ -132,7 +133,8 @@ public class Chef extends GameObject {
                 startTimer(currIngredient);
             }
         } else {
-            animatedSprite.setIdx(0);
+            workingIdx = facing(currWorkstation.workingOffset.mul(-1f) );
+            animatedSprite.setIdx(workingIdx);
             // work at workstation
             if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds
                     || (!Kitchen.isOnFire && todo[currIngredient] == Ingredient.TrashFire)) {

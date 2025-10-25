@@ -1,7 +1,6 @@
 package hu.hunjam25.dlhc.model;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.*;
 
 import hu.hunjam25.dlhc.AssetManager;
@@ -19,7 +18,11 @@ public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
     private final static float SPEED = 0.005f;
 
+    private static int count = 0;
+
     public Chef(int foodCount) {
+        ++count;
+        animatedSprite =  new AnimatedSprite(AssetManager.getAnim("chef" + count), 0.5f);
         positionToCenter();
         foodTodo = new java.util.ArrayDeque<>();
         for (int i = 0; i < foodCount; i++) {
@@ -31,6 +34,10 @@ public class Chef extends GameObject {
         animatedSprite.setScale(0.375f);
 
         //TODO: real stuff here
+        addClockAndRatMeter();
+    }
+
+    private void addClockAndRatMeter() {
         UiElement timr = new UiElement();
         timr.visible = true;
         timr.scale = 0.2f;
@@ -188,7 +195,7 @@ public class Chef extends GameObject {
         results[currIngredient] += result;
     }
 
-    private AnimatedSprite animatedSprite =  new AnimatedSprite(AssetManager.getAnim("chef1"), 0.5f);
+    private AnimatedSprite animatedSprite;
     private  boolean confused = false;
 
     @Override

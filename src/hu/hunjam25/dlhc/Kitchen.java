@@ -59,6 +59,8 @@ public class Kitchen {
         workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Vec2(5f, 3f),
                 new Vec2(-0.5f, 0f)));
         chefs.add(new Chef());
+        chefs.add(new Chef());
+        chefs.add(new Chef());
 
         var element = new UiElement();
         element.visible = true;

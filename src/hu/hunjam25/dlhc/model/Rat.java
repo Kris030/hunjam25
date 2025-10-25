@@ -14,6 +14,8 @@ import static java.lang.Math.min;
 public class Rat extends GameObject {
     static float SPEED = 0.005f;
 
+    static Point2D.Float velocity = new Point2D.Float(0f, 0f);
+
     private final float width = 1.5f;
     private final float height = 1f;
 
@@ -38,7 +40,7 @@ public class Rat extends GameObject {
     private void ratMotion(float dt) {
         var keys = Game.keysPressed;
 
-        Point2D.Float velocity = new Point2D.Float(0f, 0f);
+        velocity = new Point2D.Float(0f, 0f);
 
         if (keys.contains(KeyEvent.VK_UP)) {
             velocity.y += 1;
@@ -73,6 +75,7 @@ public class Rat extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         var pos = new Point2D.Float(position.x, position.y);
+        if (ratView.mirrored) {pos.x -= 1.25f;}
         var screen = Game.gameToScreen(pos);
         gd.translate(screen.x,screen.y);
 

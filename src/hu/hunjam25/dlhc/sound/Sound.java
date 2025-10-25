@@ -17,17 +17,9 @@ public class Sound {
 
     public Clip play() throws LineUnavailableException {
         Clip clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, buffer.format()));
+
         clip.open(buffer.format(), buffer.audioData(), 0, buffer.audioData().length);
-
-        clip.addLineListener(new LineListener() {
-            @Override
-            public void update(LineEvent event) {
-                System.out.println(event.getType());
-            }
-        });
-
         clip.start();
-        clip.drain();
 
         return clip;
     }

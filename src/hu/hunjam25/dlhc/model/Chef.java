@@ -22,7 +22,7 @@ public class Chef extends GameObject {
 
     public Chef(int foodCount) {
         ++count;
-        animatedSprite =  new AnimatedSprite(AssetManager.getAnim("chef" + count), 0.5f);
+        animatedSprite = new AnimatedSprite(AssetManager.getAnim("chef" + count), 0.5f);
         positionToCenter();
         foodTodo = new java.util.ArrayDeque<>();
         for (int i = 0; i < foodCount; i++) {
@@ -33,7 +33,7 @@ public class Chef extends GameObject {
         animatedSprite.frozen = true;
         animatedSprite.setScale(0.375f);
 
-        //TODO: real stuff here
+        // TODO: real stuff here
         addClockAndRatMeter();
     }
 
@@ -120,13 +120,15 @@ public class Chef extends GameObject {
         } else {
             animatedSprite.setIdx(0);
             // work at workstation
-            if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds) {
+            if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds
+                    || (!Kitchen.isOnFire && todo[currIngredient] == Ingredient.TrashFire)) {
                 currWorkstation.workers--;
                 currWorkstation = null;
 
-                if (tempIfOnFire == null) {
+                if (!Kitchen.isOnFire) {
                     currIngredient++;
                 } else {
+                    Kitchen.isOnFire = false;
                     fixTempIngredient();
                 }
 
@@ -159,7 +161,7 @@ public class Chef extends GameObject {
         Vec2 velocity = pathFindingTargetPosition.sub(position);
 
         float length = velocity.length();
-        if (length == 0){
+        if (length == 0) {
             animatedSprite.setIdx(0);
             return true;
         }
@@ -169,9 +171,12 @@ public class Chef extends GameObject {
         position = position.add(velocity.mul(SPEED * dt));
 
         int spriteIdx = facing(velocity);
-        if (confused) spriteIdx = spriteIdx + 3;
-        if (velocity.x() < 0) animatedSprite.mirrored = true;
-        else animatedSprite.mirrored = false;
+        if (confused)
+            spriteIdx = spriteIdx + 3;
+        if (velocity.x() < 0)
+            animatedSprite.mirrored = true;
+        else
+            animatedSprite.mirrored = false;
         animatedSprite.setIdx(spriteIdx);
 
         return length <= 0.1f;
@@ -196,7 +201,7 @@ public class Chef extends GameObject {
     }
 
     private AnimatedSprite animatedSprite;
-    private  boolean confused = false;
+    private boolean confused = false;
 
     @Override
     public void render(Graphics2D gd) {
@@ -205,15 +210,23 @@ public class Chef extends GameObject {
         renderUiElements(gd);
     }
 
-    private static int facing(Vec2 vel) { //fentről óramutatóval 4 forgási fázis indexe
-        if (vel.x() == 0.0f && vel.y() == 0.0f) {return 0;}
-        if (vel.y() > 0.0f && abs(vel.y()) > abs(vel.x())) {return 0;} //felfele gyorsabb -> 0. index
-        if (vel.y() < 0.0f && abs(vel.y()) > abs(vel.x())) {return 2;} //lefele gyorsbb -> 2. index
-        //if (vel.x > 0f && abs(vel.y) < abs(vel.x)) {return 1;} //jobbra gyorsabb -> 1. index
-        return 1; //egyébként 3. index
+    private static int facing(Vec2 vel) { // fentről óramutatóval 4 forgási fázis indexe
+        if (vel.x() == 0.0f && vel.y() == 0.0f) {
+            return 0;
+        }
+        if (vel.y() > 0.0f && abs(vel.y()) > abs(vel.x())) {
+            return 0;
+        } // felfele gyorsabb -> 0. index
+        if (vel.y() < 0.0f && abs(vel.y()) > abs(vel.x())) {
+            return 2;
+        } // lefele gyorsbb -> 2. index
+          // if (vel.x > 0f && abs(vel.y) < abs(vel.x)) {return 1;} //jobbra gyorsabb ->
+          // 1. index
+        return 1; // egyébként 3. index
     }
 
     public void addHazard(Workstation trash, Ingredient fire) {
+        currWorkstation.workers--;
         currWorkstation = null;
         pathFindingTargetPosition = null;
         pathFindingTo = trash;

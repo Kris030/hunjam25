@@ -21,7 +21,6 @@ public class Kitchen {
 
     public static Rat rat;
 
-    // TODO:
     public static Sprite background = new Sprite(Game.getImage("tiles"));
 
     // TODO: BFS if the kitchen isn't a square?

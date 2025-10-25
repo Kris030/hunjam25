@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc.model;
 
+import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.view.Sprite;
 

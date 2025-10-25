@@ -9,11 +9,8 @@ import hu.hunjam25.dlhc.view.Sprite;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 import static hu.hunjam25.dlhc.Game.keepOnMap;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class Rat extends GameObject {
     static float SPEED = 0.005f;
@@ -48,19 +45,19 @@ public class Rat extends GameObject {
 
         velocity = new Point2D.Float(0f, 0f);
 
-        if (keys.contains(KeyEvent.VK_UP)) {
+        if (keys.contains(KeyEvent.VK_UP) || keys.contains(KeyEvent.VK_W)) {
             velocity.y += 1;
         }
 
-        if (keys.contains(KeyEvent.VK_DOWN)) {
+        if (keys.contains(KeyEvent.VK_DOWN) || keys.contains(KeyEvent.VK_S)) {
             velocity.y -= 1;
         }
 
-        if (keys.contains(KeyEvent.VK_LEFT)) {
+        if (keys.contains(KeyEvent.VK_LEFT) || keys.contains(KeyEvent.VK_A)) {
             velocity.x -= 1;
         }
 
-        if (keys.contains(KeyEvent.VK_RIGHT)) {
+        if (keys.contains(KeyEvent.VK_RIGHT) || keys.contains(KeyEvent.VK_D)) {
             velocity.x += 1;
         }
 

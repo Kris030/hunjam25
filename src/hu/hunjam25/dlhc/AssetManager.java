@@ -5,11 +5,6 @@ import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import hu.hunjam25.dlhc.sound.Sound;
-import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -83,6 +78,20 @@ public class AssetManager {
         };
 
         animStorage.put(Workstation.WorkstationType.ChoppingBoard.name(), choppingBoard);
+
+        BufferedImage[] fire = new BufferedImage[]{
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "tuz_1.png").toFile()),
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "tuz_2.png").toFile())
+        };
+
+        animStorage.put("fire", fire);
+
+        BufferedImage[] smoke = new BufferedImage[]{
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "fust_1.png").toFile()),
+                ImageIO.read(Path.of("art", "organized", "ego_kuka", "fust_2.png").toFile())
+        };
+
+        animStorage.put("smoke", smoke);
     }
 
     private static void addClockAnimation() throws IOException {
@@ -124,15 +133,6 @@ public class AssetManager {
 
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
         soundStorage.put("pipe", SoundBuffer.read(Path.of("art", "metal-pipe.wav")));
-
-        Sound s = new Sound(soundStorage.get("pipe"));
-
-        try {
-            var c = s.play();
-            c.drain();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
     }
 
     public static BufferedImage getImage(String name) {

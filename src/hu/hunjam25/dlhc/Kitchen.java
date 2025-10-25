@@ -72,7 +72,7 @@ public class Kitchen {
 
         s = Stream.concat(s, Stream.of(rat));
 
-        s = Stream.concat(s, particleEffectKillList.stream());
+        s = Stream.concat(s, particleEffects.stream());
 
         if (minigame != null) {
             s = Stream.concat(s, Stream.of(minigame));

@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,24 +22,23 @@ public class Game {
     public static final int MAP_WIDTH = 14;
     public static final int MAP_HEIGHT = 7;
 
-    public static final Point2D.Float CENTER = new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
-            Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
+    public static final Vec2 CENTER = new Vec2(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
+                    Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
 
     public static final int TILE_SIZE = 120;
 
-    public static void keepOnMap(Point2D.Float position) {
-        position.x = max(Game.MAP_OFFSET_X, position.x);
-        position.x = min(Game.MAP_WIDTH + Game.MAP_OFFSET_X, position.x);
-        position.y = max(Game.MAP_OFFSET_Y, position.y);
-        position.y = min(Game.MAP_HEIGHT + Game.MAP_OFFSET_Y, position.y);
+    public static void keepOnMap(Vec2 position) {
+        position = new Vec2(
+                min(Game.MAP_WIDTH + Game.MAP_OFFSET_X, max(Game.MAP_OFFSET_X, position.x())),
+                min(Game.MAP_HEIGHT + Game.MAP_OFFSET_Y, max(Game.MAP_OFFSET_Y, position.y())));
     }
 
-    public static Point2D.Float gameToScreen(Point2D.Float game) {
-        return new Point2D.Float(game.x * TILE_SIZE, (MAP_HEIGHT - game.y) * TILE_SIZE);
+    public static Vec2 gameToScreen(Vec2 game) {
+        return new Vec2(game.x() * TILE_SIZE, (MAP_HEIGHT - game.y()) * TILE_SIZE);
     }
 
-    public static Point2D.Float screenToGame(Point2D.Float screen) {
-        return new Point2D.Float(screen.x / TILE_SIZE, (MAP_HEIGHT * TILE_SIZE - screen.y) / TILE_SIZE);
+    public static Vec2 screenToGame(Vec2 screen) {
+        return new Vec2(screen.x() / TILE_SIZE, (MAP_HEIGHT * TILE_SIZE - screen.y()) / TILE_SIZE);
     }
 
     // null if not in fullscreen

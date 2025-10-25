@@ -32,7 +32,6 @@ public class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));
-        // f.setLayout(new FlowLayout());
         frame.setLocationRelativeTo(null);
 
         Canvas c = new Canvas();
@@ -62,7 +61,7 @@ public class Main {
             Game.tick((float) wait);
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-            // Utils.setRenderingHints(g);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             g.setColor(Color.ORANGE); // background color
             g.fillRect(0, 0, frame.getWidth(), frame.getHeight());

@@ -1,6 +1,5 @@
 package hu.hunjam25.dlhc;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -36,10 +35,10 @@ public class Kitchen {
         background.centered = false;
     }
 
-    public static Workstation findClosestWorkStation(Point.Float position, Ingredient ingredient) {
+    public static Workstation findClosestWorkStation(Vec2 position, Ingredient ingredient) {
         var _ws = workstations.stream()
                 .filter(ws -> ws.type.equals(ingredient.workstationType))
-                .min((ws1, ws2) -> Double.compare(position.distance(ws1.position), position.distance(ws2.position)))
+                .min((ws1, ws2) -> Double.compare(position.dist(ws1.position), position.dist(ws2.position)))
                 .orElse(null);
         return _ws;
     }
@@ -52,13 +51,13 @@ public class Kitchen {
     public static void init() {
         rat = new Rat();
         // trash workstation must be first in Kitchen.workstations!!!
-            workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Point.Float(2f, 2f),
-                new Point.Float(0.5f, 0f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 2f),
+                new Vec2(0.5f, 0f)));
         // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(8f, 2f),
-                new Point.Float(0f, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(5f, 3f),
-                new Point.Float(-0.5f, 0f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(8f, 2f),
+                new Vec2(0f, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Vec2(5f, 3f),
+                new Vec2(-0.5f, 0f)));
         chefs.add(new Chef());
 
         var element = new UiElement();
@@ -96,5 +95,9 @@ public class Kitchen {
         rating -= deduction;
         // keep rating between 0 and 1
         rating = Math.clamp(rating, 0.0f, 1.0f);
+    }
+
+    public static void startMinigame(Workstation w) {
+        minigame = w.getMinigame();
     }
 }

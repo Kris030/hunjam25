@@ -89,7 +89,7 @@ public class Rat extends GameObject {
 
         position = position.add(velocity.mul(SPEED * dt));
 
-        keepOnMap(position);
+        position = keepOnMap(position);
     }
 
     @Override

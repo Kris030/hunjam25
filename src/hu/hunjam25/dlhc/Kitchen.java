@@ -26,7 +26,7 @@ public class Kitchen {
     public static Sprite wallpaper = new Sprite(AssetManager.getImage("wallpaper"));
     static {
         wallpaper.centered = false;
-        wallpaper.spriteScale = 0.25f;
+        wallpaper.spriteScale = 1.35f;
     }
 
 

@@ -84,9 +84,9 @@ public class Game {
         AffineTransform transform = g.getTransform();
 
 
+        //g.translate(1f * Game.TILE_SIZE, 0f);
         Kitchen.wallpaper.render(g);
         g.setTransform(transform);
-        //g.translate(-SCREEN_WIDTH/2f, -SCREEN_HEIGHT/2f);
 
         g.clipRect(MAP_OFFSET_X * TILE_SIZE, abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,MAP_HEIGHT*TILE_SIZE );
         Kitchen.floor.render(g);

@@ -149,7 +149,7 @@ public class AssetManager {
         imageStorage.put("tiles", ImageIO.read(Path.of("art", "programmerArt", "tiles.png").toFile()));
         imageStorage.put("new_tiles", ImageIO.read(Path.of("art", "programmerArt", "new_tiles.png").toFile()));
         imageStorage.put("new_tiles2", ImageIO.read(Path.of("art", "programmerArt", "new_tiles2.png").toFile()));
-        imageStorage.put("wallpaper", ImageIO.read(Path.of("art", "wallpaper.jpeg").toFile()));
+        imageStorage.put("wallpaper", ImageIO.read(Path.of("art", "organized","wallpaper_smudge.jpeg").toFile()));
         imageStorage.put("dot", ImageIO.read(Path.of("art", "programmerArt", "dot.png").toFile()));
         imageStorage.put("mark", ImageIO.read(Path.of("art", "programmerArt", "mark.png").toFile()));
         imageStorage.put("chef", ImageIO.read(Path.of("art", "programmerArt", "chef.png").toFile()));

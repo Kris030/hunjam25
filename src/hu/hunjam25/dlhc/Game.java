@@ -64,6 +64,23 @@ public class Game {
         for (int i = 1; i <= 6; ++i){
             imageStorage.put("remi" + i,ImageIO.read(Path.of("art","programmerArt","remi", "animalt_remi" + i + ".png").toFile()));
         }
+        /*
+        imageStorage.put("stove_front", ImageIO.read(Path.of("art","organized", "stove", "stove_front_on.png").toFile()));
+        imageStorage.put("sink_front_on", ImageIO.read(Path.of("art","organized", "sink", "sink_front_on.png").toFile()));
+        imageStorage.put("sink_front_off", ImageIO.read(Path.of("art","organized", "sink", "sink_front_off.png").toFile()));
+        imageStorage.put("counter_front", ImageIO.read(Path.of("art","organized", "counter", "counter_front.png").toFile()));
+        imageStorage.put("sink_back_off", ImageIO.read(Path.of("art","organized", "sink", "sink_behind_off.png").toFile()));
+        imageStorage.put("sink_back_on", ImageIO.read(Path.of("art","organized", "sink", "sink_behind_on.png").toFile()));
+        imageStorage.put("stove_back_off", ImageIO.read(Path.of("art","organized", "stove", "stove_behind_off.png").toFile()));
+        imageStorage.put("stove_back_on", ImageIO.read(Path.of("art","organized", "stove", "stove_behind_on.png").toFile()));
+        imageStorage.put("counter_back", ImageIO.read(Path.of("art","organized", "counter", "counter_behind.png").toFile()));
+        imageStorage.put("fridge_closed", ImageIO.read(Path.of("art","organized", "fridge", "fridge_closed.png").toFile()));
+        imageStorage.put("fridge_open", ImageIO.read(Path.of("art","organized", "fridge", "fridge_open.png").toFile()));
+        */
+        imageStorage.put("Stove", ImageIO.read(Path.of("art","organized", "stove", "stove_front_on.png").toFile()));
+        imageStorage.put("Sink", ImageIO.read(Path.of("art","organized", "sink", "sink_front_off.png").toFile()));
+        imageStorage.put("Counter", ImageIO.read(Path.of("art","organized", "counter", "counter_front.png").toFile()));
+        imageStorage.put("Fridge", ImageIO.read(Path.of("art","organized", "fridge", "fridge_closed.png").toFile()));
     }
 
     public static BufferedImage getImage(String name) {

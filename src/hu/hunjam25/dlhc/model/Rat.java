@@ -30,15 +30,7 @@ public class Rat extends GameObject {
         positionToCenter();
         //ratView.spriteScale = 0.25f;
 
-        BufferedImage[] frames = new BufferedImage[]{
-                AssetManager.getImage("remi1") ,
-                AssetManager.getImage("remi2") ,
-                AssetManager.getImage("remi3") ,
-                AssetManager.getImage("remi4") ,
-                AssetManager.getImage("remi5") ,
-                AssetManager.getImage("remi6")
-        };
-        remi = new AnimatedSprite(frames, 1f);
+        remi = new AnimatedSprite(AssetManager.getAnim("remi"), 2.5f);
         remi.spriteScale = 0.25f;
 
         remi.unFreeze();

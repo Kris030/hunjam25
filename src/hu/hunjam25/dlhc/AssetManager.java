@@ -10,9 +10,12 @@ public class AssetManager {
 
     private static HashMap<String, BufferedImage> imageStorage;
 
+    private static HashMap<String, BufferedImage[]> animStorage;
+
     static void init() throws IOException {
         // TODO: better
         imageStorage = new HashMap<>();
+        animStorage = new HashMap<>();
         addProgramerArt();
 
         addProgrammerRemy();
@@ -20,6 +23,8 @@ public class AssetManager {
         //addAllWorkSations();
 
         addWorkStations();
+
+        addRemiAnim();
     }
 
     private static void addProgrammerRemy() throws IOException {
@@ -57,7 +62,23 @@ public class AssetManager {
         imageStorage.put("chef", ImageIO.read(Path.of("art","programmerArt","chef.png").toFile()));
     }
 
+    private static void addRemiAnim() throws IOException {
+        BufferedImage[] remiAnim = new BufferedImage[69];
+        for (int i = 0; i < 69; ++i) {
+            String num =  Integer.toString(i);
+            if (num.length() == 1) {
+                num = "0" + num;
+            }
+            remiAnim[i] = ImageIO.read(Path.of("art", "organized", "remi", "gonosz_remi2_000" + num + ".png").toFile());
+        }
+        animStorage.put("remi", remiAnim);
+    }
+
     public static BufferedImage getImage(String name) {
         return imageStorage.get(name);
+    }
+
+    public static BufferedImage[] getAnim(String name) {
+        return animStorage.get(name);
     }
 }

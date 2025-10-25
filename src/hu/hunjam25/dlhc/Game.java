@@ -57,11 +57,11 @@ public class Game {
     static void init() throws IOException {
         // TODO: better
         imageStorage = new HashMap<>();
-        imageStorage.put("rat", ImageIO.read(Path.of("art", "rat.png").toFile()));
-        imageStorage.put("tiles", ImageIO.read(Path.of("art", "tiles.png").toFile()));
-        imageStorage.put("dot", ImageIO.read(Path.of("art", "dot.png").toFile()) );
-        imageStorage.put("mark", ImageIO.read(Path.of("art","mark.png" ).toFile()));
-        imageStorage.put("chef", ImageIO.read(Path.of("art","chef.png").toFile()));
+        imageStorage.put("rat", ImageIO.read(Path.of("art","programmerArt", "rat.png").toFile()));
+        imageStorage.put("tiles", ImageIO.read(Path.of("art","programmerArt", "tiles.png").toFile()));
+        imageStorage.put("dot", ImageIO.read(Path.of("art", "programmerArt","dot.png").toFile()) );
+        imageStorage.put("mark", ImageIO.read(Path.of("art","programmerArt","mark.png" ).toFile()));
+        imageStorage.put("chef", ImageIO.read(Path.of("art","programmerArt","chef.png").toFile()));
     }
 
     public static BufferedImage getImage(String name) {

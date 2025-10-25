@@ -9,25 +9,16 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 
 import static hu.hunjam25.dlhc.Game.keepOnMap;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class Rat extends GameObject {
     static float SPEED = 0.005f;
 
     static Point2D.Float velocity = new Point2D.Float(0f, 0f);
 
-    private final float width = 1.5f;
-    private final float height = 1f;
-
     private Sprite dot = new Sprite(Game.getImage("dot"));
     private Sprite ratView = new Sprite(Game.getImage("rat"));
 
-
     public Rat() {
-        dot.centered = true;
-        ratView.centered = true;
-
         position.x = Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f;
         position.y = Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f;
     }
@@ -46,20 +37,25 @@ public class Rat extends GameObject {
         if (keys.contains(KeyEvent.VK_UP)) {
             velocity.y += 1;
         }
+
         if (keys.contains(KeyEvent.VK_DOWN)) {
             velocity.y -= 1;
         }
+
         if (keys.contains(KeyEvent.VK_LEFT)) {
             velocity.x -= 1;
         }
+
         if (keys.contains(KeyEvent.VK_RIGHT)) {
             velocity.x += 1;
         }
+
         if (velocity.x != 0f && velocity.y != 0f) {
             var length = velocity.distance(0, 0);
             velocity.x /= length;
             velocity.y /= length;
         }
+
         if (velocity.x != 0f) {
             ratView.mirrored = velocity.x > 0f;
         }
@@ -74,8 +70,7 @@ public class Rat extends GameObject {
     public void render(Graphics2D gd) {
         var pos = new Point2D.Float(position.x, position.y);
         var screen = Game.gameToScreen(pos);
-        gd.translate(screen.x,screen.y);
-
+        gd.translate(screen.x, screen.y);
 
         ratView.render(gd);
         dot.render(gd);

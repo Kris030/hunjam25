@@ -11,8 +11,12 @@ public class Sprite implements IRenderable {
 
     public boolean mirrored = false;
 
-    void mirror(Graphics2D gd){
-        gd.scale(-1f,1f);
+    static void mirrorX(Graphics2D gd) {
+        gd.scale(-1f, 1f);
+    }
+
+    static void center(Graphics2D gd, int width, int height) {
+        gd.translate(-width * 0.5f, -height * 0.5f);
     }
 
     public Sprite(BufferedImage image) {
@@ -23,16 +27,14 @@ public class Sprite implements IRenderable {
     // (dt vagy tárolja a jelenlegit és inkrementál)
     @Override
     public void render(Graphics2D gd) {
-        int x = 0;
-        int y = 0;
-        if(centered){
-            x = (int) -(image.getWidth()/2f);
-            y = (int) -(image.getHeight()/2f);
-        }
-        if(mirrored){
-            mirror(gd);
+        if (centered) {
+            center(gd, image.getWidth(), image.getHeight());
         }
 
-        gd.drawImage(image, x,y, null);
+        if (mirrored) {
+            mirrorX(gd);
+        }
+
+        gd.drawImage(image, 0, 0, null);
     }
 }

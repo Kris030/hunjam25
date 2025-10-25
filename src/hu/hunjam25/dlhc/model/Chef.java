@@ -1,11 +1,13 @@
 package hu.hunjam25.dlhc.model;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Kitchen;
+import hu.hunjam25.dlhc.view.Sprite;
 
 public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
@@ -88,5 +90,15 @@ public class Chef extends GameObject {
 
     public void pushResult(float result) {
         results.add(result);
+    }
+
+
+    private Sprite sprite = new Sprite(Game.getImage("chef"));
+
+    @Override
+    public void render(Graphics2D gd) {
+        super.render(gd);
+        sprite.render(gd);
+        //System.out.println("chef drawn");
     }
 }

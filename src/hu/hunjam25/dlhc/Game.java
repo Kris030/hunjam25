@@ -61,6 +61,7 @@ public class Game {
         imageStorage.put("tiles", ImageIO.read(Path.of("art", "tiles.png").toFile()));
         imageStorage.put("dot", ImageIO.read(Path.of("art", "dot.png").toFile()) );
         imageStorage.put("mark", ImageIO.read(Path.of("art","mark.png" ).toFile()));
+        imageStorage.put("chef", ImageIO.read(Path.of("art","chef.png").toFile()));
     }
 
     public static BufferedImage getImage(String name) {

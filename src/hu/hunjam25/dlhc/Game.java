@@ -14,9 +14,6 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import hu.hunjam25.dlhc.model.Chef;
-import hu.hunjam25.dlhc.model.Workstation;
-
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -43,12 +40,12 @@ public class Game {
 
     private static HashMap<String, BufferedImage> imageStorage;
 
-    public static Point2D.Float gameToScreen(Point2D.Float game){
-        return new Point2D.Float(game.x * TILE_SIZE, (MAP_HEIGHT -game.y) * TILE_SIZE);
+    public static Point2D.Float gameToScreen(Point2D.Float game) {
+        return new Point2D.Float(game.x * TILE_SIZE, (MAP_HEIGHT - game.y) * TILE_SIZE);
     }
 
-    public static Point2D.Float screenToGame(Point2D.Float screen){
-        return new Point2D.Float(screen.x / TILE_SIZE, (MAP_HEIGHT * TILE_SIZE -screen.y) / TILE_SIZE);
+    public static Point2D.Float screenToGame(Point2D.Float screen) {
+        return new Point2D.Float(screen.x / TILE_SIZE, (MAP_HEIGHT * TILE_SIZE - screen.y) / TILE_SIZE);
     }
 
     static void init() throws IOException {
@@ -56,7 +53,7 @@ public class Game {
         imageStorage = new HashMap<>();
         imageStorage.put("rat", ImageIO.read(Path.of("art", "rat.png").toFile()));
         imageStorage.put("tiles", ImageIO.read(Path.of("art", "tiles.png").toFile()));
-        imageStorage.put("dot", ImageIO.read(Path.of("art", "dot.png").toFile()) );
+        imageStorage.put("dot", ImageIO.read(Path.of("art", "dot.png").toFile()));
     }
 
     public static BufferedImage getImage(String name) {
@@ -67,6 +64,7 @@ public class Game {
     private static Rectangle lastBounds;
 
     public static void toggleFullscreen() {
+        // FIXME
         if (lastBounds == null) {
             lastBounds = Main.frame.getBounds();
 
@@ -96,43 +94,17 @@ public class Game {
             toggleFullscreen();
         }
 
-        for (Workstation w : Kitchen.workstations) {
-            w.tick(dt);
-        }
-
-        Kitchen.rat.tick(dt);
-
-        for (Chef c : Kitchen.chefs) {
-            c.tick(dt);
-        }
-
-        if (Kitchen.minigame != null) {
-            Kitchen.minigame.tick(dt);
-        }
+        Kitchen.getGameObjects().forEach(o -> o.tick(dt));
     }
 
     static void render(Graphics2D g) {
         AffineTransform transform = g.getTransform();
         Kitchen.background.render(g);
 
-        for (Workstation w : Kitchen.workstations) {
+        Kitchen.getGameObjects().forEach(o -> {
             g.setTransform(transform);
-            w.render(g);
-        }
-
-        g.setTransform(transform);
-        Kitchen.rat.render(g);
-
-        for (Chef c : Kitchen.chefs) {
-            g.setTransform(transform);
-            c.render(g);
-        }
-
-        if (Kitchen.minigame != null) {
-            g.setTransform(transform);
-            // TODO: render frame, translate, clip, etc
-            Kitchen.minigame.render(g);
-        }
+            o.render(g);
+        });
     }
 
     static KeyListener listener = new KeyListener() {

@@ -1,6 +1,7 @@
 package hu.hunjam25.dlhc;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.model.Chef;
@@ -35,5 +36,12 @@ public class Kitchen {
 
     public static void init() {
         rat = new Rat();
+    }
+
+    public static Stream<GameObject> getGameObjects() {
+        // render order
+        return Stream.concat(
+                Stream.concat(workstations.stream(), chefs.stream()),
+                minigame == null ? Stream.of(rat) : Stream.of(rat, minigame));
     }
 }

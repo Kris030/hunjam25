@@ -173,6 +173,10 @@ public class AssetManager {
     }
 
     public static BufferedImage[] getAnim(String name) {
-        return animStorage.getOrDefault(name, new BufferedImage[]{imageStorage.get("no_texture")});
+        return animStorage.getOrDefault(name, new BufferedImage[]{
+                imageStorage.get("no_texture"),
+                imageStorage.get("no_texture"),
+                imageStorage.get("no_texture")
+        });
     }
 }

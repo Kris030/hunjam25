@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ public class Main {
 
     static JFrame frame;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
         // force enable hardware acceleration
         System.setProperty("sun.java2d.opengl", "true");
 

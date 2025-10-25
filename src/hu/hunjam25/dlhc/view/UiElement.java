@@ -1,7 +1,6 @@
 package hu.hunjam25.dlhc.view;
 
 import hu.hunjam25.dlhc.AssetManager;
-import hu.hunjam25.dlhc.Game;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

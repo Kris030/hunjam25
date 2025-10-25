@@ -9,11 +9,8 @@ import hu.hunjam25.dlhc.view.Sprite;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 import static hu.hunjam25.dlhc.Game.keepOnMap;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class Rat extends GameObject {
     static float SPEED = 0.005f;

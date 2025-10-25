@@ -12,6 +12,7 @@ import hu.hunjam25.dlhc.model.Rat;
 import hu.hunjam25.dlhc.model.Workstation;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
+import hu.hunjam25.dlhc.view.UiElement;
 
 public class Kitchen {
 
@@ -49,6 +50,11 @@ public class Kitchen {
         workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Point.Float(0f, 2f), new Point.Float(0f, -0.5f)));
         workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(5f, 0f), new Point.Float(-0.5f, 0f)));
         chefs.add(new Chef());
+
+        var element = new UiElement();
+        element.visible = true;
+        element.scale = 0.5f;
+        rat.addUiElement(element);
     }
 
     public static Stream<GameObject> getGameObjects() {

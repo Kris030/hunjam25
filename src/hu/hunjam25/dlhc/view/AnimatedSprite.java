@@ -66,5 +66,8 @@ public class AnimatedSprite implements IRenderable {
         gd.scale(spriteScale, spriteScale);
 
         gd.drawImage(image, x, y, null);
+
+
+        gd.scale(1/spriteScale,1/ spriteScale);
     }
 }

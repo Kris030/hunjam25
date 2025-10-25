@@ -20,14 +20,14 @@ import static java.lang.Math.min;
 public class Game {
 
     public static final int SCREEN_WIDTH = 10;
-    public static final int SCREEN_HEIGHT = 7;
+    public static final int SCREEN_HEIGHT = 8;
 
     public static final int MAP_OFFSET_X = 1;
     public static final int MAP_OFFSET_Y = -1;
 
     // in tiles
     public static final int MAP_WIDTH = 8;
-    public static final int MAP_HEIGHT = 5;
+    public static final int MAP_HEIGHT = 6;
 
     public static final Point2D.Float CENTER =
             new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,

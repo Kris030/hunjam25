@@ -1,6 +1,7 @@
 package hu.hunjam25.dlhc.model;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.*;
 
 import hu.hunjam25.dlhc.AssetManager;
@@ -10,6 +11,8 @@ import hu.hunjam25.dlhc.Kitchen;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 import hu.hunjam25.dlhc.view.UiElement;
+
+import static java.lang.Math.abs;
 
 public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
@@ -174,13 +177,21 @@ public class Chef extends GameObject {
         results[currIngredient] += result;
     }
 
-    private Sprite sprite = new Sprite(AssetManager.getImage("chef"));
+    private AnimatedSprite animatedSprite =  new AnimatedSprite(AssetManager.getAnim("chef"), 0.5f);
+    private  boolean shocked = false;
 
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
-        sprite.render(gd);
+        animatedSprite.render(gd);
         renderUiElements(gd);
+    }
+
+    private static int facing(Point2D.Float vel) { //fentről óramutatóval 4 forgási fázis indexe
+        if (vel.y > 0.0f && abs(vel.y) > abs(vel.x)) {return 0;} //felfele gyorsabb -> 0. index
+        if (vel.y < 0.0f && abs(vel.y) > abs(vel.x)) {return 2;} //lefele gyorsbb -> 2. index
+        //if (vel.x > 0f && abs(vel.y) < abs(vel.x)) {return 1;} //jobbra gyorsabb -> 1. index
+        return 1; //egyébként 3. index
     }
 
     public void addHazard(Workstation trash, Ingredient fire) {

@@ -50,14 +50,17 @@ public class AnimatedSprite implements IRenderable {
         int idx = (int) (images.length * age / animLength);
         BufferedImage image = images[idx];
 
+        int x = 0, y = 0;
+
         if (centered) {
-            Sprite.center(gd, image.getWidth(), image.getHeight());
+            x = -(int) (image.getWidth() * 0.5f);
+            y = -(int) (image.getHeight() * 0.5f);
         }
 
         if (mirrored) {
             Sprite.mirrorX(gd);
         }
 
-        gd.drawImage(image, 0, 0, null);
+        gd.drawImage(image, x, y, null);
     }
 }

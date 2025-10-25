@@ -17,7 +17,7 @@ public class GameObject implements IRenderable {
 
     }
 
-    public void positionToCenter(){
+    public void positionToCenter() {
         position = (Point.Float) Game.CENTER.clone();
     }
 
@@ -33,6 +33,6 @@ public class GameObject implements IRenderable {
     public void render(Graphics2D gd) {
         var pos = new Point2D.Float(position.x, position.y);
         var screen = Game.gameToScreen(pos);
-        gd.translate(screen.x,screen.y);
+        gd.translate(screen.x, screen.y);
     }
 }

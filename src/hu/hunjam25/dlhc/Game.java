@@ -1,7 +1,5 @@
 package hu.hunjam25.dlhc;
 
-import hu.hunjam25.dlhc.view.Sprite;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

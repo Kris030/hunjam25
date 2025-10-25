@@ -2,7 +2,6 @@ package hu.hunjam25.dlhc.view;
 
 import java.awt.Graphics2D;
 
-import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Kitchen;
 

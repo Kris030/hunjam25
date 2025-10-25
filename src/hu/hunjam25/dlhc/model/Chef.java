@@ -13,15 +13,14 @@ public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
     private final static float SPEED = 0.005f;
 
-    private Point.Float velocity = new Point.Float(0f, 0f);
-
     public Chef(int foodCount){
+        positionToCenter();
         foodTodo = new java.util.ArrayDeque<>();
         for (int i = 0; i<foodCount; i++){
             foodTodo.add(Food.RandomFood());
         }
         results = new ArrayList<>();
-        currentFood = foodTodo.poll();
+        currentFood = foodTodo.remove();
         currIngredient = 0;
         todo = Arrays.asList(currentFood.ingredients);
         pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
@@ -31,7 +30,7 @@ public class Chef extends GameObject {
         this(DEFAULT_FOOD_COUNT);
     }
 
-    Deque<Food> foodTodo;
+    Queue<Food> foodTodo;
 
     Food currentFood;
     int currIngredient;
@@ -45,8 +44,12 @@ public class Chef extends GameObject {
     Workstation pathFindingTo;
     Point.Float pathFindingTargetPosition;
 
+    boolean finished = false;
+
     @Override
     public void tick(float dt) {
+        if (finished) return;
+        // TODO: fix incorrect behaviour if 2 of the same workstations follow each other
         if (currWorkstation == null) {
             if (pathFindingTargetPosition == null){
                 pathFindingTargetPosition = pathFindingTo.getPosition();
@@ -57,7 +60,7 @@ public class Chef extends GameObject {
             // we aren't at a station, go to pathFindingTargetPosition
             stepTowardsTarget(dt);
             
-            boolean close = position.distance(pathFindingTargetPosition) <= /*TODO exact distance?*/ 0.5f;
+            boolean close = position.distance(pathFindingTargetPosition) <= /*TODO exact distance?*/ 0.1f;
             if (close) {
                 currWorkstation = pathFindingTo;
                 position = pathFindingTargetPosition;
@@ -70,13 +73,26 @@ public class Chef extends GameObject {
 
             if (Game.now - startedWorkAt >= todo.get(currIngredient).durationSeconds) {
                 currWorkstation = null;
+                currIngredient++;
+                // TODO: results handling
+                // food finished
+                if (currIngredient >= todo.size()) {
+                    // TODO: results handling
+                    if (foodTodo.isEmpty()) {
+                        finished = true;
+                        return;
+                    }
+                    currentFood = foodTodo.remove();
+                    todo = Arrays.asList(currentFood.ingredients);
+                    currIngredient = 0;
+                }
                 pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
             }
         }
     }
 
     private void stepTowardsTarget(float dt) {
-        velocity = pathFindingTargetPosition;
+        Point.Float velocity = (Point.Float) pathFindingTargetPosition.clone();
         velocity.x -= position.x;
         velocity.y -= position.y;
 

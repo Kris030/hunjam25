@@ -10,7 +10,7 @@ public enum Food {
     ScrambledEggs(new Ingredient[] { Ingredient.Egg, Ingredient.Water, Ingredient.Egg, Ingredient.Plating }),
     ;
 
-    private static Random r = new Random(System.currentTimeMillis());
+    public static Random r = new Random(System.currentTimeMillis());
 
     public Ingredient[] ingredients;
 

@@ -87,7 +87,6 @@ public class Game {
         //g.translate(1f * Game.TILE_SIZE, 0f);
         Kitchen.wallpaper.render(g);
         g.setTransform(transform);
-        Kitchen.woodFrame.render(g);
 
         g.clipRect(MAP_OFFSET_X * TILE_SIZE, abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,MAP_HEIGHT*TILE_SIZE );
         g.shear(-0.3,0);
@@ -99,6 +98,8 @@ public class Game {
             g.setTransform(transform);
             o.render(g);
         });
+        g.setTransform(transform);
+        Kitchen.woodFrame.render(g);
     }
 
     static KeyListener listener = new KeyListener() {

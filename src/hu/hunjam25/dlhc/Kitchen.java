@@ -1,13 +1,11 @@
 package hu.hunjam25.dlhc;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import hu.hunjam25.dlhc.gameplay.Minigame;
-import hu.hunjam25.dlhc.model.Chef;
-import hu.hunjam25.dlhc.model.Ingredient;
-import hu.hunjam25.dlhc.model.Rat;
-import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.model.*;
 import hu.hunjam25.dlhc.view.ParticleEffect;
 import hu.hunjam25.dlhc.view.Sprite;
 import hu.hunjam25.dlhc.view.UiElement;
@@ -62,22 +60,15 @@ public class Kitchen {
     public static void init() {
         rat = new Rat();
 
-        // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 1f),
-                new Vec2(0f, 0.5f)));
-        // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(12f, 3f),
-                new Vec2(0f, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Vec2(5f, 3f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Sink, new Vec2(6f, 3f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2(8f, 3f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Oven, new Vec2(9f, 3f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Belt, new Vec2(12f, 1f),
-                new Vec2(-0.5f, 0f)));
+        //defLaylout();
+        for (int i = 1; i < Game.MAP_WIDTH; ++i) {
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2((float)i, 5f),
+                    new Vec2(0, -0.5f)));
+        }
+        for (int i = 1; i < Game.MAP_WIDTH; ++i) {
+            workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2((float)i, 1f),
+                    new Vec2(0, -0.5f)));
+        }
 
         chefs.add(new Chef());
         chefs.add(new Chef());
@@ -87,6 +78,25 @@ public class Kitchen {
         //element.visible = true;
         //element.scale = 0.5f;
         //rat.addUiElement(element);
+    }
+
+    private static void defLaylout() {
+        // trash workstation must be first in Kitchen.workstations!!!
+        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 5f),
+                new Vec2(0f, 0.5f)));
+        // trash workstation must be first in Kitchen.workstations!!!
+        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(12f, 5f),
+                new Vec2(0f, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Vec2(5f, 5f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Sink, new Vec2(6f, 5f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2(8f, 5f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Oven, new Vec2(9f, 5f),
+                new Vec2(0, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Belt, new Vec2(12f, 5f),
+                new Vec2(-0.5f, 0f)));
     }
 
     public static Stream<GameObject> getGameObjects() {

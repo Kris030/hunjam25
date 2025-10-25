@@ -19,6 +19,8 @@ public class AnimatedSprite implements IRenderable {
 
     public boolean frozen = true;
 
+    private int idx = 0;
+
     private float frozenAge;
 
     public float animLength;
@@ -45,6 +47,10 @@ public class AnimatedSprite implements IRenderable {
         frozenAge = getAge();
     }
 
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
+
     public void unFreeze() {
         frozen = false;
     }
@@ -58,7 +64,9 @@ public class AnimatedSprite implements IRenderable {
     @Override
     public void render(Graphics2D gd) {
         float age = frozen ? frozenAge : getAge();
-        int idx = (int) (images.length * age / animLength);
+        if(!frozen){
+            idx = (int) (images.length * age / animLength);
+        }
         BufferedImage image = images[idx];
 
         int x = 0, y = 0;
@@ -73,8 +81,7 @@ public class AnimatedSprite implements IRenderable {
         }
         gd.scale(spriteScales[idx], spriteScales[idx]);
 
-        gd.drawImage(image, x, y + (int) spriteOffsets[idx], null);
-        System.out.println(y);
+        gd.drawImage(image, x, y + 3 * (int) spriteOffsets[idx], null);
 
 
         gd.scale(1/spriteScales[idx],1/ spriteScales[idx]);
@@ -86,9 +93,10 @@ public class AnimatedSprite implements IRenderable {
             var ratio = images[i].getWidth() / (float) images[i].getHeight();
             spriteOffsets[i] = 0f;
             if (ratio < 1)
-                spriteOffsets[i] += (1f - (1f/ratio))/2f;
+                spriteOffsets[i] += 120f * (1f - (1f/ratio))/2f;
             else
-                spriteOffsets[i] -= (1f - (1f/ratio))/2f;
+                spriteOffsets[i] -= 120f * (1f - (1f/ratio))/2f;
+            System.out.println(spriteOffsets[i]);
         }
     }
 

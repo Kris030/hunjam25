@@ -23,10 +23,6 @@ public class AssetManager {
 
     private static HashMap<String, SoundBuffer> soundStorage;
 
-    private static void img(String name, String pathFirst, String... pathRest) throws IOException {
-        imageStorage.put(name, ImageIO.read(Path.of(pathFirst, pathRest).toFile()));
-    }
-
     static void init() throws IOException, UnsupportedAudioFileException {
         // TODO: better
         imageStorage = new HashMap<>();
@@ -39,12 +35,17 @@ public class AssetManager {
 
         addProgrammerRemy();
 
-        // addAllWorkSations();
+        addWorkStationAnimations();
 
         addWorkStations();
 
         addRemiAnim();
     }
+
+    private static void img(String name, String pathFirst, String... pathRest) throws IOException {
+        imageStorage.put(name, ImageIO.read(Path.of(pathFirst, pathRest).toFile()));
+    }
+
 
     private static void addProgrammerRemy() throws IOException {
         for (int i = 1; i <= 6; ++i) {
@@ -52,18 +53,18 @@ public class AssetManager {
         }
     }
 
-    private static void addAllWorkSations() throws IOException {
-        img("stove_front", "art", "organized", "stove", "stove_front_on.png");
-        img("sink_front_on", "art", "organized", "sink", "sink_front_on.png");
-        img("sink_front_off", "art", "organized", "sink", "sink_front_off.png");
-        img("counter_front", "art", "organized", "counter", "counter_front.png");
-        img("sink_back_off", "art", "organized", "sink", "sink_behind_off.png");
-        img("sink_back_on", "art", "organized", "sink", "sink_behind_on.png");
-        img("stove_back_off", "art", "organized", "stove", "stove_behind_off.png");
-        img("stove_back_on", "art", "organized", "stove", "stove_behind_on.png");
-        img("counter_back", "art", "organized", "counter", "counter_behind.png");
-        img("fridge_closed", "art", "organized", "fridge", "fridge_closed.png");
-        img("fridge_open", "art", "organized", "fridge", "fridge_open.png");
+    private static void addWorkStationAnimations() throws IOException {
+        BufferedImage[] stove = new BufferedImage[]{
+               ImageIO.read(Path.of( "art", "organized", "stove", "stove_front_off.png").toFile() ),
+                ImageIO.read(Path.of( "art", "organized", "stove", "stove_front_on.png").toFile() ),
+        };
+        animStorage.put("Stove",stove);
+
+        BufferedImage[] fridge = new BufferedImage[]{
+                ImageIO.read( Path.of( "art", "organized", "fridge", "fridge_closed.png").toFile()),
+                ImageIO.read( Path.of( "art", "organized", "fridge", "fridge_open.png").toFile() )
+        };
+        animStorage.put("Fridge",fridge);
     }
 
     private static void addWorkStations() throws IOException {

@@ -71,6 +71,7 @@ public class Chef extends GameObject {
             // we aren't at a station, go to pathFindingTargetPosition
             if (stepTowardsTarget(dt)) {
                 currWorkstation = pathFindingTo;
+                currWorkstation.workers++;
                 position = pathFindingTargetPosition;
                 pathFindingTargetPosition = null;
                 pathFindingTo = null;
@@ -79,6 +80,7 @@ public class Chef extends GameObject {
         } else {
             // work at workstation
             if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds) {
+                currWorkstation.workers--;
                 currWorkstation = null;
                 currIngredient++;
 

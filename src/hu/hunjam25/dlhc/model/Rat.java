@@ -2,7 +2,7 @@ package hu.hunjam25.dlhc.model;
 
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
-import hu.hunjam25.dlhc.view.RatView;
+import hu.hunjam25.dlhc.view.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,12 +14,19 @@ import static java.lang.Math.min;
 public class Rat extends GameObject {
     static float SPEED = 0.005f;
 
-    private boolean mirrored = false;
+    private final float width = 1.5f;
+    private final float height = 1f;
+
+    private Sprite dot = new Sprite(Game.getImage("dot"));
+    private Sprite ratView = new Sprite(Game.getImage("rat"));
+
 
     public Rat() {
-        view = new RatView();
-        position.x = 3;
-        position.y = 7;
+        dot.centered = true;
+        ratView.centered = true;
+
+        position.x = 5;
+        position.y = 3;
     }
 
     @Override
@@ -51,7 +58,7 @@ public class Rat extends GameObject {
             velocity.y /= length;
         }
         if (velocity.x != 0f) {
-            mirrored = velocity.x < 0f;
+            ratView.mirrored = velocity.x > 0f;
         }
 
         position.x += velocity.x * SPEED * dt;
@@ -65,9 +72,12 @@ public class Rat extends GameObject {
 
     @Override
     public void render(Graphics2D gd) {
-        var screen = Game.gameToScreen(position);
+        var pos = new Point2D.Float(position.x, position.y);
+        var screen = Game.gameToScreen(pos);
         gd.translate(screen.x,screen.y);
-        gd.scale(mirrored ? 1f : -1f, 1f);
-        view.render(gd);
+
+
+        ratView.render(gd);
+        dot.render(gd);
     }
 }

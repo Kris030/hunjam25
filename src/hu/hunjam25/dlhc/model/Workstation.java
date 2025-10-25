@@ -36,6 +36,9 @@ public class Workstation extends GameObject {
 
         this.animatedSprite = new AnimatedSprite(AssetManager.getAnim(type.name()),0);
         this.animatedSprite.scaleWidth();
+        if (type == WorkstationType.Trash) {
+            setOnFire();
+        }
         // sprite.scaleToTileMax();
         // sprite.scaleWidth();
         // float sc = sprite.getRatio();
@@ -62,11 +65,11 @@ public class Workstation extends GameObject {
         return workers > 0;
     }
 
-    private void makeTrashCan() {
+    private void setOnFire() {
         UiElement timr = new UiElement();
         timr.visible = true;
         timr.scale = 0.2f;
-        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("fire"), 4);
+        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("fire"), 0.1f);
         timerSprite.frozen = false;
         timerSprite.start();
         timr.setAnimatedSprite(timerSprite);
@@ -75,7 +78,7 @@ public class Workstation extends GameObject {
         UiElement timer = new UiElement();
         timer.visible = true;
         timer.scale = 0.2f;
-        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("smoke"), 2);
+        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("smoke"), 0.2f);
         timrSprite.frozen = false;
         timrSprite.start();
         timer.setAnimatedSprite(timrSprite);

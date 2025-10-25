@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 import java.util.HashSet;
 import java.util.Set;
 
+import hu.hunjam25.dlhc.model.Ingredient;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

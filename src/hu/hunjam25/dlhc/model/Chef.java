@@ -55,12 +55,15 @@ public class Chef extends GameObject {
 
     float stoppedUntil = 0f;
 
-    boolean finished = false;
+    Ingredient tempIfOnFire = null;
+
+    public boolean finished = false;
 
     @Override
     public void tick(float dt) {
-        if (finished)
-            return;
+        if (finished) {
+            return; // TODO: valami dispose
+        }
         if (currWorkstation == null) {
             if (pathFindingTargetPosition == null) {
                 pathFindingTargetPosition = pathFindingTo.getPosition();
@@ -68,8 +71,8 @@ public class Chef extends GameObject {
                 pathFindingTargetPosition.y += pathFindingTo.workingOffset.y;
             }
 
-            // we aren't at a station, go to pathFindingTargetPosition
-            if (stepTowardsTarget(dt)) {
+            boolean arrivedAtStation = stepTowardsTarget(dt);
+            if (arrivedAtStation) {
                 currWorkstation = pathFindingTo;
                 currWorkstation.workers++;
                 position = pathFindingTargetPosition;
@@ -82,7 +85,14 @@ public class Chef extends GameObject {
             if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds) {
                 currWorkstation.workers--;
                 currWorkstation = null;
-                currIngredient++;
+
+                if (tempIfOnFire == null) {
+                    System.out.println("Task completed");
+                    currIngredient++;
+                } else {
+                    System.out.println("Fire extinguished");
+                    fixTempIngredient();
+                }
 
                 // food finished
                 if (currIngredient >= todo.length) {
@@ -93,6 +103,7 @@ public class Chef extends GameObject {
                     Kitchen.increaseRating(results, timeDelay);
 
                     if (foodTodo.isEmpty()) {
+                        currIngredient = 0;
                         finished = true;
                         return;
                     }
@@ -120,7 +131,7 @@ public class Chef extends GameObject {
         position.x += velocity.x * SPEED * dt;
         position.y += velocity.y * SPEED * dt;
 
-        return length <= /* TODO exact distance? */ 0.1f;
+        return length <= 0.1f;
     }
 
     public void stopForDuration(float seconds) {
@@ -141,5 +152,18 @@ public class Chef extends GameObject {
     public void render(Graphics2D gd) {
         super.render(gd);
         sprite.render(gd);
+    }
+
+    public void addHazard(Workstation trash, Ingredient fire) {
+        currWorkstation = null;
+        pathFindingTargetPosition = null;
+        pathFindingTo = trash;
+        tempIfOnFire = todo[currIngredient];
+        todo[currIngredient] = fire;
+    }
+
+    private void fixTempIngredient() {
+        todo[currIngredient] = tempIfOnFire;
+        tempIfOnFire = null;
     }
 }

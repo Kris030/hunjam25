@@ -15,11 +15,13 @@ public class Workstation extends GameObject {
         Oven,
         Fridge,
         Stove,
+        Trash,
+
         ;
     }
 
     private AnimatedSprite animatedSprite;
-    //private Sprite sprite;
+    // private Sprite sprite;
     public WorkstationType type = WorkstationType.Stove;
 
     // relative to GameObject position
@@ -32,24 +34,24 @@ public class Workstation extends GameObject {
         this.position = position;
         this.workingOffset = workingOffset;
 
-        this.animatedSprite = new AnimatedSprite(AssetManager.getAnim(type.name()),0);
+        this.animatedSprite = new AnimatedSprite(AssetManager.getAnim(type.name()), 0);
         // sprite.scaleToTileMax();
-        //sprite.scaleWidth();
-        //float sc = sprite.getRatio();
+        // sprite.scaleWidth();
+        // float sc = sprite.getRatio();
         // System.out.println(sc);
 
-        //if (sc < 1)
-            //this.position.y += (1f - (1f / sc)) / 2f;
-        //else
-            //this.position.y -= (1f - (1f / sc)) / 2f;
+        // if (sc < 1)
+        // this.position.y += (1f - (1f / sc)) / 2f;
+        // else
+        // this.position.y -= (1f - (1f / sc)) / 2f;
     }
 
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
-        if(workers > 0){
+        if (workers > 0) {
             animatedSprite.setIdx(1);
-        }else{
+        } else {
             animatedSprite.setIdx(0);
         }
         animatedSprite.render(gd);

@@ -43,6 +43,8 @@ public class AssetManager {
         addWorkStations();
 
         addRemiAnim();
+
+        addClockAnimation();
     }
 
     private static void img(String name, String pathFirst, String... pathRest) throws IOException {
@@ -87,7 +89,7 @@ public class AssetManager {
         BufferedImage[] clock = new BufferedImage[5];
 
         for (int i = 1 ; i <= 5; ++i){
-            clock[i] = ImageIO.read(Path.of("art","ora","ora_0" + i + ".png").toFile());
+            clock[i - 1] = ImageIO.read(Path.of("art","ora","ora_0" + i + ".png").toFile());
         }
 
         animStorage.put("clock", clock);

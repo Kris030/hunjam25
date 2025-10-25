@@ -27,14 +27,17 @@ public class Sprite implements IRenderable {
     // (dt vagy tárolja a jelenlegit és inkrementál)
     @Override
     public void render(Graphics2D gd) {
-        if (centered) {
-            center(gd, image.getWidth(), image.getHeight());
+        int x = 0;
+        int y = 0;
+        if(centered){
+            x = (int) -(image.getWidth()/2f);
+            y = (int) -(image.getHeight()/2f);
         }
 
         if (mirrored) {
             mirrorX(gd);
         }
 
-        gd.drawImage(image, 0, 0, null);
+        gd.drawImage(image, x, y, null);
     }
 }

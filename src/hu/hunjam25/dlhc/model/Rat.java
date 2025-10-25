@@ -1,10 +1,6 @@
 package hu.hunjam25.dlhc.model;
 
-import hu.hunjam25.dlhc.AssetManager;
-import hu.hunjam25.dlhc.Game;
-import hu.hunjam25.dlhc.GameObject;
-import hu.hunjam25.dlhc.Kitchen;
-import hu.hunjam25.dlhc.Vec2;
+import hu.hunjam25.dlhc.*;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
@@ -20,7 +16,7 @@ public class Rat extends GameObject {
     private Sprite dot = new Sprite(AssetManager.getImage("dot"));
     //private Sprite ratView = new Sprite(Game.getImage("rat"));
 
-    private AnimatedSprite remi ;
+    private AnimatedSprite remi;
 
 
     public Rat() {
@@ -38,19 +34,29 @@ public class Rat extends GameObject {
     public void tick(float dt) {
         super.tick(dt);
 
-        ratMotion(dt);
+        if (Kitchen.minigame == null || Kitchen.minigame.isGameEnded()) {
+            ratMotion(dt);
+        }
 
-        if (Kitchen.minigame == null && Game.keysPressed.contains(KeyEvent.VK_M)) {
+        if ((Kitchen.minigame == null || Kitchen.minigame.isGameEnded()) && Game.keysPressed.contains(KeyEvent.VK_M)) {
             var w = Kitchen.workstations.stream()
                     .min((w1, w2) -> Double.compare(
                             w1.getOffsettedPosition().dist(this.position),
                             w2.getOffsettedPosition().dist(this.position)))
 
-                    // there allways will be a workstation
-                    .orElse(null);
+                    // there always will be a workstation
+                    .get();
 
-            if (w.getPosition().dist(this.position) < 0.1f) {
-                Kitchen.startMinigame(w);
+            float dist = w.getOffsettedPosition().dist(this.position);
+            if (dist < 0.3f && w.hasWorker()) {
+                var chef = Kitchen.chefs.stream()
+                        .filter(c -> c.currWorkstation == w)
+                        .min((c1, c2) -> Float.compare(
+                                c1.getPosition().dist(this.position), c2.getPosition().dist(this.position)
+                        ))
+                        .get();
+
+                Kitchen.startMinigame(w, chef, chef.todo[chef.currIngredient]);
                 position = w.getOffsettedPosition();
             }
         }

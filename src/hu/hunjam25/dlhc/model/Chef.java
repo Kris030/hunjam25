@@ -1,16 +1,13 @@
 package hu.hunjam25.dlhc.model;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.util.*;
-
-import hu.hunjam25.dlhc.AssetManager;
-import hu.hunjam25.dlhc.Game;
-import hu.hunjam25.dlhc.GameObject;
-import hu.hunjam25.dlhc.Kitchen;
-import hu.hunjam25.dlhc.Vec2;
+import hu.hunjam25.dlhc.*;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.UiElement;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.util.Arrays;
+import java.util.Queue;
 
 import static java.lang.Math.abs;
 
@@ -133,12 +130,16 @@ public class Chef extends GameObject {
                 startTimer(currIngredient);
             }
         } else {
-            workingIdx = facing(currWorkstation.workingOffset.mul(-1f) );
+            workingIdx = facing(currWorkstation.workingOffset.mul(-1f));
             animatedSprite.setIdx(workingIdx);
             // work at workstation
             if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds
                     || (!Kitchen.isOnFire && todo[currIngredient] == Ingredient.TrashFire)) {
                 currWorkstation.workers--;
+                if (Kitchen.minigame != null && !Kitchen.minigame.isGameEnded()) {
+                    Kitchen.minigame.endGame();
+                }
+
                 currWorkstation = null;
 
                 if (!Kitchen.isOnFire) {
@@ -154,7 +155,8 @@ public class Chef extends GameObject {
                     float ingredientSumTime = 0;
                     for (var ing : todo)
                         ingredientSumTime += ing.durationSeconds;
-                    Float timeDelay = Game.now - startedCurrentFoodAt - ingredientSumTime;
+
+                    float timeDelay = Game.now - startedCurrentFoodAt - (float) ingredientSumTime;
                     Kitchen.decreaseRating(results, timeDelay);
 
                     if (foodTodo.isEmpty()) {
@@ -162,6 +164,7 @@ public class Chef extends GameObject {
                         finished = true;
                         return;
                     }
+
                     startNewFood();
                 }
                 pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
@@ -224,7 +227,7 @@ public class Chef extends GameObject {
     /**
      * add result handling for each ingredient, should be called by the minigame
      * when it ends
-     * 
+     *
      * @param result should be in {@code[0;0.10]} with the highend being rare
      */
     public void pushResult(float result) {

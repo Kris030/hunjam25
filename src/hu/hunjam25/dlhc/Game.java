@@ -1,8 +1,5 @@
 package hu.hunjam25.dlhc;
 
-import hu.hunjam25.dlhc.view.DefaultMinigame;
-import hu.hunjam25.dlhc.view.Minigame;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,10 +22,22 @@ public class Game {
     public static final int MAP_WIDTH = 14;
     public static final int MAP_HEIGHT = 5;
 
-    public static final Vec2 CENTER = new Vec2(Game.MAP_WIDTH / 2f,
-                     Game.MAP_HEIGHT / 2f);
+    public static final Vec2 CENTER = new Vec2(
+            Game.MAP_WIDTH / 2f,
+            Game.MAP_HEIGHT / 2f);
 
     public static final int TILE_SIZE = 120;
+
+    public static final Vec2 SCREEN_SIZE = new Vec2(
+            SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE
+    );
+
+    public static final Vec2 MINIGAME_FRAME_SIZE = new Vec2(1169, 916);
+    public static final Vec2 MINIGAME_CONTENT_TOPLEFT_OFFSET = new Vec2(150, 207);
+    public static final Vec2 MINIGAME_CONTENT_BOTTOMRIGHT_OFFSET = new Vec2(1018, 795);
+    public static final Vec2 MINIGAME_CONTENT_SIZE = MINIGAME_CONTENT_BOTTOMRIGHT_OFFSET
+            .sub(MINIGAME_CONTENT_TOPLEFT_OFFSET)
+            .add(new Vec2(2, 2));
 
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
@@ -79,6 +88,13 @@ public class Game {
         }
 
         Kitchen.getGameObjects().forEach(o -> o.tick(dt));
+        if (Kitchen.minigame != null) {
+            Kitchen.minigame.tick(dt);
+
+            if (Kitchen.minigame.isDisappeared()) {
+                Kitchen.minigame = null;
+            }
+        }
 
         Kitchen.particleEffects.removeAll(Kitchen.particleEffectKillList);
         Kitchen.particleEffectKillList.clear();
@@ -92,11 +108,11 @@ public class Game {
         Kitchen.wallpaper.render(g);
         g.setTransform(transform);
 
-        g.clipRect(MAP_OFFSET_X * TILE_SIZE, Math.abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,MAP_HEIGHT*TILE_SIZE );
-        g.shear(-0.3,0);
+        g.clipRect(MAP_OFFSET_X * TILE_SIZE, Math.abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
+        g.shear(-0.3, 0);
         Kitchen.floor.render(g);
         g.setTransform(transform);
-        g.setClip(0,0,SCREEN_WIDTH * TILE_SIZE,SCREEN_HEIGHT * TILE_SIZE );
+        g.setClip(0, 0, SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE);
 
         Kitchen.getGameObjects().forEach(o -> {
             g.setTransform(transform);
@@ -104,6 +120,11 @@ public class Game {
         });
         g.setTransform(transform);
         Kitchen.woodFrame.render(g);
+
+        if (Kitchen.minigame != null) {
+            g.setTransform(transform);
+            Kitchen.minigame.render(g);
+        }
     }
 
     static KeyListener listener = new KeyListener() {

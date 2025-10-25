@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import hu.hunjam25.dlhc.gameplay.DefaultMinigame;
 import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.model.*;
 import hu.hunjam25.dlhc.view.ParticleEffect;
@@ -53,7 +54,6 @@ public class Kitchen {
     }
 
     public static void minigameEnded(float result) {
-        minigame = null;
         minigame.chef.pushResult(result);
     }
 
@@ -113,10 +113,6 @@ public class Kitchen {
 
         s = Stream.concat(s, particleEffects.stream());
 
-        if (minigame != null) {
-            s = Stream.concat(s, Stream.of(minigame));
-        }
-
         return s;
     }
 
@@ -136,8 +132,16 @@ public class Kitchen {
         rating = Math.clamp(rating, 0.0f, 1.0f);
     }
 
-    public static void startMinigame(Workstation w) {
-        minigame = w.getMinigame();
+    public static void startMinigame(Workstation workstation,  Chef chef, Ingredient ingredient) {
+//        minigame = switch (workstation.type) {
+//            case ChoppingBoard -> new DefaultMinigame(workstation, chef, ingredient);
+//            case Fridge -> null;
+//            case Oven -> null;
+//            case Stove -> null;
+//            case Trash -> null;
+//        };
+
+        minigame = new DefaultMinigame(workstation, chef, ingredient);
     }
 
     public static void startFire() {

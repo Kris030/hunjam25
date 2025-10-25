@@ -3,8 +3,6 @@ package hu.hunjam25.dlhc.model;
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Vec2;
-import hu.hunjam25.dlhc.gameplay.ChoppingBoard;
-import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
@@ -12,7 +10,7 @@ import java.awt.*;
 
 public class Workstation extends GameObject {
 
-    public static enum WorkstationType {
+    public enum WorkstationType {
         ChoppingBoard,
         Oven,
         Fridge,
@@ -24,7 +22,7 @@ public class Workstation extends GameObject {
         ;
     }
 
-    private AnimatedSprite animatedSprite;
+    private final AnimatedSprite animatedSprite;
     // private Sprite sprite;
     public WorkstationType type = WorkstationType.Stove;
 
@@ -93,24 +91,6 @@ public class Workstation extends GameObject {
         timer.setAnimatedSprite(timrSprite);
         timer.addOffset(new Vec2(0.0f, 0.5f));
         addUiElement(timer);
-    }
-
-    public Minigame getMinigame() {
-        switch (type) {
-            case ChoppingBoard:
-                return new ChoppingBoard();
-            case Fridge:
-                break;
-            case Oven:
-                break;
-            case Stove:
-                break;
-            case Trash:
-                break;
-        }
-
-        // FIXME
-        return null;
     }
 
     public Vec2 getOffsettedPosition() {

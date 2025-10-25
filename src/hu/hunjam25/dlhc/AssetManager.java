@@ -46,6 +46,8 @@ public class AssetManager {
         addChefAnimations("chef1");
         addChefAnimations("chef2");
         addChefAnimations("chef3");
+
+        img("minigame_keret", "art", "minigame_keret.png");
     }
 
     private static void addRatMeter() throws IOException {

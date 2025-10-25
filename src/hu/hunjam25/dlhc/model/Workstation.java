@@ -3,6 +3,8 @@ package hu.hunjam25.dlhc.model;
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Vec2;
+import hu.hunjam25.dlhc.gameplay.ChoppingBoard;
+import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
@@ -29,7 +31,7 @@ public class Workstation extends GameObject {
     // relative to GameObject position
     Vec2 workingOffset;
 
-    public int workers = 0;
+    private Chef worker = null;
 
     public Workstation(WorkstationType type, Vec2 position, Vec2 workingOffset) {
         this.type = type;
@@ -55,7 +57,7 @@ public class Workstation extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
-        if (workers > 0) {
+        if (worker != null) {
             animatedSprite.setIdx(1);
         } else {
             animatedSprite.setIdx(0);
@@ -66,7 +68,7 @@ public class Workstation extends GameObject {
     }
 
     public boolean hasWorker() {
-        return workers > 0;
+        return worker!= null;
     }
 
     private void setOnFire() {
@@ -91,6 +93,10 @@ public class Workstation extends GameObject {
         timer.setAnimatedSprite(timrSprite);
         timer.addOffset(new Vec2(0.0f, 0.5f));
         addUiElement(timer);
+    }
+
+    public void setWorker(Chef worker) {
+        this.worker = worker;
     }
 
     public Vec2 getOffsettedPosition() {

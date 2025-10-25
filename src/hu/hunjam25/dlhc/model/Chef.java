@@ -56,7 +56,7 @@ public class Chef extends GameObject {
         todo = currentFood.ingredients;
         results = new float[todo.length];
         Arrays.fill(results, 0f);
-        pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
+        pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
         startedCurrentFoodAt = Game.now;
         addRatMeter();
         addClockTimers();
@@ -113,63 +113,89 @@ public class Chef extends GameObject {
         }
 
         if (currWorkstation == null) {
-            if (pathFindingTargetPosition == null) {
-                if (pathFindingTo == null)
-                    return;
-                pathFindingTargetPosition = pathFindingTo.getPosition().add(pathFindingTo.workingOffset);
-            }
-
-            boolean arrivedAtStation = stepTowardsTarget(dt);
-            if (arrivedAtStation) {
-                currWorkstation = pathFindingTo;
-                currWorkstation.workers++;
-                position = pathFindingTargetPosition;
-                pathFindingTargetPosition = null;
-                pathFindingTo = null;
-                startedWorkAt = Game.now;
-                startTimer(currIngredient);
-            }
-        } else {
-            workingIdx = facing(currWorkstation.workingOffset.mul(-1f));
-            animatedSprite.setIdx(workingIdx);
-            // work at workstation
-            if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds
-                    || (!Kitchen.isOnFire && todo[currIngredient] == Ingredient.TrashFire)) {
-                currWorkstation.workers--;
-                if (Kitchen.minigame != null && !Kitchen.minigame.isGameEnded()) {
-                    Kitchen.minigame.endGame();
-                }
-
-                currWorkstation = null;
-
-                if (!Kitchen.isOnFire) {
-                    currIngredient++;
-                    setTimersAfterTask(currIngredient);
-                } else {
-                    Kitchen.isOnFire = false;
-                    fixTempIngredient();
-                }
-
-                // food finished
-                if (currIngredient >= todo.length) {
-                    float ingredientSumTime = 0;
-                    for (var ing : todo)
-                        ingredientSumTime += ing.durationSeconds;
-
-                    float timeDelay = Game.now - startedCurrentFoodAt - (float) ingredientSumTime;
-                    Kitchen.decreaseRating(results, timeDelay);
-
-                    if (foodTodo.isEmpty()) {
-                        currIngredient = 0;
-                        finished = true;
-                        return;
-                    }
-
-                    startNewFood();
-                }
-                pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
+            if(!searching(dt)){
+                return;
             }
         }
+        else {
+            working();
+        }
+    }
+
+    private void working() {
+        workingIdx = facing(currWorkstation.workingOffset.mul(-1f) );
+        animatedSprite.setIdx(workingIdx);
+        // work at workstation
+        if (isJobOver()) {
+            finishJob();
+        }
+    }
+
+    private void finishJob() {
+        currWorkstation.setWorker(null);
+        currWorkstation = null;
+
+        if (!Kitchen.isOnFire) {
+            currIngredient++;
+            setTimersAfterTask(currIngredient);
+        } else {
+            Kitchen.isOnFire = false;
+            fixTempIngredient();
+        }
+
+        // food finished
+        if (currIngredient >= todo.length) {
+            if (lookForNewJob()) return;
+        }
+        pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
+    }
+
+    private boolean lookForNewJob() {
+        float ingredientSumTime = 0;
+        for (var ing : todo)
+            ingredientSumTime += ing.durationSeconds;
+        float timeDelay = Game.now - startedCurrentFoodAt - ingredientSumTime;
+        Kitchen.decreaseRating(results, timeDelay);
+
+        if (foodTodo.isEmpty()) {
+            currIngredient = 0;
+            finished = true;
+            return true;
+        }
+        startNewFood();
+        return false;
+    }
+
+    private boolean isJobOver() {
+        return Game.now - startedWorkAt >= todo[currIngredient].durationSeconds
+                || (!Kitchen.isOnFire && todo[currIngredient] == Ingredient.TrashFire);
+    }
+
+    /***
+     *
+     * @param dt
+     * @return true if continue tick(), false if return
+     */
+    private boolean searching(float dt) {
+        if (pathFindingTargetPosition == null) {
+            if (pathFindingTo == null){
+                System.out.println("Nowhere to Go");
+                return false;
+            }
+            pathFindingTargetPosition = pathFindingTo.getPosition().add(pathFindingTo.workingOffset);
+        }
+
+        boolean arrivedAtStation = stepTowardsTarget(dt);
+        if (arrivedAtStation) {
+            currWorkstation = pathFindingTo;
+            currWorkstation.setWorker(this);
+            position = pathFindingTargetPosition;
+            pathFindingTargetPosition = null;
+            pathFindingTo = null;
+            startedWorkAt = Game.now;
+            startTimer(currIngredient);
+        }
+        return true;
     }
 
     private void startTimer(int id) {
@@ -227,7 +253,7 @@ public class Chef extends GameObject {
     /**
      * add result handling for each ingredient, should be called by the minigame
      * when it ends
-     *
+     * 
      * @param result should be in {@code[0;0.10]} with the highend being rare
      */
     public void pushResult(float result) {
@@ -262,7 +288,7 @@ public class Chef extends GameObject {
     }
 
     public void addHazard(Workstation trash, Ingredient fire) {
-        currWorkstation.workers--;
+        currWorkstation.setWorker(null);
         currWorkstation = null;
         pathFindingTargetPosition = null;
         pathFindingTo = trash;

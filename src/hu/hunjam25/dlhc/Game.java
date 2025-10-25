@@ -115,6 +115,11 @@ public class Game {
         g.setTransform(transform);
         g.setClip(0, 0, SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE);
 
+        Kitchen.chefs.removeIf(chef -> chef.finished);
+        if(Kitchen.chefs.isEmpty()){
+            System.exit(0);
+        }
+
         Kitchen.getGameObjects().sorted(Comparator.comparingDouble(GameObject::getY).reversed()).forEach(o -> {
             g.setTransform(transform);
             o.render(g);

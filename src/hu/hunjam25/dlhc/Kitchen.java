@@ -1,7 +1,6 @@
 package hu.hunjam25.dlhc;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.stream.Stream;
 
 import hu.hunjam25.dlhc.gameplay.DefaultMinigame;
@@ -9,7 +8,6 @@ import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.model.*;
 import hu.hunjam25.dlhc.view.ParticleEffect;
 import hu.hunjam25.dlhc.view.Sprite;
-import hu.hunjam25.dlhc.view.UiElement;
 
 public class Kitchen {
 
@@ -44,9 +42,9 @@ public class Kitchen {
         floor.centered = false;
     }
 
-    public static Workstation findClosestWorkStation(Vec2 pos, Ingredient ingredient) {
+    public static Workstation findClosestFreeWorkStation(Vec2 pos, Ingredient ingredient) {
         return workstations.stream()
-                .filter(ws -> ws.type.equals(ingredient.workstationType))
+                .filter(ws -> ws.type.equals(ingredient.workstationType) && !ws.hasWorker())
                 .min((ws1, ws2) -> Double.compare(
                         pos.dist(ws1.getOffsettedPosition()),
                         pos.dist(ws2.getOffsettedPosition())))

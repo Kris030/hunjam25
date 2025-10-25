@@ -2,12 +2,16 @@ package hu.hunjam25.dlhc.view;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 import hu.hunjam25.dlhc.Game;
 
 public class AnimatedSprite implements IRenderable {
 
     private BufferedImage[] images;
+
+    private float[] spriteScales;
+    private float[] spriteOffsets;
 
     public boolean centered = true;
 
@@ -26,6 +30,10 @@ public class AnimatedSprite implements IRenderable {
     public AnimatedSprite(BufferedImage[] images, float animLength) {
         this.images = images;
         this.animLength = animLength;
+        spriteScales = new float[images.length];
+        Arrays.fill(spriteScales, 1f);
+        spriteOffsets = new float[images.length];
+        Arrays.fill(spriteOffsets, 0f);
     }
 
     float getAge() {
@@ -63,11 +71,31 @@ public class AnimatedSprite implements IRenderable {
         if (mirrored) {
             Sprite.mirrorX(gd);
         }
-        gd.scale(spriteScale, spriteScale);
+        gd.scale(spriteScales[idx], spriteScales[idx]);
 
-        gd.drawImage(image, x, y, null);
+        gd.drawImage(image, x, y + (int) spriteOffsets[idx], null);
+        System.out.println(y);
 
 
-        gd.scale(1/spriteScale,1/ spriteScale);
+        gd.scale(1/spriteScales[idx],1/ spriteScales[idx]);
+    }
+
+    public void scaleWidth() {
+        for (int i = 0; i < images.length; i++) {
+            spriteScales[i] = 120f / images[i].getWidth();
+            var ratio = images[i].getWidth() / (float) images[i].getHeight();
+            spriteOffsets[i] = 0f;
+            if (ratio < 1)
+                spriteOffsets[i] += (1f - (1f/ratio))/2f;
+            else
+                spriteOffsets[i] -= (1f - (1f/ratio))/2f;
+        }
+    }
+
+    public void setScale(float scale) {
+        spriteScale = scale;
+        for (int i = 0; i < spriteScales.length; i++) {
+            spriteScales[i] = scale;
+        }
     }
 }

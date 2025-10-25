@@ -31,7 +31,7 @@ public class Rat extends GameObject {
         //ratView.spriteScale = 0.25f;
 
         remi = new AnimatedSprite(AssetManager.getAnim("remi"), 2.5f);
-        remi.spriteScale = 0.25f;
+        remi.setScale(0.25f);
 
         remi.unFreeze();
         remi.start();

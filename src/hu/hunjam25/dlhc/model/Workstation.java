@@ -35,7 +35,7 @@ public class Workstation extends GameObject {
         sprite.scaleWidth();
         float sc = sprite.getRatio();
         //System.out.println(sc);
-        if (sc < 1)
+        if (sc < 1 && sc != 0)
             this.position.y += (1f - (1f/sc))/2f;
         else
             this.position.y -= (1f - (1f/sc))/2f;

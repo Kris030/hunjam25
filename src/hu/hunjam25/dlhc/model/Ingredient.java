@@ -8,7 +8,7 @@ public enum Ingredient {
     Egg(WorkstationType.Fridge, 2),
     Beef(WorkstationType.Stove, 10),
     Carrots(WorkstationType.Stove, 7),
-    ;
+    TrashFire(WorkstationType.Trash, 4);
 
     public WorkstationType workstationType;
 

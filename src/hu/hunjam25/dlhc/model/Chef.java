@@ -18,10 +18,11 @@ public class Chef extends GameObject {
         for (int i = 0; i<foodCount; i++){
             foodTodo.add(Food.RandomFood());
         }
+        results = new ArrayList<>();
         currentFood = foodTodo.poll();
         currIngredient = 0;
         todo = Arrays.asList(currentFood.ingredients);
-        results = new ArrayList<>();
+        pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
     }
 
     public Chef(){
@@ -67,7 +68,7 @@ public class Chef extends GameObject {
 
             if (Game.now - startedWorkAt >= todo.get(currIngredient).durationSeconds) {
                 currWorkstation = null;
-                pathFindingTo = Kitchen.findClosestWorkStation(todo.get(currIngredient));
+                pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
             }
         }
     }

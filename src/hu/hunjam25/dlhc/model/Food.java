@@ -2,8 +2,8 @@ package hu.hunjam25.dlhc.model;
 
 public enum Food {
 
-    Gulyas(new Ingredient[] {}),
-    Pori(new Ingredient[] {}),
+    Gulyas(new Ingredient[] {Ingredient.Tomato, Ingredient.Tomato}),
+    Pori(new Ingredient[] {Ingredient.Tomato, Ingredient.Tomato}),
 
     ;
 

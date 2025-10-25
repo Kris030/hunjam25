@@ -23,7 +23,7 @@ public class Workstation extends GameObject {
         this.workingOffset = workingOffset;
     }
 
-    WorkstationType type;
+    public WorkstationType type;
 
     // relative to GameObject position
     Point.Float workingOffset;

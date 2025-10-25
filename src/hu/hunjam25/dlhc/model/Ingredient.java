@@ -10,12 +10,12 @@ public enum Ingredient {
     Carrots(WorkstationType.ChoppingBoard, 7),
     ;
 
-    public WorkstationType workspace;
+    public WorkstationType workstationType;
 
     public double durationSeconds;
 
     Ingredient(WorkstationType workspace, double durationSeconds) {
-        this.workspace = workspace;
+        this.workstationType = workspace;
         this.durationSeconds = durationSeconds;
     }
 

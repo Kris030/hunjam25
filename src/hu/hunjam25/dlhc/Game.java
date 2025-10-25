@@ -38,6 +38,7 @@ public class Game {
         imageStorage = new HashMap<>();
         imageStorage.put("rat", ImageIO.read(Path.of("art", "rat.jpg").toFile()));
         imageStorage.put("tiles", ImageIO.read(Path.of("art", "tiles.png").toFile()));
+        imageStorage.put("dot", ImageIO.read(Path.of("art", "dot.png").toFile()) );
     }
 
     public static BufferedImage getImage(String name) {

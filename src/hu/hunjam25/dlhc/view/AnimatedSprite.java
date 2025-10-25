@@ -84,7 +84,7 @@ public class AnimatedSprite implements IRenderable {
         var tf = gd.getTransform();
         gd.scale(spriteScales[idx], spriteScales[idx]);
 
-        gd.drawImage(image, x, y + (int) spriteOffsets[idx], null);
+        gd.drawImage(image, x, y  + (int) (spriteOffsets[idx] / spriteScales[idx]), null);
 
         //gd.drawImage(image, x, y, null);
 
@@ -99,8 +99,7 @@ public class AnimatedSprite implements IRenderable {
             if (ratio < 1)
                 spriteOffsets[i] += 120f * (1f - (1f/ratio))/2f;
             else
-                spriteOffsets[i] -= 120f * (1f - (1f/ratio))/2f;
-            System.out.println(spriteOffsets[i]);
+                spriteOffsets[i] += 120f * (1f - (1f/ratio))/2f;
         }
     }
 

@@ -1,7 +1,6 @@
 package hu.hunjam25.dlhc;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
@@ -10,7 +9,6 @@ import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Rat;
 import hu.hunjam25.dlhc.model.Workstation;
-import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
@@ -26,12 +24,12 @@ public class Kitchen {
 
     public static Sprite background = new Sprite(AssetManager.getImage("tiles"));
 
+    public static float rating = 1.0f;
 
     static {
         background.centered = false;
     }
 
-    // TODO: BFS if the kitchen isn't a square?
     public static Workstation findClosestWorkStation(Point.Float position, Ingredient ingredient) {
         var _ws = workstations.stream()
                 .filter(ws -> ws.type.equals(ingredient.workstationType))
@@ -47,8 +45,10 @@ public class Kitchen {
 
     public static void init() {
         rat = new Rat();
-        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(2f, 5f), new Point.Float(0f, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(7f, 0f), new Point.Float(-0.5f, 0f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(0f, 2f),
+                new Point.Float(0f, -0.5f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(5f, 0f),
+                new Point.Float(-0.5f, 0f)));
         chefs.add(new Chef());
 
         var element = new UiElement();
@@ -62,5 +62,14 @@ public class Kitchen {
         return Stream.concat(
                 Stream.concat(workstations.stream(), chefs.stream()),
                 minigame == null ? Stream.of(rat) : Stream.of(rat, minigame));
+    }
+
+    public static void increaseRating(Float[] ingRatings, Float timeDelay) {
+        /*
+         * TODO: create function for how time delay and minigames affect rating
+         */
+
+        // keep rating between 0 and 1
+        Math.clamp(rating, 0.0f, 1.0f);
     }
 }

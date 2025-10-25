@@ -2,7 +2,6 @@ package hu.hunjam25.dlhc.model;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
@@ -20,11 +19,17 @@ public class Chef extends GameObject {
         for (int i = 0; i < foodCount; i++) {
             foodTodo.add(Food.RandomFood());
         }
-        results = new ArrayList<>();
+        startNewFood();
+    }
+
+    private void startNewFood() {
         currentFood = foodTodo.remove();
         currIngredient = 0;
-        todo = Arrays.asList(currentFood.ingredients);
-        pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
+        todo = currentFood.ingredients;
+        results = new Float[todo.length];
+        Arrays.fill(results, 0f);
+        pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
+        startedCurrentFoodAt = Game.now;
     }
 
     public Chef() {
@@ -34,16 +39,21 @@ public class Chef extends GameObject {
     Queue<Food> foodTodo;
 
     Food currentFood;
+
     int currIngredient;
-    List<Ingredient> todo;
-    List<Float> results;
+    Ingredient[] todo;
+    Float[] results;
 
     // null if not at workstation
     Workstation currWorkstation;
     float startedWorkAt;
 
+    float startedCurrentFoodAt;
+
     Workstation pathFindingTo;
     Point.Float pathFindingTargetPosition;
+
+    float stoppedUntil = 0f;
 
     boolean finished = false;
 
@@ -68,28 +78,33 @@ public class Chef extends GameObject {
             }
         } else {
             // work at workstation
-            if (Game.now - startedWorkAt >= todo.get(currIngredient).durationSeconds) {
+            if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds) {
                 currWorkstation = null;
                 currIngredient++;
-                // TODO: results handling
+
                 // food finished
-                if (currIngredient >= todo.size()) {
-                    // TODO: results handling
+                if (currIngredient >= todo.length) {
+                    double ingredientSumTime = 0;
+                    for (var ing : todo)
+                        ingredientSumTime += ing.durationSeconds;
+                    Float timeDelay = Game.now - startedCurrentFoodAt - (float) ingredientSumTime;
+                    Kitchen.increaseRating(results, timeDelay);
+
                     if (foodTodo.isEmpty()) {
                         finished = true;
                         return;
                     }
-                    currentFood = foodTodo.remove();
-                    todo = Arrays.asList(currentFood.ingredients);
-                    currIngredient = 0;
+                    startNewFood();
                 }
-                pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
+                pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
             }
         }
     }
 
     /// return true if the chef has arrived at the target
     private boolean stepTowardsTarget(float dt) {
+        if (stopped())
+            return false;
         Point.Float velocity = (Point.Float) pathFindingTargetPosition.clone();
         velocity.x -= position.x;
         velocity.y -= position.y;
@@ -106,8 +121,16 @@ public class Chef extends GameObject {
         return length <= /* TODO exact distance? */ 0.1f;
     }
 
+    public void stopForDuration(float seconds) {
+        stoppedUntil = Game.now + seconds;
+    }
+
+    private boolean stopped() {
+        return Game.now < stoppedUntil;
+    }
+
     public void pushResult(float result) {
-        results.add(result);
+        results[currIngredient] += result;
     }
 
     private Sprite sprite = new Sprite(AssetManager.getImage("chef"));
@@ -116,6 +139,5 @@ public class Chef extends GameObject {
     public void render(Graphics2D gd) {
         super.render(gd);
         sprite.render(gd);
-        // System.out.println("chef drawn");
     }
 }

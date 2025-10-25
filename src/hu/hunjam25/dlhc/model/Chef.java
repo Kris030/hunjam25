@@ -10,7 +10,6 @@ import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Kitchen;
 import hu.hunjam25.dlhc.Vec2;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
-import hu.hunjam25.dlhc.view.Sprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
 import static java.lang.Math.abs;
@@ -29,37 +28,31 @@ public class Chef extends GameObject {
         for (int i = 0; i < foodCount; i++) {
             foodTodo.add(Food.RandomFood());
         }
-        startNewFood();
 
         animatedSprite.frozen = true;
         animatedSprite.setScale(0.375f);
 
         // TODO: real stuff here
-        addClockAndRatMeter();
+        startNewFood();
+        addRatMeter();
     }
 
-    private void addClockAndRatMeter() {
-        UiElement timr = new UiElement();
-        timr.visible = true;
-        timr.scale = 0.15f;
-        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("clock"), 4);
-        timerSprite.frozen = false;
-        timerSprite.start();
-        timr.setAnimatedSprite(timerSprite);
-        timr.addOffset(new Vec2(0.5f, 0.0f));
-        addUiElement(timr);
-        UiElement timer = new UiElement();
-        timer.visible = true;
-        timer.scale = 0.15f;
-        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
-        timrSprite.frozen = false;
-        timrSprite.start();
-        timer.setAnimatedSprite(timrSprite);
-        timer.addOffset(new Vec2(-0.5f, 0.0f));
-        addUiElement(timer);
+    private void addRatMeter() {
+        float min = -1.0f * (todo.length + 1) / 6.0f;
+
+        UiElement ratTimer = new UiElement();
+        ratTimer.visible = true;
+        ratTimer.scale = 0.15f;
+        AnimatedSprite ratSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
+        ratSprite.frozen = true;
+        ratTimer.setAnimatedSprite(ratSprite);
+        ratTimer.addOffset(new Vec2(min, 0.0f));
+        addUiElement(ratTimer);
     }
 
     private void startNewFood() {
+        this.clearUiElements();
+
         currentFood = foodTodo.remove();
         currIngredient = 0;
         todo = currentFood.ingredients;
@@ -67,6 +60,25 @@ public class Chef extends GameObject {
         Arrays.fill(results, 0f);
         pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
         startedCurrentFoodAt = Game.now;
+        addRatMeter();
+        addClockTimers();
+    }
+
+    private void addClockTimers() {
+        for (int i = 0; i < todo.length; i++) {
+            float min = -1.0f * (todo.length + 1) / 6.0f;
+
+            UiElement timr = new UiElement();
+            timr.visible = true;
+            timr.scale = 0.1f;
+            AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("clock"),
+                    todo[i].durationSeconds * 5f / 4f);
+            timerSprite.frozen = i == 0 ? false : true;
+            timerSprite.start();
+            timr.setAnimatedSprite(timerSprite);
+            timr.addOffset(new Vec2(min + (i + 1) * 0.4f, 0.0f));
+            addUiElement(timr);
+        }
     }
 
     public Chef() {
@@ -117,6 +129,7 @@ public class Chef extends GameObject {
                 pathFindingTargetPosition = null;
                 pathFindingTo = null;
                 startedWorkAt = Game.now;
+                startTimer(currIngredient);
             }
         } else {
             animatedSprite.setIdx(0);
@@ -128,6 +141,7 @@ public class Chef extends GameObject {
 
                 if (!Kitchen.isOnFire) {
                     currIngredient++;
+                    setTimersAfterTask(currIngredient);
                 } else {
                     Kitchen.isOnFire = false;
                     fixTempIngredient();
@@ -135,10 +149,10 @@ public class Chef extends GameObject {
 
                 // food finished
                 if (currIngredient >= todo.length) {
-                    double ingredientSumTime = 0;
+                    float ingredientSumTime = 0;
                     for (var ing : todo)
                         ingredientSumTime += ing.durationSeconds;
-                    Float timeDelay = Game.now - startedCurrentFoodAt - (float) ingredientSumTime;
+                    Float timeDelay = Game.now - startedCurrentFoodAt - ingredientSumTime;
                     Kitchen.decreaseRating(results, timeDelay);
 
                     if (foodTodo.isEmpty()) {
@@ -150,6 +164,20 @@ public class Chef extends GameObject {
                 }
                 pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
             }
+        }
+    }
+
+    private void startTimer(int id) {
+        var as = ((UiElement) this.getUiElement(id + 1)).animatedSprite;
+        as.frozen = false;
+        as.start();
+    }
+
+    private void setTimersAfterTask(int id) {
+        for (int i = 1; i < todo.length + 1; i++) {
+            var as = ((UiElement) this.getUiElement(i)).animatedSprite;
+            as.frozen = true;
+            as.setIdx(id + 1 > i ? 4 : 0);
         }
     }
 

@@ -14,9 +14,9 @@ public enum Ingredient {
 
     public WorkstationType workstationType;
 
-    public double durationSeconds;
+    public float durationSeconds;
 
-    Ingredient(WorkstationType workspace, double durationSeconds) {
+    Ingredient(WorkstationType workspace, float durationSeconds) {
         this.workstationType = workspace;
         this.durationSeconds = durationSeconds;
     }

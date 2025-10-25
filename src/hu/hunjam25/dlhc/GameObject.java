@@ -38,7 +38,15 @@ public class GameObject implements IRenderable {
         uiElements.add(element);
     }
 
-    public void renderUiElements(Graphics2D gd){
+    public void renderUiElements(Graphics2D gd) {
         uiElements.forEach(ui -> ui.render(gd));
+    }
+
+    public IRenderable getUiElement(int index) {
+        return uiElements.get(index);
+    }
+
+    public void clearUiElements() {
+        uiElements.clear();
     }
 }

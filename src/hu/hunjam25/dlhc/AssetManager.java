@@ -83,6 +83,16 @@ public class AssetManager {
         animStorage.put(Workstation.WorkstationType.ChoppingBoard.name(), choppingBoard);
     }
 
+    private static void addClockAnimation() throws IOException {
+        BufferedImage[] clock = new BufferedImage[5];
+
+        for (int i = 1 ; i <= 5; ++i){
+            clock[i] = ImageIO.read(Path.of("art","ora","ora_0" + i + ".png").toFile());
+        }
+
+        animStorage.put("clock", clock);
+    }
+
     private static void addWorkStations() throws IOException {
         img("Stove", "art", "organized", "stove", "stove_front_on.png");
         img("Sink", "art", "organized", "sink", "sink_front_off.png");

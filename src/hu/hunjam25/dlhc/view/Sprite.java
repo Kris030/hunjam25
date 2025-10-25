@@ -7,7 +7,7 @@ public class Sprite implements IRenderable {
 
     private BufferedImage image;
 
-    public boolean centered = false;
+    public boolean centered = true;
 
     public boolean mirrored = false;
 

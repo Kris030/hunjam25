@@ -23,6 +23,10 @@ public class Kitchen {
 
     public static Sprite background = new Sprite(Game.getImage("tiles"));
 
+    static {
+        background.centered = false;
+    }
+
     // TODO: BFS if the kitchen isn't a square?
     public static Workstation findClosestWorkStation(Point.Float position, Ingredient ingredient) {
         return workstations.stream()

@@ -5,6 +5,7 @@ import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
+import hu.hunjam25.dlhc.view.UiElement;
 
 import java.awt.*;
 
@@ -60,5 +61,26 @@ public class Workstation extends GameObject {
 
     public boolean hasWorker() {
         return workers > 0;
+    }
+
+    private void makeTrashCan() {
+        UiElement timr = new UiElement();
+        timr.visible = true;
+        timr.scale = 0.2f;
+        AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("fire"), 4);
+        timerSprite.frozen = false;
+        timerSprite.start();
+        timr.setAnimatedSprite(timerSprite);
+        timr.addOffset(0.5f, 0.0f);
+        addUiElement(timr);
+        UiElement timer = new UiElement();
+        timer.visible = true;
+        timer.scale = 0.2f;
+        AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("smoke"), 2);
+        timrSprite.frozen = false;
+        timrSprite.start();
+        timer.setAnimatedSprite(timrSprite);
+        timer.addOffset(-0.5f, 0.0f);
+        addUiElement(timer);
     }
 }

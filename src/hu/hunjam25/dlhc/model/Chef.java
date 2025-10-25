@@ -87,10 +87,8 @@ public class Chef extends GameObject {
                 currWorkstation = null;
 
                 if (tempIfOnFire == null) {
-                    System.out.println("Task completed");
                     currIngredient++;
                 } else {
-                    System.out.println("Fire extinguished");
                     fixTempIngredient();
                 }
 

@@ -31,6 +31,8 @@ public class Kitchen {
     /// real number in [0;1]
     public static float rating = 1.0f;
 
+    public static boolean isOnFire = false;
+
     static {
         background.centered = false;
     }
@@ -53,8 +55,8 @@ public class Kitchen {
         rat = new Rat();
 
         // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 2f),
-                new Vec2(0.5f, 0f)));
+        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 0f),
+                new Vec2(0f, 0.5f)));
         // trash workstation must be first in Kitchen.workstations!!!
         workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(12f, 3f),
                 new Vec2(0f, -0.5f)));
@@ -112,5 +114,10 @@ public class Kitchen {
 
     public static void startMinigame(Workstation w) {
         minigame = w.getMinigame();
+    }
+
+    public static void startFire() {
+        isOnFire = true;
+        chefs.forEach(c -> c.addHazard(Kitchen.workstations.get(0), Ingredient.TrashFire));
     }
 }

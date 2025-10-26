@@ -137,8 +137,7 @@ public class Chef extends GameObject {
 
     private void finishJob() {
         try {
-            Clip c = ding.play();
-            c.close();
+            ding.play();
         } catch (LineUnavailableException e) {
             System.err.println("No sound");
             throw new RuntimeException(e);

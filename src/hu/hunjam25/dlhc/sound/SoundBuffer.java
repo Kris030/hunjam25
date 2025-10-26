@@ -19,6 +19,12 @@ public record SoundBuffer(AudioFormat format, byte[] audioData) {
         clip.open(this.format(), this.audioData(), 0, this.audioData().length);
         clip.start();
 
+        clip.addLineListener(event -> {
+            if (event.getType() == LineEvent.Type.STOP) {
+                clip.close();
+            }
+        });
+
         return clip;
     }
 }

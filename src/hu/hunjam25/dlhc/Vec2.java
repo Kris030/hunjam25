@@ -29,4 +29,8 @@ public record Vec2(float x, float y) {
     public Vec2 norm() {
         return div(length());
     }
+
+    public Vec2 neg() {
+        return new Vec2(-x, -y);
+    }
 }

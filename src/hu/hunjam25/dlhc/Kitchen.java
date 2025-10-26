@@ -67,17 +67,18 @@ public class Kitchen {
         rat = new Rat();
 
         // defLaylout();
-        List<WorkstationType> topRow = List.of(WorkstationType.Fridge, WorkstationType.ChoppingBoard,
+        List<WorkstationType> topRow = List.of(WorkstationType.Fridge,
+                WorkstationType.ChoppingBoard,
                 WorkstationType.Oven, WorkstationType.Sink, WorkstationType.Stove);
         List<WorkstationType> randomStations = new ArrayList<>();
         randomStations.addAll(topRow);
         Collections.shuffle(randomStations);
-        for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 1) * 2; i++) {
+        for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 2) * 2; i++) {
             randomStations.add(topRow.get(Food.r.nextInt(topRow.size())));
         }
-        for (int i = 1; i < Game.MAP_WIDTH - 1; ++i) {
+        for (int i = 1; i < Game.MAP_WIDTH - 1; i++) {
             workstations.add(new Workstation(
-                    randomStations.get(i),
+                    randomStations.get(i - 1),
                     new Vec2((float) i, 5f),
                     new Vec2(-0.2f, -0.5f)));
         }
@@ -86,12 +87,12 @@ public class Kitchen {
         randomStations = new ArrayList<>();
         randomStations.addAll(bottomRow);
         Collections.shuffle(randomStations);
-        for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 1) * 2; i++) {
+        for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 2) * 2; i++) {
             randomStations.add(bottomRow.get(Food.r.nextInt(bottomRow.size())));
         }
         for (int i = 1; i < Game.MAP_WIDTH - 1; ++i) {
             workstations.add(new Workstation(
-                    randomStations.get(i),
+                    randomStations.get(i - 1),
                     new Vec2((float) i, 0f),
                     new Vec2(0.2f, 0.5f)));
         }

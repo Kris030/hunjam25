@@ -23,6 +23,9 @@ public class Game {
     public static final int MAP_WIDTH = 14;
     public static final int MAP_HEIGHT = 5;
 
+    public static final Vec2 GLOBAL_SCALE = new Vec2(0.8f,0.8f);
+    public static final Vec2 GLOBAL_SKEW = new Vec2(-0.3f,0f);
+
     public static final Vec2 CENTER = new Vec2(
             Game.MAP_WIDTH / 2f,
             Game.MAP_HEIGHT / 2f);
@@ -47,7 +50,7 @@ public class Game {
     }
 
     public static Vec2 gameToScreen(Vec2 game) {
-        return new Vec2((game.x() + MAP_OFFSET_X) * TILE_SIZE, (-MAP_OFFSET_Y + MAP_HEIGHT - game.y()) * TILE_SIZE);
+        return new Vec2((game.x() + MAP_OFFSET_X + GLOBAL_SKEW.x() * -game.y())  , (-MAP_OFFSET_Y + MAP_HEIGHT - game.y()) + GLOBAL_SKEW.y() * game.x() ).mul(TILE_SIZE);
     }
 
     public static Vec2 screenToGame(Vec2 screen) {
@@ -110,7 +113,7 @@ public class Game {
         g.setTransform(transform);
 
         g.clipRect(MAP_OFFSET_X * TILE_SIZE, Math.abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
-        g.shear(-0.3, 0);
+        g.shear(GLOBAL_SKEW.x(), GLOBAL_SKEW.y());
         Kitchen.floor.render(g);
         g.setTransform(transform);
         g.setClip(0, 0, SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE);

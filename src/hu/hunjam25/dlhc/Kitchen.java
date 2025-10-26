@@ -59,22 +59,22 @@ public class Kitchen {
         rat = new Rat();
 
         //defLaylout();
-        for (int i = 1; i < Game.MAP_WIDTH; ++i) {
+        for (int i = 0; i < Game.MAP_WIDTH-1; ++i) {
             workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2((float)i, 5f),
                     new Vec2(0, -0.5f)));
         }
 
         for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(1f,(float) i),
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(0f,(float) i),
                     new Vec2(0.5f, 0f)));
         }
 
         for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(Game.MAP_WIDTH-1,(float) i),
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(Game.MAP_WIDTH-2f,(float) i),
                     new Vec2(-0.5f, 0f)));
         }
 
-        for (int i = 1; i < Game.MAP_WIDTH; ++i) {
+        for (int i = 0; i < Game.MAP_WIDTH-1; ++i) {
             workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2((float)i, 0f),
                     new Vec2(0, 0.5f)));
         }

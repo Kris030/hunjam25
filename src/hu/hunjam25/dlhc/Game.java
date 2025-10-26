@@ -123,6 +123,7 @@ public class Game implements IScreen {
         if (Kitchen.chefs.isEmpty()) {
             Main.endGame(Kitchen.rating <= 0.4);
         }
+        if(Kitchen.rating <= 0)
 
         Kitchen.updateStars();
         Kitchen.particleEffects.removeAll(Kitchen.particleEffectKillList);

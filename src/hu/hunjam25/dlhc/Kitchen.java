@@ -134,7 +134,11 @@ public class Kitchen {
 
         rating -= deduction;
         // keep rating between 0 and 1
-        rating = Math.clamp(rating, 0.0f, 1.0f);
+        if(rating < 0.0f){
+            Main.endGame(true);
+        }
+
+        rating = Math.max(rating, 1f);
     }
 
     public static void startMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {

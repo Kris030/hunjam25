@@ -11,6 +11,8 @@ import static hu.hunjam25.dlhc.Game.keepOnMap;
 
 public class Rat extends GameObject {
 
+    //How close do you have to be to start minigame
+    public static final float RAT_RANGE = 0.9f;
     static float SPEED = 0.005f;
 
     private Sprite dot = new Sprite(AssetManager.getImage("dot"));
@@ -48,7 +50,7 @@ public class Rat extends GameObject {
                     .get();
 
             float dist = w.getOffsettedPosition().dist(this.position);
-            if (dist < 0.3f && w.hasWorker()) {
+            if (dist < RAT_RANGE && w.hasWorker()) {
                 var chef = Kitchen.chefs.stream()
                         .filter(c -> c.currWorkstation == w)
                         .min((c1, c2) -> Float.compare(

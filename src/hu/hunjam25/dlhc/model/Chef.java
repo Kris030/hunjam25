@@ -5,7 +5,6 @@ import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -32,23 +31,24 @@ public class Chef extends GameObject {
             foodTodo.add(Food.RandomFood());
         }
 
-        animatedSprite.frozen = true;
+        animatedSprite.freeze();
         animatedSprite.setScale(0.375f);
 
         ding = AssetManager.getSound("ready");
         // TODO: real stuff here
         startNewFood();
-        addRatMeter();
+        addRatMeter(0f);
     }
 
-    private void addRatMeter() {
+    private void addRatMeter(float level) {
         float min = -1.0f * (todo.length + 1) / 6.0f;
 
         UiElement ratTimer = new UiElement();
         ratTimer.visible = true;
         ratTimer.scale = 0.15f;
         AnimatedSprite ratSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
-        ratSprite.frozen = true;
+        ratSprite.freeze();
+        ratSprite.setIdx((int)(level * ratSprite.getNumberOfFrames()) );
         ratTimer.setAnimatedSprite(ratSprite);
         ratTimer.addOffset(new Vec2(min, 0.0f));
         addUiElement(ratTimer);
@@ -64,7 +64,7 @@ public class Chef extends GameObject {
         Arrays.fill(results, 0f);
         pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
         startedCurrentFoodAt = Game.now;
-        addRatMeter();
+        addRatMeter(Kitchen.rating);
         addClockTimers();
     }
 
@@ -77,7 +77,11 @@ public class Chef extends GameObject {
             timr.scale = 0.1f;
             AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("clock"),
                     todo[i].durationSeconds * 5f / 4f);
-            timerSprite.frozen = i == 0 ? false : true;
+            if (i != 0) {
+                timerSprite.freeze();
+            } else {
+                timerSprite.unFreeze();
+            }
             timerSprite.start();
             timr.setAnimatedSprite(timerSprite);
             timr.addOffset(new Vec2(min + (i + 1) * 0.4f, 0.0f));
@@ -219,14 +223,14 @@ public class Chef extends GameObject {
 
     private void startTimer(int id) {
         var as = ((UiElement) this.getUiElement(id + 1)).animatedSprite;
-        as.frozen = false;
+        as.unFreeze();
         as.start();
     }
 
     private void setTimersAfterTask(int id) {
         for (int i = 1; i < todo.length + 1; i++) {
             var as = ((UiElement) this.getUiElement(i)).animatedSprite;
-            as.frozen = true;
+            as.freeze();
             as.setIdx(id + 1 > i ? 4 : 0);
         }
     }

@@ -75,7 +75,7 @@ public class Workstation extends GameObject {
         timr.scale = 0.2f;
 
         AnimatedSprite timerSprite = new AnimatedSprite(AssetManager.getAnim("fire"), 0.2f);
-        timerSprite.frozen = false;
+        timerSprite.unFreeze();
         timerSprite.start();
         timr.setAnimatedSprite(timerSprite);
         timr.addOffset(new Vec2(0.0f, 0.0f));
@@ -86,7 +86,7 @@ public class Workstation extends GameObject {
         timer.scale = 0.2f;
 
         AnimatedSprite timrSprite = new AnimatedSprite(AssetManager.getAnim("smoke"), 0.4f);
-        timrSprite.frozen = false;
+        timrSprite.unFreeze();
         timrSprite.start();
         timer.setAnimatedSprite(timrSprite);
         timer.addOffset(new Vec2(0.0f, 0.5f));

@@ -17,7 +17,7 @@ public class AnimatedSprite implements IRenderable {
 
     public boolean mirrored = false;
 
-    public boolean frozen = true;
+    private boolean frozen = true;
 
     private int idx = 0;
 
@@ -48,8 +48,8 @@ public class AnimatedSprite implements IRenderable {
     }
 
     public void setIdx(int idx) {
-        this.idx = idx;
         idx %= images.length;
+        this.idx = idx;
     }
 
     public void unFreeze() {
@@ -97,10 +97,7 @@ public class AnimatedSprite implements IRenderable {
             spriteScales[i] = 1f * 120f / images[i].getWidth();
             var ratio = images[i].getWidth() / (float) images[i].getHeight();
             spriteOffsets[i] = 0f; //-60f;
-            if (ratio < 1)
-                spriteOffsets[i] += 1f * 120f * (1f - (1f/ratio))/2f;
-            else
-                spriteOffsets[i] += 1f * 120f * (1f - (1f/ratio))/2f;
+            spriteOffsets[i] += 1f * 120f * (1f - (1f/ratio))/2f;
         }
     }
 
@@ -109,5 +106,9 @@ public class AnimatedSprite implements IRenderable {
         for (int i = 0; i < spriteScales.length; i++) {
             spriteScales[i] = scale;
         }
+    }
+
+    public int getNumberOfFrames() {
+        return images.length;
     }
 }

@@ -3,8 +3,6 @@ package hu.hunjam25.dlhc.model;
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.GameObject;
 import hu.hunjam25.dlhc.Vec2;
-import hu.hunjam25.dlhc.gameplay.ChoppingBoard;
-import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.UiElement;
 

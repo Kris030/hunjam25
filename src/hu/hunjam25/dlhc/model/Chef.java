@@ -130,6 +130,10 @@ public class Chef extends GameObject {
     }
 
     private void finishJob() {
+        if(Kitchen.minigame != null && !Kitchen.minigame.isGameEnded()){
+            Kitchen.minigame.endGame();
+        }
+
         currWorkstation.setWorker(null);
         currWorkstation = null;
 
@@ -180,6 +184,7 @@ public class Chef extends GameObject {
                 confused = true;
                 findClosestWorkStation();
                 if(pathFindingTo != null){
+                    confused = false;
                     System.out.println("job found");
                 }
                 return;

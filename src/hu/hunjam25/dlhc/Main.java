@@ -65,7 +65,7 @@ public class Main {
 
             g.setColor(Color.ORANGE); // background color
             g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-            //g.scale(0.8f,0.8f);
+            g.scale(0.8f,0.8f);
             Game.render(g);
             //g.drawImage(AssetManager.getImage("tiles"),0,0, null);
 

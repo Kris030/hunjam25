@@ -57,7 +57,6 @@ public class Rat extends GameObject {
                         .get();
 
                 Kitchen.startMinigame(w, chef, chef.todo[chef.currIngredient]);
-                position = w.getOffsettedPosition();
             }
         }
     }

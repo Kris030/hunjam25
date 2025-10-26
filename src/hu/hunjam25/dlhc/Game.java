@@ -49,7 +49,7 @@ public class Game {
 
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
-                min(Game.MAP_WIDTH, max(0, position.x())),
+                min(Game.MAP_WIDTH - 2, max(0, position.x())),
                 min(Game.MAP_HEIGHT, max(0, position.y())));
     }
 

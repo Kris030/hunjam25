@@ -33,4 +33,12 @@ public record Vec2(float x, float y) {
     public Vec2 neg() {
         return new Vec2(-x, -y);
     }
+
+    public float minComp() {
+        return Math.min(x, y);
+    }
+
+    public float maxComp() {
+        return Math.max(x, y);
+    }
 }

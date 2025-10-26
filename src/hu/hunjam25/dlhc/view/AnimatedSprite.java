@@ -1,6 +1,7 @@
 package hu.hunjam25.dlhc.view;
 
 import hu.hunjam25.dlhc.Main;
+import hu.hunjam25.dlhc.Vec2;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -121,5 +122,9 @@ public class AnimatedSprite implements IRenderable {
 
     public boolean hasFinished() {
         return !looping && idx == images.length - 1;
+    }
+
+    public Vec2 getCurrFrameSize() {
+        return new Vec2(images[idx].getWidth(), images[idx].getHeight());
     }
 }

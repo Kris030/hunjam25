@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.stream.Stream;
 
 public class ChoppingBoardMinigame extends Minigame {
 
@@ -23,10 +24,9 @@ public class ChoppingBoardMinigame extends Minigame {
     private AnimatedSprite tomato = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.pari"), 0);
     private AnimatedSprite rat = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.remi_karddal"), 0);
 
-    private static final int TOMATO_COUNT = 5;
+    private static final int TOMATO_COUNT = 4;
     private static final Rectangle2D.Float TOMATO_BOUNDS = new Rectangle2D.Float(
-            -0.9f, -0.17f, 1.0f, 0.8f
-    );
+            -0.9f, -0.17f, 1.0f, 0.8f);
 
     private static final Vec2 KNIFE_POSITION = new Vec2(0.8f, -0.1f);
     private static final Vec2 KNIFE_ROT_OFFSET = new Vec2(0.2f, 0.2f);
@@ -41,8 +41,19 @@ public class ChoppingBoardMinigame extends Minigame {
         super(workstation, chef, ingredient);
 
         tomatos = new Vec2[TOMATO_COUNT];
+
+        float s = worldScale * tomato.getCurrFrameSize().maxComp();
         for (int i = 0; i < TOMATO_COUNT; i++) {
-            tomatos[i] = getTomatoPosition();
+            int k = i;
+            do {
+                tomatos[i] = new Vec2(
+                        Food.r.nextFloat(TOMATO_BOUNDS.x, TOMATO_BOUNDS.x + TOMATO_BOUNDS.width),
+                        Food.r.nextFloat(TOMATO_BOUNDS.y, TOMATO_BOUNDS.y + TOMATO_BOUNDS.height));
+
+            } while (k != 0 && Stream.of(tomatos)
+                    .limit(k - 1)
+                    .anyMatch(o -> o.dist(tomatos[k]) <= s));
+
         }
     }
 
@@ -93,20 +104,11 @@ public class ChoppingBoardMinigame extends Minigame {
         knife.render(g);
 
         g.translate(KNIFE_ROT_OFFSET.x(), KNIFE_ROT_OFFSET.y());
-        g.fill(new Ellipse2D.Float(
-                0.0f, 0.0f, 0.05f, 0.05f
-        ));
+        g.fill(new Ellipse2D.Float(0.0f, 0.0f, 0.05f, 0.05f));
 
         g.setTransform(tf);
         g.setColor(Color.RED);
         g.fill(TOMATO_BOUNDS);
-    }
-
-    private Vec2 getTomatoPosition() {
-        return new Vec2(
-                Food.r.nextFloat(TOMATO_BOUNDS.x, TOMATO_BOUNDS.x + TOMATO_BOUNDS.width),
-                Food.r.nextFloat(TOMATO_BOUNDS.y, TOMATO_BOUNDS.y + TOMATO_BOUNDS.height)
-        );
     }
 
     private void startCut() {

@@ -22,11 +22,11 @@ public class FridgeMinigame extends Minigame {
     private final float CLICK_SENSITIVITY = 0.1f;
     private final float SMOOTHNESS = 2.0f;
 
-    private final Sprite nyerFinal = new Sprite(AssetManager.getImage("huto_minigame_nyer"));
-    private final Sprite veszitFinal = new Sprite(AssetManager.getImage("huto_minigame_veszit"));
+    private final Sprite winFinal = new Sprite(AssetManager.getImage("huto_minigame_nyer"));
+    private final Sprite loseFinal = new Sprite(AssetManager.getImage("huto_minigame_veszit"));
 
-    private final AnimatedSprite nyer = new AnimatedSprite(AssetManager.getAnim("huto_minigame_nyer"), 0);
-    private final AnimatedSprite veszit = new AnimatedSprite(AssetManager.getAnim("huto_minigame_veszit"), 0);
+    private final AnimatedSprite win = new AnimatedSprite(AssetManager.getAnim("huto_minigame_nyer"), 0);
+    private final AnimatedSprite lose = new AnimatedSprite(AssetManager.getAnim("huto_minigame_veszit"), 0);
 
     public FridgeMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         super(workstation, chef, ingredient);
@@ -37,9 +37,6 @@ public class FridgeMinigame extends Minigame {
     }
 
     public void tick(float dt) {
-        if (isGameEnded())
-            return;
-
         boolean click = false;
         if (Game.keysPressed.contains(KeyEvent.VK_SPACE)) {
             if (!previouslyPressed)
@@ -58,22 +55,22 @@ public class FridgeMinigame extends Minigame {
             endGame();
         }
 
-        renderState = Utils.interpolateExp(dt / SMOOTHNESS, renderState, state);
+        renderState = Utils.interpolateExp(dt / SMOOTHNESS, 100.0f, renderState, state);
     }
 
     protected void renderGame(Graphics2D g) {
         if (state <= -1.0f) {
-            veszitFinal.spriteScale = worldScale;
-            veszitFinal.render(g);
+            loseFinal.spriteScale = worldScale;
+            loseFinal.render(g);
         } else if (Math.abs(state) < 1.0f) {
-            var anim = state > 0.0f ? nyer : veszit;
+            var anim = state > 0.0f ? win : lose;
             anim.setIdx((int) ((anim.getNumberOfFrames() - 1) * Math.abs(renderState)));
             anim.setScale(worldScale);
 
             anim.render(g);
         } else {
-            nyerFinal.spriteScale = worldScale;
-            nyerFinal.render(g);
+            winFinal.spriteScale = worldScale;
+            winFinal.render(g);
         }
     }
 }

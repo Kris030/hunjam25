@@ -32,9 +32,8 @@ public class Utils {
 //        return (float) (a * Math.pow(2.0f, -10.0f * t) * Math.sin((t * d - s) * (2.0f * Math.PI) / p) + c + b);
 //    }
 
-    public static float interpolateExp(float dt, float start, float end) {
-        var weight = (float) Math.exp(-dt * 100.0f);
-        var iweight = 1.0f - weight;
-        return start * weight + iweight * end;
+    public static float interpolateExp(float t, float c, float start, float end) {
+        var weight = (float) Math.exp(-t * c);
+        return start * weight + (1.0f - weight) * end;
     }
 }

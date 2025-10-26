@@ -46,6 +46,10 @@ public abstract class Minigame implements IRenderable {
         Kitchen.minigameEnded(getResult());
     }
 
+    public boolean isGameRunning() {
+        return state == State.SHOWN;
+    }
+
     public boolean isGameEnded() {
         return state == State.ANIM_OUT;
     }

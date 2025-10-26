@@ -211,7 +211,7 @@ public class Game implements IScreen {
 
     public static void playMusic(SoundBuffer music) {
         if (currentClip != null) {
-            fadeOut(currentClip);
+            // fadeOut(currentClip);
         }
 
         try {

@@ -122,7 +122,7 @@ public class Kitchen {
     }
 
     public static void decreaseRating(float[] ingredientResults, float timeDelay) {
-        float deduction = -0.1f;
+        float deduction = /*-0.1f; */ 0f;
         if (timeDelay > 6) {
             deduction += (timeDelay - 6) / 100f;
         }
@@ -130,7 +130,7 @@ public class Kitchen {
         for (float ir : ingredientResults) {
             sum += ir;
         }
-        deduction += (sum / ingredientResults.length) / 100f;
+        deduction += (sum / ingredientResults.length) / 100f * 2f;
 
         rating -= deduction;
         // keep rating between 0 and 1

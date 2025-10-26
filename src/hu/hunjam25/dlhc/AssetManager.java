@@ -254,8 +254,10 @@ public class AssetManager {
         addSound("ready", Path.of("art", "sounds", "ready_ding.wav"));
         addSound("music", Path.of("art", "Sound", "main.wav"));
 
-        addSound("opening", Path.of("art", "Sound","op", "op.wav"));
+        addSound("winSound", Path.of("art", "Sound", "win_fail", "win sound .wav"));
+        addSound("loseSound", Path.of("art", "Sound", "win_fail", "fail sound .wav"));
 
+        addSound("opening", Path.of("art", "Sound","op", "op.wav"));
     }
 
     public static BufferedImage getImage(String name) {

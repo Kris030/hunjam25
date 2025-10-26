@@ -91,6 +91,8 @@ public class OvenMinigame extends Minigame {
         }
     }
 
+
+
     protected void renderGame(Graphics2D g) {
         backg.spriteScale = worldScale;
         backg.render(g);

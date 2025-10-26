@@ -41,14 +41,11 @@ public class Main {
 
         frame = new JFrame("Don't let him cook");
 
-<<<<<<< Updated upstream
-        frame.setSize(1000, 589);
-=======
+
         frame.setUndecorated(true);
         frame.setResizable(false);
         //frame.setSize(Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
         frame.setSize(800, 600);
->>>>>>> Stashed changes
         frame.setLocationRelativeTo(null);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

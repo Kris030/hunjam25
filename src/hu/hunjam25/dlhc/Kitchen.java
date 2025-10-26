@@ -3,6 +3,7 @@ package hu.hunjam25.dlhc;
 import hu.hunjam25.dlhc.gameplay.ChoppingBoardMinigame;
 import hu.hunjam25.dlhc.gameplay.FridgeMinigame;
 import hu.hunjam25.dlhc.gameplay.Minigame;
+import hu.hunjam25.dlhc.gameplay.OvenMinigame;
 import hu.hunjam25.dlhc.model.*;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.ParticleEffect;
@@ -143,8 +144,8 @@ public class Kitchen {
         minigame = switch (workstation.type) {
             case Fridge -> new FridgeMinigame(workstation, chef, ingredient);
             case ChoppingBoard -> new ChoppingBoardMinigame(workstation, chef, ingredient);
-//            case Oven -> null;
-//            case Stove -> null;
+            case Stove -> new OvenMinigame(workstation, chef, ingredient);
+            case Oven -> new OvenMinigame(workstation, chef, ingredient);
 //            case Trash -> null;
             default -> new ChoppingBoardMinigame(workstation, chef, ingredient);
         };

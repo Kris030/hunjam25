@@ -62,6 +62,8 @@ public class AssetManager {
         addHutoMinigame();
 
         addChoppingMinigame();
+
+        addOvenGameSprites();
     }
 
     private static void addChoppingMinigame() throws IOException {
@@ -266,5 +268,13 @@ public class AssetManager {
 
     public static SoundBuffer getSound(String name) {
         return soundStorage.getOrDefault(name, soundStorage.get("pipe"));
+    }
+
+    private static void addOvenGameSprites() throws IOException {
+        addImg("ovenBackg", img(Path.of("art", "minigame_suto", "minigame_suto_hatter.png")));
+        addImg("leftFlame", img(Path.of("art", "minigame_suto", "minigame_suto_bal_tuz.png")));
+        addImg("rightFlame", img(Path.of("art", "minigame_suto", "minigame_suto_jobb_tuz.png")));
+        addImg("leftKnob", img(Path.of("art", "minigame_suto", "minigame_suto_bal_gomb.png")));
+        addImg("rightKnob", img(Path.of("art", "minigame_suto", "minigame_suto_jobb_gomb.png")));
     }
 }

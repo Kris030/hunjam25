@@ -11,6 +11,7 @@ import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -88,6 +89,11 @@ public class OvenMinigame extends Minigame {
             jumping = 0.2f;
             onBurner = Math.abs(onBurner - 1);
             ratRun.freeze();
+            /*try {
+                AssetManager.getSound("ugras").play(null);
+            } catch (LineUnavailableException e) {
+                //throw new RuntimeException(e);
+            }*/
         }
 
         if (leftBurner < -1f) leftBurner = -1f;
@@ -152,6 +158,6 @@ public class OvenMinigame extends Minigame {
 
     @Override
     public SoundBuffer getMusic() {
-        return AssetManager.getSound(null);
+        return AssetManager.getSound("ovenMusic");
     }
 }

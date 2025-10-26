@@ -144,7 +144,7 @@ public class Kitchen {
             case Stove -> new OvenMinigame(workstation, chef, ingredient);
             case Oven -> new OvenMinigame(workstation, chef, ingredient);
             // case Trash -> null;
-            default -> new ChoppingBoardMinigame(workstation, chef, ingredient);
+            default -> new OvenMinigame(workstation, chef, ingredient);//new ChoppingBoardMinigame(workstation, chef, ingredient);
         };
 
         Game.playMusic(minigame.getMusic());

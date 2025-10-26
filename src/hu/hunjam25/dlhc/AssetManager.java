@@ -294,7 +294,7 @@ public class AssetManager {
         return soundStorage.getOrDefault(name, soundStorage.get("pipe"));
     }
 
-    private static void addOvenGameSprites() throws IOException {
+    private static void addOvenGameSprites() throws IOException, UnsupportedAudioFileException {
         addImg("ovenBackg", img(Path.of("art", "minigame_suto", "minigame_suto_hatter.png")));
         addImg("leftFlame", img(Path.of("art", "minigame_suto", "minigame_suto_bal_tuz.png")));
         addImg("rightFlame", img(Path.of("art", "minigame_suto", "minigame_suto_jobb_tuz.png")));
@@ -303,5 +303,9 @@ public class AssetManager {
         addImg("ratJump", img(Path.of("art", "rat_run", "rat_jump.png")));
         addAnim("ratRun",
                 imgs(2, i -> Path.of("art", "rat_run", "rat_run_" + (i+1) + ".png" )));
+        addSound("ovenMusic", Path.of("art", "Sound", "mini game suto", "zene suto.wav"));
+        //addSound("fire", Path.of("art", "Sound", "mini game suto", "fire.wav"));
+        //addSound("sizzle", Path.of("art", "Sound", "mini game suto", "sizel.wav"));
+        //addSound("ugras", Path.of("art", "Sound", "mini game suto", "ugras.wav"));
     }
 }

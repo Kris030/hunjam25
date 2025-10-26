@@ -35,7 +35,6 @@ public class Chef extends GameObject {
         animatedSprite.setScale(0.375f);
 
         ding = AssetManager.getSound("ready");
-        // TODO: real stuff here
         startNewFood();
         addRatMeter(0f);
     }
@@ -48,7 +47,7 @@ public class Chef extends GameObject {
         ratTimer.scale = 0.15f;
         AnimatedSprite ratSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
         ratSprite.freeze();
-        ratSprite.setIdx((int)(level * ratSprite.getNumberOfFrames()) );
+        ratSprite.setIdx((int) (level * ratSprite.getNumberOfFrames()));
         ratTimer.setAnimatedSprite(ratSprite);
         ratTimer.addOffset(new Vec2(min, 0.0f));
         addUiElement(ratTimer);
@@ -119,19 +118,18 @@ public class Chef extends GameObject {
     @Override
     public void tick(float dt) {
         if (finished) {
-            return; // TODO: valami dispose
+            return;
         }
 
         if (currWorkstation == null) {
             searching(dt);
-        }
-        else {
+        } else {
             working();
         }
     }
 
     private void working() {
-        workingIdx = facing(currWorkstation.workingOffset.mul(-1f) );
+        workingIdx = facing(currWorkstation.workingOffset.mul(-1f));
         animatedSprite.setIdx(workingIdx);
         // work at workstation
         if (isJobOver()) {
@@ -140,14 +138,7 @@ public class Chef extends GameObject {
     }
 
     private void finishJob() {
-        try {
-            ding.play();
-        } catch (LineUnavailableException e) {
-            System.err.println("No sound");
-            throw new RuntimeException(e);
-
-        }
-        if(Kitchen.minigame != null && !Kitchen.minigame.isGameEnded()){
+        if (Kitchen.minigame != null && !Kitchen.minigame.isGameEnded()) {
             Kitchen.minigame.endGame();
         }
 
@@ -164,9 +155,20 @@ public class Chef extends GameObject {
 
         // food finished
         if (currIngredient >= todo.length) {
-            if (lookForNewJob()) return;
+            playDing();
+            if (lookForNewJob())
+                return;
         }
         pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
+    }
+
+    private void playDing() {
+        try {
+            ding.play();
+        } catch (LineUnavailableException e) {
+            System.err.println("No sound");
+            throw new RuntimeException(e);
+        }
     }
 
     private boolean lookForNewJob() {
@@ -196,11 +198,11 @@ public class Chef extends GameObject {
      */
     private void searching(float dt) {
         if (pathFindingTargetPosition == null) {
-            if (pathFindingTo == null){
-                //System.out.println("Nowhere to Go");
+            if (pathFindingTo == null) {
+                // System.out.println("Nowhere to Go");
                 confused = true;
                 findClosestWorkStation();
-                if(pathFindingTo != null){
+                if (pathFindingTo != null) {
                     confused = false;
                     System.out.println("job found");
                 }
@@ -262,8 +264,8 @@ public class Chef extends GameObject {
         else
             animatedSprite.mirrored = false;
         animatedSprite.setIdx(spriteIdx);
-        //Workstation taken
-        if(pathFindingTo.hasWorker()){
+        // Workstation taken
+        if (pathFindingTo.hasWorker()) {
             findClosestWorkStation();
             return false;
         }
@@ -271,8 +273,8 @@ public class Chef extends GameObject {
         return length <= 0.1f;
     }
 
-    private void findClosestWorkStation(){
-        pathFindingTo = Kitchen.findClosestFreeWorkStation(position,todo[currIngredient]);
+    private void findClosestWorkStation() {
+        pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
         pathFindingTargetPosition = null;
     }
 

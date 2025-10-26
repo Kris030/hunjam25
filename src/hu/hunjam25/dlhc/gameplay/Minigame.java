@@ -81,7 +81,6 @@ public abstract class Minigame implements IRenderable {
         };
 
         g.translate(Game.SCREEN_SIZE.x() * 0.5, Game.SCREEN_SIZE.y() * 0.5);
-        g.scale(tt, tt);
 
         var tf = g.getTransform();
         var clip = g.getClip();
@@ -97,15 +96,18 @@ public abstract class Minigame implements IRenderable {
         } else {
             renderAreaSize = new Vec2(2.0f, 2.0f * (whMax / whMin));
         }
-        worldScale = ndcScale * tt;
+
+        worldScale = 1f / ndcScale;
 
         g.clip(new Rectangle2D.Float(
-                -renderAreaSize.x() * 0.5f, -renderAreaSize.y() * 0.5f,
-                renderAreaSize.x(), renderAreaSize.y()));
+                -renderAreaSize.x() * 0.5f * tt, -renderAreaSize.y() * 0.5f * tt,
+                renderAreaSize.x() * tt, renderAreaSize.y() * tt));
         renderGame(g);
 
         g.setTransform(tf);
         g.setClip(clip);
+
+        g.scale(tt, tt);
 
         g.translate(-Game.MINIGAME_FRAME_SIZE.x() * 0.5f, -Game.MINIGAME_FRAME_SIZE.y() * 0.5f);
         g.translate(

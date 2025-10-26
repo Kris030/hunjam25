@@ -6,11 +6,11 @@ import hu.hunjam25.dlhc.Utils;
 import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.view.AnimatedSprite;
+import hu.hunjam25.dlhc.view.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 public class FridgeMinigame extends Minigame {
 
@@ -21,6 +21,12 @@ public class FridgeMinigame extends Minigame {
     private final float DIFFICULTY = 0.75f;
     private final float CLICK_SENSITIVITY = 0.1f;
     private final float SMOOTHNESS = 2.0f;
+
+    private final Sprite nyerFinal = new Sprite(AssetManager.getImage("huto_minigame_nyer"));
+    private final Sprite veszitFinal = new Sprite(AssetManager.getImage("huto_minigame_veszit"));
+
+    private final AnimatedSprite nyer = new AnimatedSprite(AssetManager.getAnim("huto_minigame_nyer"), 0);
+    private final AnimatedSprite veszit = new AnimatedSprite(AssetManager.getAnim("huto_minigame_veszit"), 0);
 
     public FridgeMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         super(workstation, chef, ingredient);
@@ -56,26 +62,18 @@ public class FridgeMinigame extends Minigame {
     }
 
     protected void renderGame(Graphics2D g) {
-        g.setColor(Color.BLACK);
-        g.fill(new Rectangle2D.Float(
-                -renderAreaSize.x() * 0.5f, -renderAreaSize.y() * 0.5f,
-                renderAreaSize.x(), renderAreaSize.y())
-        );
-
-        BufferedImage frame;
         if (state <= -1.0f) {
-            frame = AssetManager.getImage("huto_minigame_veszit");
+            veszitFinal.spriteScale = worldScale;
+            veszitFinal.render(g);
         } else if (Math.abs(state) < 1.0f) {
-            var anim = state > 0.0f
-                    ? AssetManager.getAnim("huto_minigame_nyer")
-                    : AssetManager.getAnim("huto_minigame_veszit");
-            frame = anim[(int) ((anim.length - 1) * Math.abs(renderState))];
-        } else {
-            frame = AssetManager.getImage("huto_minigame_nyer");
-        }
+            var anim = state > 0.0f ? nyer : veszit;
+            anim.setIdx((int) ((anim.getNumberOfFrames() - 1) * Math.abs(renderState)));
+            anim.setScale(worldScale);
 
-        g.translate(-renderAreaSize.x() * 0.5, -renderAreaSize.y() * 0.5);
-        g.scale(renderAreaSize.x() / frame.getWidth(), renderAreaSize.y() / frame.getHeight());
-        g.drawImage(frame, null, 0, 0);
+            anim.render(g);
+        } else {
+            nyerFinal.spriteScale = worldScale;
+            nyerFinal.render(g);
+        }
     }
 }

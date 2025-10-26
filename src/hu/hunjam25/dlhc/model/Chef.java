@@ -204,7 +204,7 @@ public class Chef extends GameObject {
                 countOfSabotages++;
         }
         var as = ((UiElement) this.getUiElement(0)).animatedSprite;
-        as.setIdx((int) (countOfSabotages / (results.length + 1) * as.getNumberOfFrames()));
+        as.setIdx((int) (Math.min(countOfSabotages, (float) as.getNumberOfFrames())));
     }
 
     private void playDing() {

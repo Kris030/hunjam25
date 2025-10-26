@@ -1,0 +1,237 @@
+Index: src/hu/hunjam25/dlhc/model/Chef.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package hu.hunjam25.dlhc.model;\r\n\r\nimport java.awt.*;\r\nimport java.util.*;\r\nimport java.util.List;\r\n\r\nimport hu.hunjam25.dlhc.AssetManager;\r\nimport hu.hunjam25.dlhc.Game;\r\nimport hu.hunjam25.dlhc.GameObject;\r\nimport hu.hunjam25.dlhc.Kitchen;\r\nimport hu.hunjam25.dlhc.view.Sprite;\r\n\r\npublic class Chef extends GameObject {\r\n    private final static int DEFAULT_FOOD_COUNT = 3;\r\n    private final static float SPEED = 0.005f;\r\n\r\n    public Chef(int foodCount) {\r\n        positionToCenter();\r\n        foodTodo = new java.util.ArrayDeque<>();\r\n        for (int i = 0; i < foodCount; i++) {\r\n            foodTodo.add(Food.RandomFood());\r\n        }\r\n        results = new ArrayList<>();\r\n        currentFood = foodTodo.remove();\r\n        currIngredient = 0;\r\n        todo = Arrays.asList(currentFood.ingredients);\r\n        pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));\r\n    }\r\n\r\n    public Chef() {\r\n        this(DEFAULT_FOOD_COUNT);\r\n    }\r\n\r\n    Queue<Food> foodTodo;\r\n\r\n    Food currentFood;\r\n    int currIngredient;\r\n    List<Ingredient> todo;\r\n    List<Float> results;\r\n\r\n    // null if not at workstation\r\n    Workstation currWorkstation;\r\n    float startedWorkAt;\r\n\r\n    Workstation pathFindingTo;\r\n    Point.Float pathFindingTargetPosition;\r\n\r\n    boolean finished = false;\r\n\r\n    @Override\r\n    public void tick(float dt) {\r\n        if (finished)\r\n            return;\r\n        if (currWorkstation == null) {\r\n            if (pathFindingTargetPosition == null) {\r\n                pathFindingTargetPosition = pathFindingTo.getPosition();\r\n                pathFindingTargetPosition.x += pathFindingTo.workingOffset.x;\r\n                pathFindingTargetPosition.y += pathFindingTo.workingOffset.y;\r\n            }\r\n\r\n            // we aren't at a station, go to pathFindingTargetPosition\r\n            if (stepTowardsTarget(dt)) {\r\n                currWorkstation = pathFindingTo;\r\n                position = pathFindingTargetPosition;\r\n                pathFindingTargetPosition = null;\r\n                pathFindingTo = null;\r\n                startedWorkAt = Game.now;\r\n            }\r\n        } else {\r\n            // work at workstation\r\n            if (Game.now - startedWorkAt >= todo.get(currIngredient).durationSeconds) {\r\n                currWorkstation = null;\r\n                currIngredient++;\r\n                // TODO: results handling\r\n                // food finished\r\n                if (currIngredient >= todo.size()) {\r\n                    // TODO: results handling\r\n                    if (foodTodo.isEmpty()) {\r\n                        finished = true;\r\n                        return;\r\n                    }\r\n                    currentFood = foodTodo.remove();\r\n                    todo = Arrays.asList(currentFood.ingredients);\r\n                    currIngredient = 0;\r\n                }\r\n                pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));\r\n            }\r\n        }\r\n    }\r\n\r\n    /// return true if the chef has arrived at the target\r\n    private boolean stepTowardsTarget(float dt) {\r\n        Point.Float velocity = (Point.Float) pathFindingTargetPosition.clone();\r\n        velocity.x -= position.x;\r\n        velocity.y -= position.y;\r\n\r\n        double length = velocity.distance(0, 0);\r\n        if (length == 0)\r\n            return true;\r\n        velocity.x /= length;\r\n        velocity.y /= length;\r\n\r\n        position.x += velocity.x * SPEED * dt;\r\n        position.y += velocity.y * SPEED * dt;\r\n\r\n        return length <= /* TODO exact distance? */ 0.1f;\r\n    }\r\n\r\n    public void pushResult(float result) {\r\n        results.add(result);\r\n    }\r\n\r\n    private Sprite sprite = new Sprite(AssetManager.getImage(\"chef\"));\r\n\r\n    @Override\r\n    public void render(Graphics2D gd) {\r\n        super.render(gd);\r\n        sprite.render(gd);\r\n        // System.out.println(\"chef drawn\");\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/hu/hunjam25/dlhc/model/Chef.java b/src/hu/hunjam25/dlhc/model/Chef.java
+--- a/src/hu/hunjam25/dlhc/model/Chef.java	(revision bb7fce74efea8424de593669566d16c84fe062e5)
++++ b/src/hu/hunjam25/dlhc/model/Chef.java	(date 1761396541949)
+@@ -2,7 +2,6 @@
+ 
+ import java.awt.*;
+ import java.util.*;
+-import java.util.List;
+ 
+ import hu.hunjam25.dlhc.AssetManager;
+ import hu.hunjam25.dlhc.Game;
+@@ -20,11 +19,17 @@
+         for (int i = 0; i < foodCount; i++) {
+             foodTodo.add(Food.RandomFood());
+         }
+-        results = new ArrayList<>();
++        startNewFood();
++    }
++
++    private void startNewFood() {
+         currentFood = foodTodo.remove();
+         currIngredient = 0;
+-        todo = Arrays.asList(currentFood.ingredients);
+-        pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
++        todo = currentFood.ingredients;
++        results = new Float[todo.length];
++        Arrays.fill(results, 0f);
++        pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
++        startedCurrentFoodAt = Game.now;
+     }
+ 
+     public Chef() {
+@@ -34,17 +39,22 @@
+     Queue<Food> foodTodo;
+ 
+     Food currentFood;
++
+     int currIngredient;
+-    List<Ingredient> todo;
+-    List<Float> results;
++    Ingredient[] todo;
++    Float[] results;
+ 
+     // null if not at workstation
+     Workstation currWorkstation;
+     float startedWorkAt;
+ 
++    float startedCurrentFoodAt;
++
+     Workstation pathFindingTo;
+     Point.Float pathFindingTargetPosition;
+ 
++    float stoppedUntil = 0f;
++
+     boolean finished = false;
+ 
+     @Override
+@@ -68,28 +78,33 @@
+             }
+         } else {
+             // work at workstation
+-            if (Game.now - startedWorkAt >= todo.get(currIngredient).durationSeconds) {
++            if (Game.now - startedWorkAt >= todo[currIngredient].durationSeconds) {
+                 currWorkstation = null;
+                 currIngredient++;
+-                // TODO: results handling
++
+                 // food finished
+-                if (currIngredient >= todo.size()) {
+-                    // TODO: results handling
++                if (currIngredient >= todo.length) {
++                    double ingredientSumTime = 0;
++                    for (var ing : todo)
++                        ingredientSumTime += ing.durationSeconds;
++                    Float timeDelay = Game.now - startedCurrentFoodAt - (float) ingredientSumTime;
++                    Kitchen.increaseRating(results, timeDelay);
++
+                     if (foodTodo.isEmpty()) {
+                         finished = true;
+                         return;
+                     }
+-                    currentFood = foodTodo.remove();
+-                    todo = Arrays.asList(currentFood.ingredients);
+-                    currIngredient = 0;
++                    startNewFood();
+                 }
+-                pathFindingTo = Kitchen.findClosestWorkStation(position, todo.get(currIngredient));
++                pathFindingTo = Kitchen.findClosestWorkStation(position, todo[currIngredient]);
+             }
+         }
+     }
+ 
+     /// return true if the chef has arrived at the target
+     private boolean stepTowardsTarget(float dt) {
++        if (stopped())
++            return false;
+         Point.Float velocity = (Point.Float) pathFindingTargetPosition.clone();
+         velocity.x -= position.x;
+         velocity.y -= position.y;
+@@ -106,8 +121,16 @@
+         return length <= /* TODO exact distance? */ 0.1f;
+     }
+ 
++    public void stopForDuration(float seconds) {
++        stoppedUntil = Game.now + seconds;
++    }
++
++    private boolean stopped() {
++        return Game.now < stoppedUntil;
++    }
++
+     public void pushResult(float result) {
+-        results.add(result);
++        results[currIngredient] += result;
+     }
+ 
+     private Sprite sprite = new Sprite(AssetManager.getImage("chef"));
+@@ -116,6 +139,5 @@
+     public void render(Graphics2D gd) {
+         super.render(gd);
+         sprite.render(gd);
+-        // System.out.println("chef drawn");
+     }
+ }
+Index: src/hu/hunjam25/dlhc/Game.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package hu.hunjam25.dlhc;\r\n\r\nimport java.awt.*;\r\nimport java.awt.event.KeyEvent;\r\nimport java.awt.event.KeyListener;\r\nimport java.awt.geom.AffineTransform;\r\nimport java.awt.geom.Point2D;\r\nimport java.awt.image.BufferedImage;\r\nimport java.io.IOException;\r\nimport java.nio.file.Path;\r\nimport java.util.HashMap;\r\nimport java.util.HashSet;\r\nimport java.util.Set;\r\n\r\nimport javax.imageio.ImageIO;\r\n\r\nimport static java.lang.Math.max;\r\nimport static java.lang.Math.min;\r\n\r\npublic class Game {\r\n\r\n    public static final int SCREEN_WIDTH = 10;\r\n    public static final int SCREEN_HEIGHT = 8;\r\n\r\n    public static final int MAP_OFFSET_X = 1;\r\n    public static final int MAP_OFFSET_Y = -1;\r\n\r\n    // in tiles\r\n    public static final int MAP_WIDTH = 8;\r\n    public static final int MAP_HEIGHT = 6;\r\n\r\n    public static final Point2D.Float CENTER =\r\n            new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,\r\n                            Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);\r\n\r\n    public static final int TILE_SIZE = 120;\r\n\r\n    public static void keepOnMap(Point2D.Float position) {\r\n        position.x = max(Game.MAP_OFFSET_X, position.x);\r\n        position.x = min(Game.MAP_WIDTH + Game.MAP_OFFSET_X, position.x);\r\n        position.y = max(Game.MAP_OFFSET_Y, position.y);\r\n        position.y = min(Game.MAP_HEIGHT + Game.MAP_OFFSET_Y, position.y);\r\n    }\r\n\r\n\r\n    public static Point2D.Float gameToScreen(Point2D.Float game) {\r\n        return new Point2D.Float(game.x * TILE_SIZE, (MAP_HEIGHT - game.y) * TILE_SIZE);\r\n    }\r\n\r\n    public static Point2D.Float screenToGame(Point2D.Float screen) {\r\n        return new Point2D.Float(screen.x / TILE_SIZE, (MAP_HEIGHT * TILE_SIZE - screen.y) / TILE_SIZE);\r\n    }\r\n\r\n    // null if not in fullscreen\r\n    private static Rectangle lastBounds;\r\n\r\n    public static void toggleFullscreen() {\r\n        // FIXME\r\n        if (lastBounds == null) {\r\n            lastBounds = Main.frame.getBounds();\r\n\r\n            Main.frame.setVisible(false);\r\n            Main.frame.setUndecorated(true); // removes title bar & borders\r\n            Main.frame.setVisible(true);\r\n            GraphicsEnvironment.getLocalGraphicsEnvironment()\r\n                    .getDefaultScreenDevice()\r\n                    .setFullScreenWindow(Main.frame);\r\n        } else {\r\n            Main.frame.setUndecorated(false); // removes title bar & borders\r\n            GraphicsEnvironment.getLocalGraphicsEnvironment()\r\n                    .getDefaultScreenDevice()\r\n                    .setFullScreenWindow(null);\r\n\r\n            Main.frame.setBounds(lastBounds);\r\n            lastBounds = null;\r\n        }\r\n    }\r\n\r\n    public static Set<Integer> keysPressed = new HashSet<>();\r\n\r\n    public static float now;\r\n\r\n    static void tick(float dt) {\r\n        if (keysPressed.contains(KeyEvent.VK_F11)) {\r\n            toggleFullscreen();\r\n        }\r\n\r\n        Kitchen.getGameObjects().forEach(o -> o.tick(dt));\r\n    }\r\n\r\n    static void render(Graphics2D g) {\r\n        AffineTransform transform = g.getTransform();\r\n        g.translate(-TILE_SIZE * 0.5f, -TILE_SIZE * 0.5f);\r\n        Kitchen.background.render(g);\r\n        g.translate(TILE_SIZE * 0.5f, TILE_SIZE * 0.5f);\r\n\r\n        Kitchen.getGameObjects().forEach(o -> {\r\n            g.setTransform(transform);\r\n            o.render(g);\r\n        });\r\n\r\n        //Kitchen.remi.render(g);\r\n\r\n        g.setTransform(transform);\r\n    }\r\n\r\n    static KeyListener listener = new KeyListener() {\r\n        @Override\r\n        public void keyTyped(KeyEvent e) {\r\n\r\n        }\r\n\r\n        @Override\r\n        public void keyPressed(KeyEvent e) {\r\n            keysPressed.add(e.getKeyCode());\r\n        }\r\n\r\n        @Override\r\n        public void keyReleased(KeyEvent e) {\r\n            keysPressed.remove((Integer) e.getKeyCode());\r\n        }\r\n    };\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/hu/hunjam25/dlhc/Game.java b/src/hu/hunjam25/dlhc/Game.java
+--- a/src/hu/hunjam25/dlhc/Game.java	(revision bb7fce74efea8424de593669566d16c84fe062e5)
++++ b/src/hu/hunjam25/dlhc/Game.java	(date 1761396541949)
+@@ -29,9 +29,8 @@
+     public static final int MAP_WIDTH = 8;
+     public static final int MAP_HEIGHT = 6;
+ 
+-    public static final Point2D.Float CENTER =
+-            new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
+-                            Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
++    public static final Point2D.Float CENTER = new Point2D.Float(Game.MAP_OFFSET_X + Game.MAP_WIDTH / 2f,
++            Game.MAP_OFFSET_Y + Game.MAP_HEIGHT / 2f);
+ 
+     public static final int TILE_SIZE = 120;
+ 
+@@ -42,7 +41,6 @@
+         position.y = min(Game.MAP_HEIGHT + Game.MAP_OFFSET_Y, position.y);
+     }
+ 
+-
+     public static Point2D.Float gameToScreen(Point2D.Float game) {
+         return new Point2D.Float(game.x * TILE_SIZE, (MAP_HEIGHT - game.y) * TILE_SIZE);
+     }
+@@ -99,7 +97,7 @@
+             o.render(g);
+         });
+ 
+-        //Kitchen.remi.render(g);
++        // Kitchen.remi.render(g);
+ 
+         g.setTransform(transform);
+     }
+Index: src/hu/hunjam25/dlhc/Kitchen.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package hu.hunjam25.dlhc;\r\n\r\nimport java.awt.Point;\r\nimport java.awt.image.BufferedImage;\r\nimport java.util.ArrayList;\r\nimport java.util.stream.Stream;\r\n\r\nimport hu.hunjam25.dlhc.gameplay.Minigame;\r\nimport hu.hunjam25.dlhc.model.Chef;\r\nimport hu.hunjam25.dlhc.model.Ingredient;\r\nimport hu.hunjam25.dlhc.model.Rat;\r\nimport hu.hunjam25.dlhc.model.Workstation;\r\nimport hu.hunjam25.dlhc.view.AnimatedSprite;\r\nimport hu.hunjam25.dlhc.view.Sprite;\r\nimport hu.hunjam25.dlhc.view.UiElement;\r\n\r\npublic class Kitchen {\r\n\r\n    public static ArrayList<Workstation> workstations = new ArrayList<>();\r\n\r\n    public static ArrayList<Chef> chefs = new ArrayList<>();\r\n\r\n    public static Minigame minigame;\r\n\r\n    public static Rat rat;\r\n\r\n    public static Sprite background = new Sprite(AssetManager.getImage(\"tiles\"));\r\n\r\n\r\n    static {\r\n        background.centered = false;\r\n    }\r\n\r\n    // TODO: BFS if the kitchen isn't a square?\r\n    public static Workstation findClosestWorkStation(Point.Float position, Ingredient ingredient) {\r\n        var _ws = workstations.stream()\r\n                .filter(ws -> ws.type.equals(ingredient.workstationType))\r\n                .min((ws1, ws2) -> Double.compare(position.distance(ws1.position), position.distance(ws2.position)))\r\n                .orElse(null);\r\n        return _ws;\r\n    }\r\n\r\n    public static void minigameEnded(float result) {\r\n        minigame = null;\r\n        minigame.chef.pushResult(result);\r\n    }\r\n\r\n    public static void init() {\r\n        rat = new Rat();\r\n        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(2f, 5f), new Point.Float(0f, -0.5f)));\r\n        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(7f, 0f), new Point.Float(-0.5f, 0f)));\r\n        chefs.add(new Chef());\r\n\r\n        var element = new UiElement();\r\n        element.visible = true;\r\n        element.scale = 0.5f;\r\n        rat.addUiElement(element);\r\n    }\r\n\r\n    public static Stream<GameObject> getGameObjects() {\r\n        // render order\r\n        return Stream.concat(\r\n                Stream.concat(workstations.stream(), chefs.stream()),\r\n                minigame == null ? Stream.of(rat) : Stream.of(rat, minigame));\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/hu/hunjam25/dlhc/Kitchen.java b/src/hu/hunjam25/dlhc/Kitchen.java
+--- a/src/hu/hunjam25/dlhc/Kitchen.java	(revision bb7fce74efea8424de593669566d16c84fe062e5)
++++ b/src/hu/hunjam25/dlhc/Kitchen.java	(date 1761396988029)
+@@ -1,7 +1,6 @@
+ package hu.hunjam25.dlhc;
+ 
+ import java.awt.Point;
+-import java.awt.image.BufferedImage;
+ import java.util.ArrayList;
+ import java.util.stream.Stream;
+ 
+@@ -10,7 +9,6 @@
+ import hu.hunjam25.dlhc.model.Ingredient;
+ import hu.hunjam25.dlhc.model.Rat;
+ import hu.hunjam25.dlhc.model.Workstation;
+-import hu.hunjam25.dlhc.view.AnimatedSprite;
+ import hu.hunjam25.dlhc.view.Sprite;
+ import hu.hunjam25.dlhc.view.UiElement;
+ 
+@@ -26,12 +24,12 @@
+ 
+     public static Sprite background = new Sprite(AssetManager.getImage("tiles"));
+ 
++    public static float rating = 1.0f;
+ 
+     static {
+         background.centered = false;
+     }
+ 
+-    // TODO: BFS if the kitchen isn't a square?
+     public static Workstation findClosestWorkStation(Point.Float position, Ingredient ingredient) {
+         var _ws = workstations.stream()
+                 .filter(ws -> ws.type.equals(ingredient.workstationType))
+@@ -47,8 +45,10 @@
+ 
+     public static void init() {
+         rat = new Rat();
+-        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(2f, 5f), new Point.Float(0f, -0.5f)));
+-        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(7f, 0f), new Point.Float(-0.5f, 0f)));
++        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Point.Float(0f, 2f),
++                new Point.Float(0f, -0.5f)));
++        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Point.Float(5f, 0f),
++                new Point.Float(-0.5f, 0f)));
+         chefs.add(new Chef());
+ 
+         var element = new UiElement();
+@@ -63,4 +63,13 @@
+                 Stream.concat(workstations.stream(), chefs.stream()),
+                 minigame == null ? Stream.of(rat) : Stream.of(rat, minigame));
+     }
++
++    public static void increaseRating(Float[] ingRatings, Float timeDelay) {
++        /*
++         * TODO: create function for how time delay and minigames affect rating
++         */
++
++        // keep rating between 0 and 1
++        Math.clamp(rating, 0.0f, 1.0f);
++    }
+ }

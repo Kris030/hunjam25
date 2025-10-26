@@ -11,6 +11,7 @@ import hu.hunjam25.dlhc.view.Sprite;
 
 public class Kitchen {
 
+    public static final int CHEF_COUNT = 3;
     public static ArrayList<Workstation> workstations = new ArrayList<>();
 
     public static ArrayList<Chef> chefs = new ArrayList<>();
@@ -79,7 +80,7 @@ public class Kitchen {
                     new Vec2(0, 0.5f)));
         }
 
-        for(int i = 0; i < 3; ++i){
+        for(int i = 0; i < CHEF_COUNT; ++i){
             chefs.add(new Chef());
         }
     }

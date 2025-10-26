@@ -43,7 +43,7 @@ public class StartScreen implements IScreen {
     public void render(Graphics2D g) {
         backg.render(g);
 
-        g.translate(Game.SCREEN_WIDTH / 2f, Game.SCREEN_HEIGHT / 2f);
+        g.translate(Game.SCREEN_WIDTH * Game.TILE_SIZE / 2f, (7+ Game.SCREEN_HEIGHT) * Game.TILE_SIZE / 2f);
         controls.render(g);
         //g.translate(-Game.SCREEN_WIDTH / 2f, -Game.SCREEN_HEIGHT / 2f);
     }

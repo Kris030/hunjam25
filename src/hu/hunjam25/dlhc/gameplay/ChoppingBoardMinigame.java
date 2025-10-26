@@ -43,6 +43,7 @@ public class ChoppingBoardMinigame extends Minigame {
 
     private static float CUT_INTERVAL = 2.0f * (60.0f / 110.0f);
     private static int CUT_COUNT = 7; //TODO
+    private static float MISTAKE_DELTA = 0.5f;
     private int cutCount = 0;
     private float error = 0.0f;
 
@@ -72,6 +73,8 @@ public class ChoppingBoardMinigame extends Minigame {
         return 0.0f;
     }
 
+    private boolean firstTick = true;
+
     public void tick(float dt) {
         boolean click = false;
         if (Game.keysPressed.contains(KeyEvent.VK_SPACE)) {
@@ -82,9 +85,20 @@ public class ChoppingBoardMinigame extends Minigame {
             previouslyPressed = false;
         }
 
-        if (Math.floor((getGameTime() + ANIM_LENGTH) / CUT_INTERVAL) > cutCount + 1) {
+        if (click) {
+            float diff = getGameTime() % CUT_INTERVAL;
+            diff = Math.min(diff, CUT_INTERVAL - diff);
+            if (diff > MISTAKE_DELTA)
+                error += 1.0f;
+
+            //System.out.println(error);
+        }
+
+        if (Math.floor((getGameTime() - ANIM_LENGTH) / CUT_INTERVAL) > cutCount) {
             startCut();
             cutCount++;
+            tomato.unFreeze();
+            tomato.start();
         }
     }
 
@@ -119,8 +133,8 @@ public class ChoppingBoardMinigame extends Minigame {
         g.fill(new Ellipse2D.Float(0.0f, 0.0f, 0.05f, 0.05f));
 
         g.setTransform(tf);
-        g.setColor(Color.RED);
-        g.fill(TOMATO_BOUNDS);
+        //g.setColor(Color.RED);
+        //g.fill(TOMATO_BOUNDS);
     }
 
     private void startCut() {

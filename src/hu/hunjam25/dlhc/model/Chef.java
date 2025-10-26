@@ -331,7 +331,7 @@ public class Chef extends GameObject {
      * @param result should be in {@code[0;1]} with the highend being rare
      */
     public void pushResult(float result) {
-        results[currIngredient] += result * 0.1f;
+        results[currIngredient] += result;
         setRatMeter();
     }
 

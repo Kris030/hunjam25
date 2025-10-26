@@ -15,13 +15,16 @@ import static java.lang.Math.abs;
 
 public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
-    private final static float SPEED = 3;
+    private final static float MAX_SPEED = 4f;
+    private final static float MIN_SPEED = 0.5f;
 
     private static int count = 0;
 
     int workingIdx = 0;
 
     private SoundBuffer ding;
+
+    float speed = MIN_SPEED;
 
     Queue<Food> foodTodo;
 
@@ -239,10 +242,10 @@ public class Chef extends GameObject {
         if (arrivedAtStation) {
             currWorkstation = pathFindingTo;
             currWorkstation.setWorker(this);
-            position = pathFindingTargetPosition;
             pathFindingTargetPosition = null;
             pathFindingTo = null;
             startedWorkAt = Main.now;
+            speed = (MIN_SPEED * 2f + MAX_SPEED) / 3f;
             startTimer(currIngredient);
         }
     }
@@ -263,7 +266,14 @@ public class Chef extends GameObject {
 
     /// return true if the chef has arrived at the target
     private boolean stepTowardsTarget(float dt) {
+        if (position.dist(pathFindingTargetPosition) < 1f && speed > MIN_SPEED) {
+            speed -= 0.15f;
+        } else if (speed < MAX_SPEED) {
+            speed += 0.15f;
+        }
+        speed = Math.clamp(speed, MIN_SPEED, MAX_SPEED);
         if (stopped()) {
+            speed = MIN_SPEED;
             animatedSprite.setIdx(0);
             return false;
         }
@@ -277,7 +287,7 @@ public class Chef extends GameObject {
 
         velocity = velocity.div(length);
 
-        position = position.add(velocity.mul(SPEED * dt));
+        position = position.add(velocity.mul(speed * dt));
 
         int spriteIdx = facing(velocity);
         if (confused) {

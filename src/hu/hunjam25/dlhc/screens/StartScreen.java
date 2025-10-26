@@ -13,15 +13,18 @@ public class StartScreen implements IScreen {
 
     public static AnimatedSprite backg;
 
+    private boolean started = false;
+
     @Override
     public void init() {
-        backg = new AnimatedSprite(AssetManager.getAnim("radio"), 1 );
+        backg = new AnimatedSprite(AssetManager.getAnim("radio"), 1);
         backg.centered = false;
         backg.setLooping(false);
     }
 
     @Override
-    public void start() {}
+    public void start() {
+    }
 
     @Override
     public void render(Graphics2D g) {
@@ -30,11 +33,12 @@ public class StartScreen implements IScreen {
 
     @Override
     public void tick(float dt) {
-        if(Game.keysPressed.contains(KeyEvent.VK_SPACE) && backg.hasFinished()){
+        if (backg.hasFinished() && !started) {
             Main.startGame();
+            started = true;
         }
 
-        if(!Game.keysPressed.isEmpty()){
+        if (!Game.keysPressed.isEmpty()) {
             backg.unFreeze();
             backg.start();
         }

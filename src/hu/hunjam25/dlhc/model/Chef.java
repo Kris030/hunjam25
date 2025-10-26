@@ -15,7 +15,7 @@ import static java.lang.Math.abs;
 
 public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
-    private final static float SPEED = 5;
+    private final static float SPEED = 3;
 
     private static int count = 0;
     private int workingIdx = 0;
@@ -84,7 +84,7 @@ public class Chef extends GameObject {
         results = new float[todo.length];
         Arrays.fill(results, 0f);
         pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
-        startedCurrentFoodAt = Game.now;
+        startedCurrentFoodAt = Main.now;
         addRatMeter();
         addClockTimers();
         addIngredientSprites();
@@ -199,7 +199,7 @@ public class Chef extends GameObject {
         float ingredientSumTime = 0;
         for (var ing : todo)
             ingredientSumTime += ing.durationSeconds;
-        float timeDelay = Game.now - startedCurrentFoodAt - ingredientSumTime;
+        float timeDelay = Main.now - startedCurrentFoodAt - ingredientSumTime;
         Kitchen.decreaseRating(results, timeDelay);
 
         if (foodTodo.isEmpty()) {
@@ -212,7 +212,7 @@ public class Chef extends GameObject {
     }
 
     private boolean isJobOver() {
-        return Game.now - startedWorkAt >= todo[currIngredient].durationSeconds
+        return Main.now - startedWorkAt >= todo[currIngredient].durationSeconds
                 || (!Kitchen.isOnFire && todo[currIngredient] == Ingredient.TrashFire);
     }
 
@@ -241,7 +241,7 @@ public class Chef extends GameObject {
             position = pathFindingTargetPosition;
             pathFindingTargetPosition = null;
             pathFindingTo = null;
-            startedWorkAt = Game.now;
+            startedWorkAt = Main.now;
             startTimer(currIngredient);
         }
     }
@@ -302,11 +302,11 @@ public class Chef extends GameObject {
     }
 
     public void stopForDuration(float seconds) {
-        stoppedUntil = Game.now + seconds;
+        stoppedUntil = Main.now + seconds;
     }
 
     private boolean stopped() {
-        return Game.now < stoppedUntil;
+        return Main.now < stoppedUntil;
     }
 
     /**

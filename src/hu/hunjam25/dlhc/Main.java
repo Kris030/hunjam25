@@ -20,6 +20,7 @@ public class Main {
     static EndScreen endScreen;
 
     static IScreen currentScreen;
+    public static float now, lastTick;
 
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
         // force enable hardware acceleration
@@ -34,8 +35,6 @@ public class Main {
         init();
 
         currentScreen = startScreen;
-
-        Kitchen.init();
 
         frame = new JFrame("Don't let him cook");
 
@@ -70,9 +69,9 @@ public class Main {
                 continue;
             }
 
-            Game.lastTick = Game.now;
-            Game.now = (start - gameStart) * 0.000000001f;
-            currentScreen.tick(Game.now - Game.lastTick);
+            lastTick = now;
+            now = (start - gameStart) * 0.000000001f;
+            currentScreen.tick(now - lastTick);
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -99,7 +98,7 @@ public class Main {
         }
     }
 
-    private static void init(){
+    private static void init() {
         try {
             AssetManager.init();
         } catch (IOException e) {
@@ -117,18 +116,17 @@ public class Main {
         endScreen.init();
     }
 
-    private static void startScreen(IScreen screen){
+    private static void startScreen(IScreen screen) {
         currentScreen.stop();
         screen.start();
         currentScreen = screen;
     }
 
-    public static void startGame(){
+    public static void startGame() {
         startScreen(game);
     }
 
-    public static void endGame(){
+    public static void endGame() {
         startScreen(endScreen);
     }
 }
-

@@ -26,7 +26,7 @@ public abstract class Minigame implements IRenderable {
     private static final float ANIM_IN_LENGTH = 1.0f;
     private static final float ANIM_OUT_LENGTH = 0.25f;
 
-    private float animStart = Game.now;
+    private float animStart = Main.now;
 
     public Minigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         this.workstation = workstation;
@@ -39,7 +39,7 @@ public abstract class Minigame implements IRenderable {
             return;
         }
 
-        animStart = Game.now;
+        animStart = Main.now;
         state = State.ANIM_OUT;
 
         Kitchen.minigameEnded(getResult());
@@ -99,8 +99,7 @@ public abstract class Minigame implements IRenderable {
 
         g.clip(new Rectangle2D.Float(
                 -renderAreaSize.x() * 0.5f, -renderAreaSize.y() * 0.5f,
-                renderAreaSize.x(), renderAreaSize.y())
-        );
+                renderAreaSize.x(), renderAreaSize.y()));
         renderGame(g);
 
         g.setTransform(tf);
@@ -108,13 +107,14 @@ public abstract class Minigame implements IRenderable {
 
         g.translate(-Game.MINIGAME_FRAME_SIZE.x() * 0.5f, -Game.MINIGAME_FRAME_SIZE.y() * 0.5f);
         g.translate(
-                0.5f * (Game.MINIGAME_CONTENT_TOPLEFT_OFFSET.x() - (Game.MINIGAME_FRAME_SIZE.x() - Game.MINIGAME_CONTENT_BOTTOMRIGHT_OFFSET.x())),
-                -0.5f * (Game.MINIGAME_CONTENT_TOPLEFT_OFFSET.y() - (Game.MINIGAME_FRAME_SIZE.y() - Game.MINIGAME_CONTENT_BOTTOMRIGHT_OFFSET.y()))
-        );
+                0.5f * (Game.MINIGAME_CONTENT_TOPLEFT_OFFSET.x()
+                        - (Game.MINIGAME_FRAME_SIZE.x() - Game.MINIGAME_CONTENT_BOTTOMRIGHT_OFFSET.x())),
+                -0.5f * (Game.MINIGAME_CONTENT_TOPLEFT_OFFSET.y()
+                        - (Game.MINIGAME_FRAME_SIZE.y() - Game.MINIGAME_CONTENT_BOTTOMRIGHT_OFFSET.y())));
         g.drawImage(AssetManager.getImage("minigame_keret"), 0, 0, null);
     }
 
     private float age() {
-        return (Game.now - animStart) / (state == State.ANIM_IN ? ANIM_IN_LENGTH : ANIM_OUT_LENGTH);
+        return (Main.now - animStart) / (state == State.ANIM_IN ? ANIM_IN_LENGTH : ANIM_OUT_LENGTH);
     }
 }

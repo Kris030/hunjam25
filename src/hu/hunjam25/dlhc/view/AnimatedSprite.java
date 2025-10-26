@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 import hu.hunjam25.dlhc.Game;
+import hu.hunjam25.dlhc.Main;
 
 public class AnimatedSprite implements IRenderable {
 
@@ -41,7 +42,7 @@ public class AnimatedSprite implements IRenderable {
     }
 
     float getAge() {
-        return Game.now - animStarted;
+        return Main.now - animStarted;
     }
 
     public void freeze() {
@@ -59,7 +60,7 @@ public class AnimatedSprite implements IRenderable {
     }
 
     public void start() {
-        animStarted = Game.now;
+        animStarted = Main.now;
     }
 
     // itt egy frame select valahogy jó lenne
@@ -91,9 +92,9 @@ public class AnimatedSprite implements IRenderable {
         var tf = gd.getTransform();
         gd.scale(spriteScales[idx], spriteScales[idx]);
 
-        gd.drawImage(image, x, y  + (int) (spriteOffsets[idx] / spriteScales[idx]), null);
+        gd.drawImage(image, x, y + (int) (spriteOffsets[idx] / spriteScales[idx]), null);
 
-        //gd.drawImage(image, x, y, null);
+        // gd.drawImage(image, x, y, null);
 
         gd.setTransform(tf);
     }
@@ -102,8 +103,8 @@ public class AnimatedSprite implements IRenderable {
         for (int i = 0; i < images.length; i++) {
             spriteScales[i] = 1f * 120f / images[i].getWidth();
             var ratio = images[i].getWidth() / (float) images[i].getHeight();
-            spriteOffsets[i] = 0f; //-60f;
-            spriteOffsets[i] += 1f * 120f * (1f - (1f/ratio))/2f;
+            spriteOffsets[i] = 0f; // -60f;
+            spriteOffsets[i] += 1f * 120f * (1f - (1f / ratio)) / 2f;
         }
     }
 

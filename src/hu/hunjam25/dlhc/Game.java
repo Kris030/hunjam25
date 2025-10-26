@@ -89,8 +89,6 @@ public class Game implements IScreen {
 
     public static Set<Integer> keysPressed = new HashSet<>();
 
-    public static float now, lastTick;
-
     @Override
     public void tick(float dt) {
         if (keysPressed.contains(KeyEvent.VK_F11)) {
@@ -193,6 +191,7 @@ public class Game implements IScreen {
     @Override
     public void start() {
         playBackgroundMusic();
+        Kitchen.init();
     }
 
     public void stopMusic() {

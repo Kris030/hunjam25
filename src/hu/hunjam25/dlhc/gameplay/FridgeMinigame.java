@@ -52,7 +52,7 @@ public class FridgeMinigame extends Minigame {
             endGame();
         }
 
-        renderState = Utils.interpolate(dt / SMOOTHNESS, renderState, state);
+        renderState = Utils.interpolateExp(dt / SMOOTHNESS, renderState, state);
     }
 
     protected void renderGame(Graphics2D g) {

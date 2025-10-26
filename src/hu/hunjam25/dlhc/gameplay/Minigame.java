@@ -89,7 +89,7 @@ public abstract class Minigame implements IRenderable {
         float whMax = Math.max(Game.MINIGAME_CONTENT_SIZE.x(), Game.MINIGAME_CONTENT_SIZE.y());
 
         float ndcScale = whMin * 0.5f;
-        g.scale(ndcScale, ndcScale);
+        g.scale(ndcScale * 1.01f, ndcScale * 1.01f);
 
         if (Game.MINIGAME_CONTENT_SIZE.x() > Game.MINIGAME_CONTENT_SIZE.y()) {
             renderAreaSize = new Vec2(2.0f * (whMax / whMin), 2.0f);
@@ -97,7 +97,7 @@ public abstract class Minigame implements IRenderable {
             renderAreaSize = new Vec2(2.0f, 2.0f * (whMax / whMin));
         }
 
-        worldScale = 1f / ndcScale;
+        worldScale = 1.0f / ndcScale;
 
         g.clip(new Rectangle2D.Float(
                 -renderAreaSize.x() * 0.5f * tt, -renderAreaSize.y() * 0.5f * tt,

@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.gameplay.ChoppingBoardMinigame;
 import hu.hunjam25.dlhc.gameplay.FridgeMinigame;
 import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.model.*;
@@ -141,11 +142,11 @@ public class Kitchen {
     public static void startMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         minigame = switch (workstation.type) {
             case Fridge -> new FridgeMinigame(workstation, chef, ingredient);
-//            case ChoppingBoard -> null;
+            case ChoppingBoard -> new ChoppingBoardMinigame(workstation, chef, ingredient);
 //            case Oven -> null;
 //            case Stove -> null;
 //            case Trash -> null;
-            default -> new FridgeMinigame(workstation, chef, ingredient);
+            default -> new ChoppingBoardMinigame(workstation, chef, ingredient);
         };
     }
 

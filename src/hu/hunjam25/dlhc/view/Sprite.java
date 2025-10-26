@@ -35,12 +35,14 @@ public class Sprite implements IRenderable {
             y = -(int) (image.getHeight() * 0.5f);
         }
 
+        var tf = gd.getTransform();
         if (mirrored) {
             mirrorX(gd);
         }
 
         gd.scale(spriteScale, spriteScale);
         gd.drawImage(image, x, y, null);
+        gd.setTransform(tf);
     }
 
     public void scaleToTileMax() {

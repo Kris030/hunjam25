@@ -1,11 +1,10 @@
 package hu.hunjam25.dlhc.view;
 
-import java.awt.Graphics2D;
+import hu.hunjam25.dlhc.Main;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-
-import hu.hunjam25.dlhc.Game;
-import hu.hunjam25.dlhc.Main;
 
 public class AnimatedSprite implements IRenderable {
 
@@ -27,8 +26,6 @@ public class AnimatedSprite implements IRenderable {
     public float animLength;
 
     public float animStarted;
-
-    public float spriteScale = 1;
 
     private boolean looping = true;
 
@@ -109,7 +106,6 @@ public class AnimatedSprite implements IRenderable {
     }
 
     public void setScale(float scale) {
-        spriteScale = scale;
         for (int i = 0; i < spriteScales.length; i++) {
             spriteScales[i] = scale;
         }

@@ -328,10 +328,10 @@ public class Chef extends GameObject {
      * add result handling for each ingredient, should be called by the minigame
      * when it ends
      * 
-     * @param result should be in {@code[0;0.10]} with the highend being rare
+     * @param result should be in {@code[0;1]} with the highend being rare
      */
     public void pushResult(float result) {
-        results[currIngredient] += result;
+        results[currIngredient] += result * 0.1f;
         setRatMeter();
     }
 

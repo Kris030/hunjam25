@@ -42,6 +42,7 @@ public class Main {
         frame = new JFrame("Don't let him cook");
 
         frame.setUndecorated(true);
+        frame.setResizable(false);
         frame.setSize(Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
         frame.setLocationRelativeTo(null);
 
@@ -82,8 +83,11 @@ public class Main {
             g.setColor(Color.BLACK);
             g.clearRect(0, 0, c.getWidth(), c.getHeight());
 
-            // TODO: min, max aspect ratio
-            g.scale(c.getWidth() / 1920f, c.getHeight() / 1080f);
+            float scaleX = c.getWidth() / 1920f;
+            float scaleY = c.getHeight() / 1080f;
+            float scale = Math.min(scaleX, scaleY);
+            g.scale(scale, scale);
+
             currentScreen.render(g);
 
             bs.show();

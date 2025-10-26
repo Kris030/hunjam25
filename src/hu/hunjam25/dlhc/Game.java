@@ -67,27 +67,26 @@ public class Game implements IScreen {
     }
 
     // null if not in fullscreen
-    private static Rectangle lastBounds;
+    private static Rectangle lastBounds = new Rectangle(0, 0, 800, 600);
+    private static boolean fullscreen = true;
 
     public static void toggleFullscreen() {
         // FIXME
-        if (lastBounds == null) {
+        if (fullscreen) {
+            Main.frame.setVisible(false);
+            Main.frame.setUndecorated(false);
+            Main.frame.setResizable(true);
+            Main.frame.setBounds(lastBounds);
+            Main.frame.setVisible(true);
+        } else {
             lastBounds = Main.frame.getBounds();
 
             Main.frame.setVisible(false);
-            Main.frame.setUndecorated(true); // removes title bar & borders
+            Main.frame.setUndecorated(true);
+            Main.frame.setResizable(false);
+            Main.frame.setSize(Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
+            Main.frame.setLocationRelativeTo(null);
             Main.frame.setVisible(true);
-            GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .getDefaultScreenDevice()
-                    .setFullScreenWindow(Main.frame);
-        } else {
-            Main.frame.setUndecorated(false); // removes title bar & borders
-            GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .getDefaultScreenDevice()
-                    .setFullScreenWindow(null);
-
-            Main.frame.setBounds(lastBounds);
-            lastBounds = null;
         }
     }
 

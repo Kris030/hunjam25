@@ -16,6 +16,7 @@ public abstract class Minigame implements IRenderable {
     public Ingredient ingredient;
 
     protected Vec2 renderAreaSize;
+    protected float worldScale;
 
     private enum State {
         ANIM_IN, ANIM_OUT, SHOWN
@@ -96,6 +97,7 @@ public abstract class Minigame implements IRenderable {
         } else {
             renderAreaSize = new Vec2(2.0f, 2.0f * (whMax / whMin));
         }
+        worldScale = ndcScale * tt;
 
         g.clip(new Rectangle2D.Float(
                 -renderAreaSize.x() * 0.5f, -renderAreaSize.y() * 0.5f,

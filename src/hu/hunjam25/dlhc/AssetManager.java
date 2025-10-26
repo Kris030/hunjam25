@@ -56,6 +56,18 @@ public class AssetManager {
         addImg("app_icon", img(Path.of("art", "icon.png")));
 
         addHutoMinigame();
+
+        addChoppingMinigame();
+    }
+
+    private static void addChoppingMinigame() throws IOException {
+        addImg("minigame.chopping.kes", img(Path.of("szeleteles", "kes.png")));
+        addImg("minigame.chopping.pari_szelet", img(Path.of("szeleteles", "pari_szelet.png")));
+        addImg("minigame.chopping.vagodeszka", img(Path.of("szeleteles", "vagodeszka.png")));
+
+        addAnim("minigame.chopping.pari", imgs(4, i -> Path.of("szeleteles", "pari_" + (i + 1) + ".png")));
+
+        addAnim("minigame.chopping.remi_karddal", imgs(2, i -> Path.of("szeleteles", "remi_karddal_" + i + ".png")));
     }
 
     private static void addHutoMinigame() throws IOException {

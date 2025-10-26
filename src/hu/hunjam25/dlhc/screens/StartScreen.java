@@ -72,7 +72,7 @@ public class StartScreen implements IScreen {
 
     private static void playMenuMusic() {
         try {
-            currentClip = menuMusic.play(Game::playBackgroundMusic);
+            currentClip = menuMusic.play(() -> Game.playMusic(Game.backgroundMusic));
         } catch (LineUnavailableException e) {
             System.err.println("No Music");
             throw new RuntimeException(e);

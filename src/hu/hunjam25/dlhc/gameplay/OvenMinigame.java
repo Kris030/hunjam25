@@ -7,7 +7,7 @@ import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Food;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Workstation;
-import hu.hunjam25.dlhc.view.AnimatedSprite;
+import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.Sprite;
 
 import java.awt.*;
@@ -126,5 +126,10 @@ public class OvenMinigame extends Minigame {
             g.rotate(-rot);
             g.translate(-350f, 150);
         }
+    }
+
+    @Override
+    public SoundBuffer getMusic() {
+        return AssetManager.getSound(null);
     }
 }

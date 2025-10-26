@@ -2,7 +2,6 @@ package hu.hunjam25.dlhc.screens;
 
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.sound.SoundBuffer;
-import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
 import javax.sound.sampled.LineUnavailableException;

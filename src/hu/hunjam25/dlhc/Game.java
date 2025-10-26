@@ -178,10 +178,10 @@ public class Game implements IScreen {
         }
     };
 
-    static SoundBuffer backgroundMusic;
+    public static SoundBuffer backgroundMusic;
     static Clip currentClip;
 
-    public static void playBackgroundMusic() {
+    public static void playMusic(SoundBuffer music) {
         try {
             currentClip = backgroundMusic.play(null);
             currentClip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -201,7 +201,7 @@ public class Game implements IScreen {
         Kitchen.init();
     }
 
-    public void stopMusic() {
+    public static void stopMusic() {
         if (currentClip != null) {
             currentClip.close();
         }

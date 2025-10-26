@@ -6,6 +6,7 @@ import hu.hunjam25.dlhc.Utils;
 import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
@@ -72,5 +73,10 @@ public class FridgeMinigame extends Minigame {
             winFinal.spriteScale = worldScale;
             winFinal.render(g);
         }
+    }
+
+    @Override
+    public SoundBuffer getMusic() {
+        return AssetManager.getSound(null);
     }
 }

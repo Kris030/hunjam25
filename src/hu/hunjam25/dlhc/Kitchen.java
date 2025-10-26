@@ -63,10 +63,6 @@ public class Kitchen {
                 .orElse(null);
     }
 
-    public static void minigameEnded(float result) {
-        minigame.chef.pushResult(result);
-    }
-
     public static void init() {
         rat = new Rat();
 
@@ -150,6 +146,13 @@ public class Kitchen {
             // case Trash -> null;
             default -> new ChoppingBoardMinigame(workstation, chef, ingredient);
         };
+
+        Game.playMusic(minigame.getMusic());
+    }
+
+    public static void minigameEnded(float result) {
+        Game.playMusic(Game.backgroundMusic);
+        minigame.chef.pushResult(result);
     }
 
     public static void startFire() {

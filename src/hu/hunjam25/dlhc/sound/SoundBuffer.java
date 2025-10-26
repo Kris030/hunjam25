@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.sound.sampled.*;
-import javax.swing.*;
 
 public record SoundBuffer(AudioFormat format, byte[] audioData) {
-
 
     public static SoundBuffer read(InputStream inp) throws IOException, UnsupportedAudioFileException {
         try (AudioInputStream stream = AudioSystem.getAudioInputStream(new ByteArrayInputStream(inp.readAllBytes()))) {

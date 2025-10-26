@@ -18,7 +18,8 @@ public class Chef extends GameObject {
     private final static float SPEED = 3;
 
     private static int count = 0;
-    private int workingIdx = 0;
+
+    int workingIdx = 0;
 
     private SoundBuffer ding;
 
@@ -144,6 +145,7 @@ public class Chef extends GameObject {
 
     private void working() {
         workingIdx = facing(currWorkstation.workingOffset.mul(-1f));
+        this.animatedSprite.setIdx(workingIdx);
         // work at workstation
         if (isJobOver()) {
             finishJob();

@@ -18,7 +18,7 @@ public class FridgeMinigame extends Minigame {
     private float renderState = 0.0f;
     private boolean previouslyPressed = false;
 
-    private final float DIFFICULTY = 0.75f;
+    private final float DIFFICULTY = 0.5f;
     private final float CLICK_SENSITIVITY = 0.1f;
     private final float SMOOTHNESS = 2.0f;
 

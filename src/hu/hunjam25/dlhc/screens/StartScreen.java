@@ -1,6 +1,7 @@
 package hu.hunjam25.dlhc.screens;
 
 import hu.hunjam25.dlhc.AssetManager;
+import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
@@ -14,8 +15,7 @@ public class StartScreen implements IScreen {
     public void init() {
         backg = new AnimatedSprite(AssetManager.getAnim("radio"), 1 );
         backg.centered = false;
-        backg.unFreeze();
-        backg.start();
+        backg.setLooping(false);
     }
 
     @Override
@@ -25,6 +25,9 @@ public class StartScreen implements IScreen {
 
     @Override
     public void tick(float dt) {
-
+        if(!Game.keysPressed.isEmpty()){
+            backg.unFreeze();
+            backg.start();
+        }
     }
 }

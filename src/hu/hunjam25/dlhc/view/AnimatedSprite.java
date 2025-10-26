@@ -29,6 +29,8 @@ public class AnimatedSprite implements IRenderable {
 
     public float spriteScale = 1;
 
+    private boolean looping = true;
+
     public AnimatedSprite(BufferedImage[] images, float animLength) {
         this.images = images;
         this.animLength = animLength;
@@ -67,6 +69,10 @@ public class AnimatedSprite implements IRenderable {
         float age = frozen ? frozenAge : getAge() % animLength;
         if (!frozen) {
             idx = (int) (images.length * age / animLength);
+        }
+
+        if (idx >= images.length - 1 && !looping) {
+            frozen = true;
         }
 
         idx %= images.length;
@@ -110,5 +116,9 @@ public class AnimatedSprite implements IRenderable {
 
     public int getNumberOfFrames() {
         return images.length;
+    }
+
+    public void setLooping(boolean b) {
+        looping = b;
     }
 }

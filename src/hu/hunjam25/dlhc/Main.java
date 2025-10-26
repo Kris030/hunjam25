@@ -69,7 +69,7 @@ public class Main {
                 continue;
             }
 
-            if (!Game.keysPressed.isEmpty()) {
+            if(!Game.keysPressed.isEmpty()){
                 currentScreen = game;
             }
 
@@ -108,3 +108,4 @@ public class Main {
         endScreen = new EndScreen();
     }
 }
+

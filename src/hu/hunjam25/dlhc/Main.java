@@ -126,7 +126,8 @@ public class Main {
         startScreen(game);
     }
 
-    public static void endGame() {
+    public static void endGame(boolean didWin) {
+        endScreen.setWon(didWin);
         startScreen(endScreen);
     }
 }

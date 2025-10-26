@@ -46,6 +46,7 @@ public class Game implements IScreen {
             .add(new Vec2(2, 2));
 
     private static final List<Integer> winCheatCode = List.of(KeyEvent.VK_W, KeyEvent.VK_I, KeyEvent.VK_N);
+    private static final List<Integer> loseCheatCode = List.of(KeyEvent.VK_L, KeyEvent.VK_O, KeyEvent.VK_S, KeyEvent.VK_E);
 
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
@@ -96,7 +97,10 @@ public class Game implements IScreen {
         }
 
         if (keysPressed.containsAll(winCheatCode)) {
-            Main.endGame();
+            Main.endGame(true);
+        }
+        if(keysPressed.containsAll(loseCheatCode)){
+            Main.endGame(false);
         }
 
         Kitchen.getGameObjects().forEach(o -> o.tick(dt));
@@ -113,7 +117,7 @@ public class Game implements IScreen {
 
         Kitchen.chefs.removeIf(chef -> chef.finished);
         if (Kitchen.chefs.isEmpty()) {
-            Main.endGame();
+            Main.endGame(false);
         }
 
         Kitchen.particleEffects.removeAll(Kitchen.particleEffectKillList);

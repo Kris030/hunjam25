@@ -8,22 +8,33 @@ import java.awt.*;
 
 public class EndScreen implements IScreen {
 
-    public static AnimatedSprite backg;
+    private static Sprite win;
+    private static Sprite lose;
+
+    boolean didWin = false;
 
     @Override
     public void init() {
-        backg = new AnimatedSprite( AssetManager.getAnim("chef1"), 1);
-        backg.centered = false;
+        win = new Sprite( AssetManager.getImage("win"));
+        win.spriteScale = 1.2f;
+        lose = new Sprite( AssetManager.getImage("lose"));
+        lose.spriteScale = 1.2f;
+        win.centered = false;
+        lose.centered = false;
     }
 
     @Override
     public void start() {
-        backg.start();
+
     }
 
     @Override
     public void render(Graphics2D g) {
-        backg.render(g);
+        if(didWin){
+            win.render(g);
+        }else{
+            lose.render(g);
+        }
     }
 
     @Override
@@ -34,5 +45,9 @@ public class EndScreen implements IScreen {
     @Override
     public void stop() {
 
+    }
+
+    public void setWon(boolean won) {
+        this.didWin = won;
     }
 }

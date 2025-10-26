@@ -44,6 +44,7 @@ public class AssetManager {
 
         addRemiAnim();
         addRadio();
+        addEndings();
         addStars();
 
         addClockAnimation();
@@ -205,6 +206,11 @@ public class AssetManager {
         addAnim("radio",
                 imgs(6, i -> Path.of("art", "radio",
                         "radio_0" + (i + 1) + ".png")));
+    }
+
+    private static void addEndings() throws IOException {
+        addImg("lose", img(Path.of("art", "ending", "ending_lose.jpg")));
+        addImg("win", img(Path.of("art", "ending", "ending_win.jpg")));
     }
 
     private static void addIngredients() throws IOException {

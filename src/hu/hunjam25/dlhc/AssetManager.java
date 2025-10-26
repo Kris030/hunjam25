@@ -150,12 +150,17 @@ public class AssetManager {
     }
 
     private static void addWorkStationAnimations() throws IOException {
-        BufferedImage[] stoveOven = imgs(new Path[] {
+        BufferedImage[] stove = imgs(new Path[] {
                 Path.of("art", "organized", "stove", "stove_front_off.png"),
                 Path.of("art", "organized", "stove", "stove_front_on.png"),
         });
-        animStorage.put(WorkstationType.Stove.name(), stoveOven);
-        animStorage.put(WorkstationType.Oven.name(), stoveOven);
+        BufferedImage[] oven = imgs(new Path[] {
+                Path.of("art", "organized", "stove", "stove_front_off.png"),
+                Path.of("art", "organized", "stove", "oven_on.png"),
+        });
+
+        animStorage.put(WorkstationType.Stove.name(), stove);
+        animStorage.put(WorkstationType.Oven.name(), oven);
 
         addAnim(WorkstationType.Fridge.name(), imgs(
                 Path.of("art", "organized", "fridge", "fridge_closed.png"),

@@ -88,6 +88,7 @@ public class AssetManager {
                 ImageIO.read(Path.of( "art", "organized", "stove", "stove_front_on.png").toFile() ),
         };
         animStorage.put(Workstation.WorkstationType.Stove.name(), stove);
+        animStorage.put(Workstation.WorkstationType.Oven.name(), stove);
 
         BufferedImage[] fridge = new BufferedImage[]{
                 ImageIO.read( Path.of( "art", "organized", "fridge", "fridge_closed.png").toFile()),

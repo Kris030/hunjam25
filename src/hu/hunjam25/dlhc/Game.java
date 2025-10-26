@@ -4,12 +4,15 @@ import hu.hunjam25.dlhc.screens.IScreen;
 import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -124,6 +127,18 @@ public class Game implements IScreen {
         Kitchen.updateStars();
         Kitchen.particleEffects.removeAll(Kitchen.particleEffectKillList);
         Kitchen.particleEffectKillList.clear();
+
+        ArrayList<Clip> fkl = new ArrayList<>();
+        for (var e : fadeoutList.entrySet()) {
+            if (e.getValue() >= Main.now) {
+                fkl.add(e.getKey());
+            }
+        }
+
+        for (Clip c : fkl) {
+            fadeoutList.remove(c);
+            c.stop();
+        }
     }
 
     @Override
@@ -181,7 +196,24 @@ public class Game implements IScreen {
     public static SoundBuffer backgroundMusic;
     static Clip currentClip;
 
+    static HashMap<Clip, Float> fadeoutList = new HashMap<>();
+
+    private static void fadeOut(Clip c) {
+        c.loop(0);
+
+        var ctrl = (FloatControl) c.getControl(FloatControl.Type.VOLUME);
+
+        var us = 300000;
+        ctrl.shift(ctrl.getValue(), 0.0f, us);
+
+        fadeoutList.put(c, Main.now + us / 1000000f);
+    }
+
     public static void playMusic(SoundBuffer music) {
+        if (currentClip != null) {
+            fadeOut(currentClip);
+        }
+
         try {
             currentClip = backgroundMusic.play(null);
             currentClip.loop(Clip.LOOP_CONTINUOUSLY);

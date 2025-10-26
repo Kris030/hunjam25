@@ -121,7 +121,7 @@ public class Game implements IScreen {
 
         Kitchen.chefs.removeIf(chef -> chef.finished);
         if (Kitchen.chefs.isEmpty()) {
-            Main.endGame(false);
+            Main.endGame(Kitchen.rating <= 0.4);
         }
 
         Kitchen.updateStars();

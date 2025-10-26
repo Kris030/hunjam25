@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.screens.CreditsScreen;
 import hu.hunjam25.dlhc.screens.EndScreen;
 import hu.hunjam25.dlhc.screens.IScreen;
 import hu.hunjam25.dlhc.screens.StartScreen;
@@ -18,6 +19,7 @@ public class Main {
     static Game game;
     static StartScreen startScreen;
     static EndScreen endScreen;
+    static CreditsScreen creditsScreen;
 
     private static IScreen currentScreen;
     public static float now, lastTick;
@@ -111,10 +113,12 @@ public class Main {
         game = new Game();
         startScreen = new StartScreen();
         endScreen = new EndScreen();
+        creditsScreen = new CreditsScreen();
 
         startScreen.init();
         game.init();
         endScreen.init();
+        creditsScreen.init();
     }
 
     private static void startScreen(IScreen screen) {

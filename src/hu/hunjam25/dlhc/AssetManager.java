@@ -55,8 +55,8 @@ public class AssetManager {
     }
 
     private static BufferedImage img(Path p) throws IOException {
-        // return ImageIO.read(Main.class.getResourceAsStream("/" + p.toString()));
-        return ImageIO.read(p.toFile());
+        return ImageIO.read(AssetManager.class.getClassLoader().getResource(p.toString()));
+        // return ImageIO.read(p.toFile());
     }
 
     private static BufferedImage[] imgs(Path... paths) throws IOException {

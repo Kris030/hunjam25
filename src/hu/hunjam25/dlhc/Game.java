@@ -1,5 +1,6 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.screens.IScreen;
 import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import javax.sound.sampled.Clip;
@@ -15,7 +16,7 @@ import java.util.Set;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class Game {
+public class Game implements IScreen {
 
     public static final int SCREEN_WIDTH = 16;
     public static final int SCREEN_HEIGHT = 9;
@@ -90,7 +91,7 @@ public class Game {
 
     public static float now;
 
-    static void tick(float dt) {
+    @Override public void tick(float dt) {
         if (keysPressed.contains(KeyEvent.VK_F11)) {
             toggleFullscreen();
         }
@@ -108,7 +109,7 @@ public class Game {
         Kitchen.particleEffectKillList.clear();
     }
 
-    static void render(Graphics2D g) {
+    @Override public void render(Graphics2D g) {
         AffineTransform transform = g.getTransform();
 
 
@@ -159,8 +160,7 @@ public class Game {
 
     static SoundBuffer backgroundMusic;
 
-    static void init(){
-        backgroundMusic = AssetManager.getSound("music");
+    public static void playBackgroundMusic() {
         try {
             Clip c = backgroundMusic.play();
             c.loop(Clip.LOOP_CONTINUOUSLY);
@@ -168,5 +168,10 @@ public class Game {
             System.err.println("No Music");
             throw new RuntimeException(e);
         }
+    }
+
+    @Override public void init(){
+        backgroundMusic = AssetManager.getSound("music");
+
     }
 }

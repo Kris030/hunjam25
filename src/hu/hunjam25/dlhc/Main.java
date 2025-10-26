@@ -1,15 +1,24 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.screens.EndScreen;
+import hu.hunjam25.dlhc.screens.IScreen;
+import hu.hunjam25.dlhc.screens.StartScreen;
+
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Main {
 
     static JFrame frame;
+
+    static Game game;
+    static StartScreen startScreen;
+    static EndScreen endScreen;
 
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
         // force enable hardware acceleration
@@ -20,6 +29,10 @@ public class Main {
         } catch (Exception e) {
             System.err.println("Failed to set look and feel");
         }
+
+        init();
+
+        IScreen currentScreen = startScreen;
 
         AssetManager.init();
         Kitchen.init();
@@ -45,7 +58,7 @@ public class Main {
         double FPS = 60;
 
         long gameStart = System.nanoTime();
-        Game.init();
+        currentScreen.init();
 
         boolean running = true;
         while (running) {
@@ -59,7 +72,7 @@ public class Main {
             }
 
             Game.now = (start - gameStart) * 0.000000001f;
-            Game.tick((float) wait);
+            currentScreen.tick((float) wait);
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -67,7 +80,7 @@ public class Main {
             g.setColor(Color.ORANGE); // background color
             g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
             g.scale(Game.GLOBAL_SCALE.x(),Game.GLOBAL_SCALE.y());
-            Game.render(g);
+            currentScreen.render(g);
             //g.drawImage(AssetManager.getImage("tiles"),0,0, null);
 
             bs.show();
@@ -83,6 +96,12 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static void init(){
+        game = new Game();
+        startScreen = new StartScreen();
+        endScreen = new EndScreen();
     }
 }
 

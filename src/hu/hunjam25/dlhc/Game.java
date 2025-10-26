@@ -88,6 +88,8 @@ public class Game implements IScreen {
             Main.frame.setLocationRelativeTo(null);
             Main.frame.setVisible(true);
         }
+
+        fullscreen = !fullscreen;
     }
 
     public static Set<Integer> keysPressed = new HashSet<>();

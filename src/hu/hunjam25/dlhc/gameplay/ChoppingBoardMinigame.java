@@ -36,6 +36,8 @@ public class ChoppingBoardMinigame extends Minigame {
     private static final Vec2 KNIFE_ROT_OFFSET = new Vec2(0.2f, 0.2f);
 
     private static final Vec2 RAT_POSITION = new Vec2(0.16f, 0.10f);
+    private static final float RAT_SWING_TIME = 0.5f;
+    private static float ratSwingTime = -RAT_SWING_TIME - 1.0f;
 
     private static final float ANIM_LENGTH = 0.5f;
     private float animStart = -1.0f;
@@ -94,14 +96,17 @@ public class ChoppingBoardMinigame extends Minigame {
         }
 
         if (click) {
-            rat.unFreeze();
-            rat.start();
-
             float diff = getGameTime() % CUT_INTERVAL;
             diff = Math.min(diff, CUT_INTERVAL - diff);
             if (diff > MISTAKE_DELTA)
                 error += 1.0f;
+
+            rat.setIdx(1);
+            ratSwingTime = Main.now;
         }
+
+        if (Main.now - ratSwingTime > RAT_SWING_TIME)
+            rat.setIdx(0);
 
         if (Math.floor(getGameTime() / CUT_INTERVAL) > cutCount) {
             startCut();

@@ -265,6 +265,14 @@ public class AssetManager {
         addSound("loseSound", Path.of("art", "Sound", "win_fail", "fail sound .wav"));
 
         addSound("opening", Path.of("art", "Sound","op", "op.wav"));
+
+        Path p = Path.of("art", "Sound", "mini game chopping board");
+        addSound("chopping_music", p.resolve(Path.of("chopping music .wav")));
+        addSound("fail_sound", p.resolve(Path.of("fail sound .wav")));
+        addSound("kard_csapas", p.resolve(Path.of("kard csapas.wav")));
+        addSound("vagas_sound", p.resolve(Path.of("vagas.wav")));
+        addSound("win_sound", p.resolve(Path.of("win sound .wav")));
+        addSound("chopping_narrator", p.resolve(Path.of("chopping narrator.wav")));
     }
 
     public static BufferedImage getImage(String name) {

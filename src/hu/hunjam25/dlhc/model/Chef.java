@@ -5,6 +5,7 @@ import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -136,7 +137,8 @@ public class Chef extends GameObject {
 
     private void finishJob() {
         try {
-            ding.play();
+            Clip c = ding.play();
+            c.close();
         } catch (LineUnavailableException e) {
             System.err.println("No sound");
             throw new RuntimeException(e);

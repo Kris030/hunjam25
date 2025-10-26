@@ -1,5 +1,9 @@
 package hu.hunjam25.dlhc;
 
+import hu.hunjam25.dlhc.sound.SoundBuffer;
+
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -152,4 +156,17 @@ public class Game {
             keysPressed.remove((Integer) e.getKeyCode());
         }
     };
+
+    static SoundBuffer backgroundMusic;
+
+    static void init(){
+        backgroundMusic = AssetManager.getSound("music");
+        try {
+            Clip c = backgroundMusic.play();
+            c.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (LineUnavailableException e) {
+            System.err.println("No Music");
+            throw new RuntimeException(e);
+        }
+    }
 }

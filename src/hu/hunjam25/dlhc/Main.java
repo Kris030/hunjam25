@@ -45,6 +45,7 @@ public class Main {
         double FPS = 60;
 
         long gameStart = System.nanoTime();
+        Game.init();
 
         boolean running = true;
         while (running) {

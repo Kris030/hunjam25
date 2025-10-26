@@ -63,29 +63,22 @@ public class Game implements IScreen {
     }
 
     // null if not in fullscreen
-    private static Rectangle lastBounds = new Rectangle(0, 0, 800, 600);
-    private static boolean fullscreen = true;
+    private static boolean fullscreen = false;
 
     public static void toggleFullscreen() {
-        // FIXME
-        if (fullscreen) {
-            Main.frame.setVisible(false);
-            Main.frame.setUndecorated(false);
-            Main.frame.setResizable(true);
-            Main.frame.setBounds(lastBounds);
-            Main.frame.setVisible(true);
-        } else {
-            lastBounds = Main.frame.getBounds();
-
-            Main.frame.setVisible(false);
-            Main.frame.setUndecorated(true);
-            Main.frame.setResizable(false);
-            Main.frame.setSize(Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
-            Main.frame.setLocationRelativeTo(null);
-            Main.frame.setVisible(true);
-        }
+        var device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
         fullscreen = !fullscreen;
+        Main.frame.dispose();
+
+        if (fullscreen) {
+            Main.frame.setUndecorated(true);
+            device.setFullScreenWindow(Main.frame);
+        } else {
+            Main.frame.setUndecorated(false);
+            device.setFullScreenWindow(null);
+            Main.frame.setVisible(true);
+        }
     }
 
     public static Set<Integer> keysPressed = new HashSet<>();

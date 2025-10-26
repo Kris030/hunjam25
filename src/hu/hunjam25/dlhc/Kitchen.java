@@ -154,4 +154,8 @@ public class Kitchen {
         isOnFire = true;
         chefs.forEach(c -> c.addHazard(Kitchen.workstations.get(0), Ingredient.TrashFire));
     }
+
+    public static void updateStars(){
+        stars.setIdx((int)(rating * 5f));
+    }
 }

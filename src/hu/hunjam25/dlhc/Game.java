@@ -123,6 +123,7 @@ public class Game implements IScreen {
             Main.endGame(false);
         }
 
+        Kitchen.updateStars();
         Kitchen.particleEffects.removeAll(Kitchen.particleEffectKillList);
         Kitchen.particleEffectKillList.clear();
     }

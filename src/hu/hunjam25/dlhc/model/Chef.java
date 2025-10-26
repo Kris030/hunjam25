@@ -36,10 +36,9 @@ public class Chef extends GameObject {
 
         ding = AssetManager.getSound("ready");
         startNewFood();
-        addRatMeter(0f);
     }
 
-    private void addRatMeter(float level) {
+    private void addRatMeter() {
         float min = -1.0f * (todo.length + 1) / 6.0f;
 
         UiElement ratTimer = new UiElement();
@@ -47,7 +46,7 @@ public class Chef extends GameObject {
         ratTimer.scale = 0.15f;
         AnimatedSprite ratSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
         ratSprite.freeze();
-        ratSprite.setIdx((int) (level * ratSprite.getNumberOfFrames()));
+        ratSprite.setIdx(0);
         ratTimer.setAnimatedSprite(ratSprite);
         ratTimer.addOffset(new Vec2(min, 0.0f));
         addUiElement(ratTimer);
@@ -63,7 +62,7 @@ public class Chef extends GameObject {
         Arrays.fill(results, 0f);
         pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
         startedCurrentFoodAt = Game.now;
-        addRatMeter(Kitchen.rating);
+        addRatMeter();
         addClockTimers();
     }
 
@@ -160,6 +159,16 @@ public class Chef extends GameObject {
                 return;
         }
         pathFindingTo = Kitchen.findClosestFreeWorkStation(position, todo[currIngredient]);
+    }
+
+    private void setRatMeter() {
+        float countOfSabotages = 0;
+        for (float res : results) {
+            if (res > 0f)
+                countOfSabotages++;
+        }
+        var as = ((UiElement) this.getUiElement(0)).animatedSprite;
+        as.setIdx((int) (countOfSabotages / (results.length + 1) * as.getNumberOfFrames()));
     }
 
     private void playDing() {
@@ -294,6 +303,7 @@ public class Chef extends GameObject {
      */
     public void pushResult(float result) {
         results[currIngredient] += result;
+        setRatMeter();
     }
 
     private AnimatedSprite animatedSprite;

@@ -1,6 +1,8 @@
 package hu.hunjam25.dlhc;
 
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -59,8 +61,10 @@ public class AssetManager {
         return ImageIO.read(getResInputStream(p));
     }
 
-    private static InputStream getResInputStream(Path p) {
-        return AssetManager.class.getClassLoader().getResourceAsStream(p.toString());
+    private static InputStream getResInputStream(Path p) throws FileNotFoundException {
+        // FIXME: first line works in jar, second works from IDE
+        // return AssetManager.class.getClassLoader().getResourceAsStream(p.toString());
+        return new FileInputStream(p.toFile());
     }
 
     private static BufferedImage[] imgs(Path... paths) throws IOException {

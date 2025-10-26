@@ -138,6 +138,7 @@ public class Game implements IScreen {
         for (Clip c : fkl) {
             fadeoutList.remove(c);
             c.stop();
+            c.close();
         }
     }
 
@@ -199,14 +200,16 @@ public class Game implements IScreen {
     static HashMap<Clip, Float> fadeoutList = new HashMap<>();
 
     private static void fadeOut(Clip c) {
-        c.loop(0);
+        // c.loop(0);
 
-        var ctrl = (FloatControl) c.getControl(FloatControl.Type.VOLUME);
+        // var ctrl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
 
-        var us = 300000;
-        ctrl.shift(ctrl.getValue(), 0.0f, us);
+        // var us = 300000;
+        // ctrl.shift(ctrl.getValue(), 0.0f, us);
 
-        fadeoutList.put(c, Main.now + us / 1000000f);
+        // fadeoutList.put(c, Main.now + us / 1000000f);
+        c.stop();
+        c.close();
     }
 
     public static void playMusic(SoundBuffer music) {
@@ -215,7 +218,7 @@ public class Game implements IScreen {
         }
 
         try {
-            currentClip = backgroundMusic.play(null);
+            currentClip = music.play(null);
             currentClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (LineUnavailableException e) {
             System.err.println("No Music");

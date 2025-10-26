@@ -66,6 +66,7 @@ public class Game implements IScreen {
     private static boolean fullscreen = false;
 
     public static void toggleFullscreen() {
+        keysPressed.clear();
         var device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
         fullscreen = !fullscreen;
@@ -79,6 +80,8 @@ public class Game implements IScreen {
             device.setFullScreenWindow(null);
             Main.frame.setVisible(true);
         }
+
+        Main.canvas.requestFocus();
     }
 
     public static Set<Integer> keysPressed = new HashSet<>();

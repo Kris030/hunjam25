@@ -15,6 +15,7 @@ import java.io.IOException;
 public class Main {
 
     static JFrame frame;
+    static Canvas canvas;
 
     static Game game;
     static StartScreen startScreen;
@@ -47,13 +48,13 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setIconImage(AssetManager.getImage("app_icon"));
 
-        Canvas c = new Canvas();
-        frame.add(c);
+        canvas = new Canvas();
+        frame.add(canvas);
 
-        c.addKeyListener(Game.listener);
+        canvas.addKeyListener(Game.listener);
 
         frame.setVisible(true);
-        c.requestFocus();
+        canvas.requestFocus();
 
         double FPS = 60;
 
@@ -61,28 +62,28 @@ public class Main {
         currentScreen.init();
 
         boolean running = true;
+        double wait = 1000 / FPS;
         while (running) {
-            double wait = 1000 / FPS;
             long start = System.nanoTime();
-
-            BufferStrategy bs = c.getBufferStrategy();
-            if (bs == null) {
-                c.createBufferStrategy(2);
-                continue;
-            }
 
             lastTick = now;
             now = (start - gameStart) * 0.000000001f;
             currentScreen.tick(now - lastTick);
 
+            BufferStrategy bs = canvas.getBufferStrategy();
+            if (bs == null) {
+                canvas.createBufferStrategy(2);
+                continue;
+            }
+
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             g.setColor(Color.BLACK);
-            g.clearRect(0, 0, c.getWidth(), c.getHeight());
+            g.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-            float scaleX = c.getWidth() / 1920f;
-            float scaleY = c.getHeight() / 1080f;
+            float scaleX = canvas.getWidth() / 1920f;
+            float scaleY = canvas.getHeight() / 1080f;
             float scale = Math.min(scaleX, scaleY);
             g.scale(scale, scale);
 

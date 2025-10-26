@@ -43,6 +43,7 @@ public class AssetManager {
         addWorkStations();
 
         addRemiAnim();
+        addRadio();
 
         addClockAnimation();
 
@@ -162,6 +163,12 @@ public class AssetManager {
         addAnim("remi",
                 imgs(69, i -> Path.of("art", "organized", "remi",
                         "gonosz_remi2_000" + String.format("%02d", i) + ".png")));
+    }
+
+    private static void addRadio() throws IOException {
+        addAnim("radio",
+                imgs(6, i -> Path.of("art", "radio",
+                        "radio_0" + (i+1) + ".png")));
     }
 
     private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {

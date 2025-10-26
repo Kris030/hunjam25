@@ -69,6 +69,10 @@ public class Main {
                 continue;
             }
 
+            if(!Game.keysPressed.isEmpty()){
+                currentScreen = game;
+            }
+
             Game.lastTick = Game.now;
             Game.now = (start - gameStart) * 0.000000001f;
             currentScreen.tick(Game.now - Game.lastTick);
@@ -104,3 +108,4 @@ public class Main {
         endScreen = new EndScreen();
     }
 }
+

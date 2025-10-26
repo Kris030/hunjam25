@@ -12,8 +12,10 @@ public class StartScreen implements IScreen {
 
     @Override
     public void init() {
-        backg = new AnimatedSprite(AssetManager.getAnim("radio"), 4 );
+        backg = new AnimatedSprite(AssetManager.getAnim("radio"), 1 );
         backg.centered = false;
+        backg.unFreeze();
+        backg.start();
     }
 
     @Override

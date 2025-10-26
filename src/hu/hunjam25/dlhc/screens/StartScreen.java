@@ -36,15 +36,16 @@ public class StartScreen implements IScreen {
 
     @Override
     public void start() {
-        playBackgroundMusic();
+        playMenuMusic();
     }
 
     @Override
     public void render(Graphics2D g) {
         backg.render(g);
 
-        //g.translate(Game.SCREEN_WIDTH);
+        g.translate(Game.SCREEN_WIDTH / 2f, Game.SCREEN_HEIGHT / 2f);
         controls.render(g);
+        //g.translate(-Game.SCREEN_WIDTH / 2f, -Game.SCREEN_HEIGHT / 2f);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class StartScreen implements IScreen {
 
     }
 
-    private static void playBackgroundMusic() {
+    private static void playMenuMusic() {
         try {
             currentClip = menuMusic.play(Game::playBackgroundMusic);
         } catch (LineUnavailableException e) {

@@ -251,7 +251,7 @@ public class AssetManager {
         addSound("ready", Path.of("art", "sounds", "ready_ding.wav"));
         addSound("music", Path.of("art", "sound", "main.wav"));
 
-        addSound("opening", Path.of("art", "sound", "main.wav"));
+        addSound("opening", Path.of("art", "sound","op", "op.wav"));
 
     }
 

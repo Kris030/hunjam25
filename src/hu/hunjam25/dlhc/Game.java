@@ -204,6 +204,8 @@ public class Game implements IScreen {
     }
 
     public void stopMusic() {
-        currentClip.close();
+        if(currentClip != null){
+            currentClip.close();
+        }
     }
 }

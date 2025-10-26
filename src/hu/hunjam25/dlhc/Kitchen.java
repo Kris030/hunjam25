@@ -75,7 +75,7 @@ public class Kitchen {
         for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 1) * 2; i++) {
             randomStations.add(topRow.get(Food.r.nextInt(topRow.size())));
         }
-        for (int i = 0; i < Game.MAP_WIDTH - 1; ++i) {
+        for (int i = 1; i < Game.MAP_WIDTH - 1; ++i) {
             workstations.add(new Workstation(
                     randomStations.get(i),
                     new Vec2((float) i, 5f),
@@ -89,7 +89,7 @@ public class Kitchen {
         for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 1) * 2; i++) {
             randomStations.add(bottomRow.get(Food.r.nextInt(bottomRow.size())));
         }
-        for (int i = 0; i < Game.MAP_WIDTH - 1; ++i) {
+        for (int i = 1; i < Game.MAP_WIDTH - 1; ++i) {
             workstations.add(new Workstation(
                     randomStations.get(i),
                     new Vec2((float) i, 0f),

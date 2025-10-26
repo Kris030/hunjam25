@@ -46,11 +46,13 @@ public class ChoppingBoardMinigame extends Minigame {
 
     private static final float CUT_INTERVAL = 2.0f * (60.0f / 110.0f);
     private static final float MISTAKE_DELTA = 0.5f;
+    private int swingCount = 0;
     private int cutCount = 0;
-    private float error = 0.0f;
+    private float sabotage = 0.0f;
 
     private boolean previouslyPressed = false;
     private final Vec2 tomatoPositions[];
+    private boolean swing = false;
 
     public ChoppingBoardMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         super(workstation, chef, ingredient);
@@ -78,11 +80,7 @@ public class ChoppingBoardMinigame extends Minigame {
     }
 
     protected float getResult() {
-        if (cutCount == 0) {
-            return 0.0f;
-        } else {
-            return 1.0f - error / cutCount;
-        }
+        return sabotage;
     }
 
     private boolean firstTick = true;
@@ -98,10 +96,12 @@ public class ChoppingBoardMinigame extends Minigame {
         }
 
         if (click) {
-            float diff = getGameTime() % CUT_INTERVAL;
-            diff = Math.min(diff, CUT_INTERVAL - diff);
-            if (diff > MISTAKE_DELTA)
-                error += 1.0f;
+            float diff = CUT_INTERVAL - (getGameTime() % CUT_INTERVAL);
+            if (diff <= MISTAKE_DELTA) {
+                sabotage += (MISTAKE_DELTA - diff) / MISTAKE_DELTA;
+                swingCount++;
+                System.out.println("swinged");
+            }
 
             rat.setIdx(1);
             ratSwingTime = Main.now;
@@ -112,11 +112,14 @@ public class ChoppingBoardMinigame extends Minigame {
 
         if (Math.floor(getGameTime() / CUT_INTERVAL) > cutCount) {
             startCut();
-            tomatos[cutCount].unFreeze();
-            tomatos[cutCount].start();
-            cutCount++;
+            if (cutCount != swingCount) {
+                System.out.println("cut");
+                tomatos[cutCount].unFreeze();
+                tomatos[cutCount].start();
+                cutCount++;
+            }
 
-            if (cutCount == TOMATO_COUNT) {
+            if (swingCount == TOMATO_COUNT) {
                 endGame();
             }
         }

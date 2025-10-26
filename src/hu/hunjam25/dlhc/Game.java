@@ -45,8 +45,7 @@ public class Game implements IScreen {
             .sub(MINIGAME_CONTENT_TOPLEFT_OFFSET)
             .add(new Vec2(2, 2));
 
-
-    private static final List winCheatCode = List.of(KeyEvent.VK_W , KeyEvent.VK_I, KeyEvent.VK_N);
+    private static final List<Integer> winCheatCode = List.of(KeyEvent.VK_W, KeyEvent.VK_I, KeyEvent.VK_N);
 
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
@@ -98,15 +97,18 @@ public class Game implements IScreen {
             toggleFullscreen();
         }
 
-        if(keysPressed.containsAll(winCheatCode) ){
+        if (keysPressed.containsAll(winCheatCode)) {
             Main.endGame();
-        };
+        }
 
         Kitchen.getGameObjects().forEach(o -> o.tick(dt));
         if (Kitchen.minigame != null) {
             Kitchen.minigame.tick(dt);
 
-            if (Kitchen.minigame.isDisappeared()) {
+            // TODO: better key
+            if (!Kitchen.minigame.isGameEnded() && keysPressed.contains(KeyEvent.VK_ESCAPE)) {
+                Kitchen.minigame.endGame();
+            } else if (Kitchen.minigame.isDisappeared()) {
                 Kitchen.minigame = null;
             }
         }

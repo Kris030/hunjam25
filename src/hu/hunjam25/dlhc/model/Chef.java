@@ -22,6 +22,29 @@ public class Chef extends GameObject {
 
     private SoundBuffer ding;
 
+    Queue<Food> foodTodo;
+
+    Food currentFood;
+
+    int currIngredient;
+    Ingredient[] todo;
+    float[] results;
+
+    // null if not at workstation
+    Workstation currWorkstation;
+    float startedWorkAt;
+
+    float startedCurrentFoodAt;
+
+    Workstation pathFindingTo;
+    Vec2 pathFindingTargetPosition;
+
+    float stoppedUntil = 0f;
+
+    Ingredient tempIfOnFire = null;
+
+    public boolean finished = false;
+
     public Chef(int foodCount) {
         ++count;
         animatedSprite = new AnimatedSprite(AssetManager.getAnim("chef" + ((count % 3) + 1)), 0.5f);
@@ -64,6 +87,7 @@ public class Chef extends GameObject {
         startedCurrentFoodAt = Game.now;
         addRatMeter();
         addClockTimers();
+        addIngredientSprites();
     }
 
     private void addClockTimers() {
@@ -82,37 +106,28 @@ public class Chef extends GameObject {
             }
             timerSprite.start();
             timr.setAnimatedSprite(timerSprite);
-            timr.addOffset(new Vec2(min + (i + 1) * 0.4f, 0.0f));
+            timr.addOffset(new Vec2(min + (i + 1) * 0.4f, 0.2f));
             addUiElement(timr);
+        }
+    }
+
+    private void addIngredientSprites() {
+        for (int i = 0; i < todo.length; i++) {
+            float min = -1.0f * (todo.length + 1) / 6.0f;
+
+            UiElement ing = new UiElement();
+            ing.visible = true;
+            ing.scale = 0.3f;
+            AnimatedSprite ingSprite = new AnimatedSprite(AssetManager.getAnim(todo[i].name().toLowerCase()), 1);
+            ing.setAnimatedSprite(ingSprite);
+            ing.addOffset(new Vec2(min + (i + 1) * 0.4f, -0.25f));
+            addUiElement(ing);
         }
     }
 
     public Chef() {
         this(DEFAULT_FOOD_COUNT);
     }
-
-    Queue<Food> foodTodo;
-
-    Food currentFood;
-
-    int currIngredient;
-    Ingredient[] todo;
-    float[] results;
-
-    // null if not at workstation
-    Workstation currWorkstation;
-    float startedWorkAt;
-
-    float startedCurrentFoodAt;
-
-    Workstation pathFindingTo;
-    Vec2 pathFindingTargetPosition;
-
-    float stoppedUntil = 0f;
-
-    Ingredient tempIfOnFire = null;
-
-    public boolean finished = false;
 
     @Override
     public void tick(float dt) {
@@ -213,7 +228,6 @@ public class Chef extends GameObject {
                 findClosestWorkStation();
                 if (pathFindingTo != null) {
                     confused = false;
-                    System.out.println("job found");
                 }
                 return;
             }

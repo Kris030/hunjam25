@@ -42,7 +42,7 @@ public class Main {
 
         frame = new JFrame("Don't let him cook");
 
-        frame.setSize(1280, 720);
+        frame.setSize(1000, 589);
         frame.setLocationRelativeTo(null);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -139,7 +139,7 @@ public class Main {
         startScreen(endScreen);
     }
 
-    public static void startCredits(){
+    public static void startCredits() {
         startScreen(creditsScreen);
     }
 

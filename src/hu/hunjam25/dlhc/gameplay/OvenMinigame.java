@@ -22,10 +22,6 @@ public class OvenMinigame extends Minigame {
     private float leftBurner = 0.0f;
     private float rightBurner = 0.0f;
     private int onBurner = 0;
-
-    private final float DIFFICULTY = 0.5f;
-    private final float CLICK_SENSITIVITY = 0.1f;
-    private final float SMOOTHNESS = 2.0f;
     private final float back = 1.0f;
     private final float speed = 2.0f;
 
@@ -51,7 +47,7 @@ public class OvenMinigame extends Minigame {
     }
 
     protected float getResult() {
-        return (state + 1.0f) * 0.5f;
+        return Math.max(0f, (leftBurner + rightBurner) * 0.66f);
     }
 
     public void tick(float dt) {
@@ -93,8 +89,6 @@ public class OvenMinigame extends Minigame {
         if (leftBurner >= 0.5f && rightBurner >= 0.5f) {
             endGame();
         }
-
-        renderState = Utils.interpolateExp(dt / SMOOTHNESS, renderState, state);
     }
 
     protected void renderGame(Graphics2D g) {

@@ -1,14 +1,15 @@
 package hu.hunjam25.dlhc.sound;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
 
 import javax.sound.sampled.*;
 
 public record SoundBuffer(AudioFormat format, byte[] audioData) {
 
-    public static SoundBuffer read(Path path) throws IOException, UnsupportedAudioFileException {
-        try (AudioInputStream stream = AudioSystem.getAudioInputStream(path.toFile())) {
+    public static SoundBuffer read(InputStream inp) throws IOException, UnsupportedAudioFileException {
+        try (AudioInputStream stream = AudioSystem.getAudioInputStream(new ByteArrayInputStream(inp.readAllBytes()))) {
             return new SoundBuffer(stream.getFormat(), stream.readAllBytes());
         }
     }

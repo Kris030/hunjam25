@@ -1,17 +1,18 @@
 package hu.hunjam25.dlhc;
 
-import hu.hunjam25.dlhc.model.Workstation.WorkstationType;
-import hu.hunjam25.dlhc.sound.SoundBuffer;
-
-import javax.imageio.ImageIO;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.IntStream;
+
+import javax.imageio.ImageIO;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import hu.hunjam25.dlhc.model.Workstation.WorkstationType;
+import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 public class AssetManager {
 
@@ -55,8 +56,11 @@ public class AssetManager {
     }
 
     private static BufferedImage img(Path p) throws IOException {
-        return ImageIO.read(AssetManager.class.getClassLoader().getResource(p.toString()));
-        // return ImageIO.read(p.toFile());
+        return ImageIO.read(getResInputStream(p));
+    }
+
+    private static InputStream getResInputStream(Path p) {
+        return AssetManager.class.getClassLoader().getResourceAsStream(p.toString());
     }
 
     private static BufferedImage[] imgs(Path... paths) throws IOException {
@@ -156,10 +160,14 @@ public class AssetManager {
                         "gonosz_remi2_000" + String.format("%02d", i) + ".png")));
     }
 
+    private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {
+        soundStorage.put(name, SoundBuffer.read(getResInputStream(path)));
+    }
+
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
-        soundStorage.put("pipe", SoundBuffer.read(Path.of("art", "metal-pipe.wav")));
-        soundStorage.put("ready", SoundBuffer.read(Path.of("art", "sounds", "ready_ding.wav")));
-        soundStorage.put("music", SoundBuffer.read(Path.of("art","sounds", "music.wav")));
+        addSound("pipe", Path.of("art", "metal-pipe.wav"));
+        addSound("ready", Path.of("art", "sounds", "ready_ding.wav"));
+        addSound("music", Path.of("art", "sounds", "music.wav"));
     }
 
     public static BufferedImage getImage(String name) {
@@ -171,7 +179,7 @@ public class AssetManager {
         return animStorage.getOrDefault(name, new BufferedImage[] { img, img, img });
     }
 
-    public static SoundBuffer getSound(String name){
-        return soundStorage.getOrDefault(name,soundStorage.get("pipe") );
+    public static SoundBuffer getSound(String name) {
+        return soundStorage.getOrDefault(name, soundStorage.get("pipe"));
     }
 }

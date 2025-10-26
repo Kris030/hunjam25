@@ -165,7 +165,7 @@ public class Chef extends GameObject {
     }
 
     private void finishJob() {
-        if (Kitchen.minigame != null && !Kitchen.minigame.isGameEnded()) {
+        if (Kitchen.minigame != null && Kitchen.minigame.chef == this && !Kitchen.minigame.isGameEnded()) {
             Kitchen.minigame.endGame();
         }
 

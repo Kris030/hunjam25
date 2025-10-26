@@ -79,7 +79,7 @@ public class Kitchen {
             workstations.add(new Workstation(
                     randomStations.get(i),
                     new Vec2((float) i, 5f),
-                    new Vec2(0, -0.5f)));
+                    new Vec2(-0.2f, -0.5f)));
         }
 
         List<WorkstationType> bottomRow = List.of(WorkstationType.ChoppingBoard, WorkstationType.Sink);
@@ -93,7 +93,7 @@ public class Kitchen {
             workstations.add(new Workstation(
                     randomStations.get(i),
                     new Vec2((float) i, 0f),
-                    new Vec2(0, 0.5f)));
+                    new Vec2(0.2f, 0.5f)));
         }
 
         workstations.add(

@@ -22,7 +22,7 @@ public class OvenMinigame extends Minigame {
     private float leftBurner = 0.0f;
     private float rightBurner = 0.0f;
     private int onBurner = 0;
-    private final float back = 1.0f;
+    private final float back = 0.9f;
     private final float speed = 2.0f;
 
     private final Sprite backg = new Sprite(AssetManager.getImage("ovenBackg"));

@@ -2,10 +2,12 @@ package hu.hunjam25.dlhc.screens;
 
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
+import hu.hunjam25.dlhc.Main;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class StartScreen implements IScreen {
 
@@ -19,15 +21,27 @@ public class StartScreen implements IScreen {
     }
 
     @Override
+    public void start() {}
+
+    @Override
     public void render(Graphics2D g) {
         backg.render(g);
     }
 
     @Override
     public void tick(float dt) {
+        if(Game.keysPressed.contains(KeyEvent.VK_SPACE) && backg.hasFinished()){
+            Main.startGame();
+        }
+
         if(!Game.keysPressed.isEmpty()){
             backg.unFreeze();
             backg.start();
         }
+    }
+
+    @Override
+    public void stop() {
+
     }
 }

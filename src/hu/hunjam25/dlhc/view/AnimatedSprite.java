@@ -121,4 +121,8 @@ public class AnimatedSprite implements IRenderable {
     public void setLooping(boolean b) {
         looping = b;
     }
+
+    public boolean hasFinished() {
+        return !looping && idx == images.length - 1;
+    }
 }

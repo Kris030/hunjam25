@@ -9,9 +9,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -45,6 +44,9 @@ public class Game implements IScreen {
     public static final Vec2 MINIGAME_CONTENT_SIZE = MINIGAME_CONTENT_BOTTOMRIGHT_OFFSET
             .sub(MINIGAME_CONTENT_TOPLEFT_OFFSET)
             .add(new Vec2(2, 2));
+
+
+    private static final List winCheatCode = List.of(KeyEvent.VK_W , KeyEvent.VK_I, KeyEvent.VK_N);
 
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
@@ -96,6 +98,10 @@ public class Game implements IScreen {
             toggleFullscreen();
         }
 
+        if(keysPressed.containsAll(winCheatCode) ){
+            Main.endGame();
+        };
+
         Kitchen.getGameObjects().forEach(o -> o.tick(dt));
         if (Kitchen.minigame != null) {
             Kitchen.minigame.tick(dt);
@@ -107,6 +113,11 @@ public class Game implements IScreen {
 
         Kitchen.particleEffects.removeAll(Kitchen.particleEffectKillList);
         Kitchen.particleEffectKillList.clear();
+    }
+
+    @Override
+    public void stop() {
+        stopMusic();
     }
 
     @Override
@@ -160,11 +171,12 @@ public class Game implements IScreen {
     };
 
     static SoundBuffer backgroundMusic;
+    static Clip currentClip;
 
-    public static void playBackgroundMusic() {
+    private static void playBackgroundMusic() {
         try {
-            Clip c = backgroundMusic.play();
-            c.loop(Clip.LOOP_CONTINUOUSLY);
+            currentClip = backgroundMusic.play();
+            currentClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (LineUnavailableException e) {
             System.err.println("No Music");
             throw new RuntimeException(e);
@@ -174,5 +186,14 @@ public class Game implements IScreen {
     @Override
     public void init() {
         backgroundMusic = AssetManager.getSound("music");
+    }
+
+    @Override
+    public void start() {
+        playBackgroundMusic();
+    }
+
+    public void stopMusic() {
+        currentClip.close();
     }
 }

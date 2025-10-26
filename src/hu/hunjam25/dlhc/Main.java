@@ -19,6 +19,8 @@ public class Main {
     static StartScreen startScreen;
     static EndScreen endScreen;
 
+    static IScreen currentScreen;
+
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
         // force enable hardware acceleration
         System.setProperty("sun.java2d.opengl", "true");
@@ -31,9 +33,8 @@ public class Main {
 
         init();
 
-        IScreen currentScreen = startScreen;
+        currentScreen = startScreen;
 
-        AssetManager.init();
         Kitchen.init();
 
         frame = new JFrame("Don't let him cook");
@@ -69,10 +70,6 @@ public class Main {
                 continue;
             }
 
-            if(!Game.keysPressed.isEmpty()){
-                currentScreen = game;
-            }
-
             Game.lastTick = Game.now;
             Game.now = (start - gameStart) * 0.000000001f;
             currentScreen.tick(Game.now - Game.lastTick);
@@ -102,10 +99,36 @@ public class Main {
         }
     }
 
-    private static void init() {
+    private static void init(){
+        try {
+            AssetManager.init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        }
+
         game = new Game();
         startScreen = new StartScreen();
         endScreen = new EndScreen();
+
+        startScreen.init();
+        game.init();
+        endScreen.init();
+    }
+
+    private static void startScreen(IScreen screen){
+        currentScreen.stop();
+        screen.start();
+        currentScreen = screen;
+    }
+
+    public static void startGame(){
+        startScreen(game);
+    }
+
+    public static void endGame(){
+        startScreen(endScreen);
     }
 }
 

@@ -183,9 +183,9 @@ public class Game implements IScreen {
     static SoundBuffer backgroundMusic;
     static Clip currentClip;
 
-    private static void playBackgroundMusic() {
+    public static void playBackgroundMusic() {
         try {
-            currentClip = backgroundMusic.play();
+            currentClip = backgroundMusic.play(null);
             currentClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (LineUnavailableException e) {
             System.err.println("No Music");
@@ -200,7 +200,6 @@ public class Game implements IScreen {
 
     @Override
     public void start() {
-        playBackgroundMusic();
         Kitchen.init();
     }
 

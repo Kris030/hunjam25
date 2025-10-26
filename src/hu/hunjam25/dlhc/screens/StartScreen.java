@@ -3,32 +3,48 @@ package hu.hunjam25.dlhc.screens;
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
 import hu.hunjam25.dlhc.Main;
+import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class StartScreen implements IScreen {
 
-    public static AnimatedSprite backg;
+    private static AnimatedSprite backg;
+
+    private static Sprite controls;
 
     private boolean started = false;
+
+    static SoundBuffer menuMusic;
+    static Clip currentClip;
 
     @Override
     public void init() {
         backg = new AnimatedSprite(AssetManager.getAnim("radio"), 1);
         backg.centered = false;
         backg.setLooping(false);
+
+        menuMusic = AssetManager.getSound("opening");
+
+
+        controls = new Sprite(AssetManager.getImage("controls"));
     }
 
     @Override
     public void start() {
+        playBackgroundMusic();
     }
 
     @Override
     public void render(Graphics2D g) {
         backg.render(g);
+
+        //g.translate(Game.SCREEN_WIDTH);
+        controls.render(g);
     }
 
     @Override
@@ -38,7 +54,7 @@ public class StartScreen implements IScreen {
             started = true;
         }
 
-        if (!Game.keysPressed.isEmpty()) {
+        if (!Game.keysPressed.isEmpty() && !started) {
             backg.unFreeze();
             backg.start();
         }
@@ -47,5 +63,14 @@ public class StartScreen implements IScreen {
     @Override
     public void stop() {
 
+    }
+
+    private static void playBackgroundMusic() {
+        try {
+            currentClip = menuMusic.play(Game::playBackgroundMusic);
+        } catch (LineUnavailableException e) {
+            System.err.println("No Music");
+            throw new RuntimeException(e);
+        }
     }
 }

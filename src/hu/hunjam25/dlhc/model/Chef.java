@@ -209,7 +209,7 @@ public class Chef extends GameObject {
 
     private void playDing() {
         try {
-            ding.play();
+            ding.play(null);
         } catch (LineUnavailableException e) {
             System.err.println("No sound");
             throw new RuntimeException(e);

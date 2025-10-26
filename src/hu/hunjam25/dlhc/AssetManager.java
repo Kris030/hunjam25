@@ -208,6 +208,9 @@ public class AssetManager {
         addAnim("radio",
                 imgs(6, i -> Path.of("art", "radio",
                         "radio_0" + (i + 1) + ".png")));
+
+        addImg("controls",
+                img(Path.of("art", "iranyitas_gombok.png")));
     }
 
     private static void addEndings() throws IOException {
@@ -246,7 +249,10 @@ public class AssetManager {
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
         addSound("pipe", Path.of("art", "metal-pipe.wav"));
         addSound("ready", Path.of("art", "sounds", "ready_ding.wav"));
-        addSound("music", Path.of("art", "sounds", "music.wav"));
+        addSound("music", Path.of("art", "sound", "main.wav"));
+
+        addSound("opening", Path.of("art", "sound", "main.wav"));
+
     }
 
     public static BufferedImage getImage(String name) {

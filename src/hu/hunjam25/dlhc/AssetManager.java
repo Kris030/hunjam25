@@ -52,6 +52,24 @@ public class AssetManager {
         addChefAnimations(3);
 
         addImg("minigame_keret", img(Path.of("art", "minigame_keret.png")));
+
+        addHutoMinigame();
+    }
+
+    private static void addHutoMinigame() throws IOException {
+        Path nyer = Path.of("art", "minigame_huto_nyeres");
+        Path veszt = Path.of("art", "minigame_huto_vesztes");
+
+        addAnim("huto_minigame_nyer",
+                imgs(89, i -> nyer.resolve(Path.of("patkany_nyer_animacio",
+                        String.format("minigame_huto_patkany_nyer_000%02d.png", i)))));
+
+        addAnim("huto_minigame_veszit",
+                imgs(89, i -> veszt.resolve(Path.of("patkany_veszit_animacio",
+                        String.format("minigame_huto_patkany_veszit_000%02d.png", i)))));
+
+        addImg("huto_minigame_nyer", img(nyer.resolve(Path.of("patkany_final_win", "patkany_final_win.png"))));
+        addImg("huto_minigame_veszit", img(veszt.resolve(Path.of("patkany_final_defeat", "patkany_final_defeat.png"))));
     }
 
     private static void addRatMeter() throws IOException {

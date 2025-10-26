@@ -23,6 +23,8 @@ public abstract class Minigame implements IRenderable {
     private float ndcScale = whMin * 0.5f;
     protected float worldScale = 1.0f / ndcScale;
 
+    private float gameStart = Main.now;
+
     private enum State {
         ANIM_IN, ANIM_OUT, SHOWN
     }
@@ -61,6 +63,10 @@ public abstract class Minigame implements IRenderable {
 
     public boolean isDisappeared() {
         return isGameEnded() && age() >= 1.0f;
+    }
+
+    protected float getGameTime() {
+        return Main.now - gameStart;
     }
 
     // mennyire zavart (0-1)

@@ -31,8 +31,13 @@ public class ChoppingBoardMinigame extends Minigame {
     private static final Vec2 KNIFE_POSITION = new Vec2(0.8f, -0.1f);
     private static final Vec2 KNIFE_ROT_OFFSET = new Vec2(0.2f, 0.2f);
 
-    private static final float ANIM_TIME = 0.5f;
+    private static final float ANIM_LENGTH = 0.5f;
     private float animStart = -1.0f;
+
+    private static float CUT_INTERVAL = 2.0f * (60.0f / 110.0f);
+    private static int CUT_COUNT = 7; //TODO
+    private int cutCount = 0;
+    private float error = 0.0f;
 
     private boolean previouslyPressed = false;
     private final Vec2 tomatos[];
@@ -71,8 +76,9 @@ public class ChoppingBoardMinigame extends Minigame {
             previouslyPressed = false;
         }
 
-        if (click) {
+        if (Math.floor((getGameTime() + ANIM_LENGTH) / CUT_INTERVAL) > cutCount + 1) {
             startCut();
+            cutCount++;
         }
     }
 
@@ -91,7 +97,7 @@ public class ChoppingBoardMinigame extends Minigame {
         knife.spriteScale = worldScale;
         g.translate(KNIFE_POSITION.x(), KNIFE_POSITION.y());
         if (animStart > 0.0f) {
-            float t = (Main.now - animStart) / ANIM_TIME;
+            float t = (Main.now - animStart) / ANIM_LENGTH;
             if (t > 1.0f) {
                 animStart = -1.0f;
             } else {

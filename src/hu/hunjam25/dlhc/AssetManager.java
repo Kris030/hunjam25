@@ -236,10 +236,10 @@ public class AssetManager {
 
     private static void addStars() throws IOException {
         addAnim("stars",
-                imgs(6, i -> Path.of("art", "ui_ceger_interakcio", "ceger_" + i + "csillag.png" )));
+                imgs(6, i -> Path.of("art", "ui_ceger_interakcio", "ceger_" + i + "csillag.png")));
 
         addAnim("greenMark",
-                imgs(2, i -> Path.of("art", "ui_ceger_interakcio", "interakcio_ikon" + (i+1) + ".png" )));
+                imgs(2, i -> Path.of("art", "ui_ceger_interakcio", "interakcio_ikon" + (i + 1) + ".png")));
     }
 
     private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {
@@ -249,10 +249,19 @@ public class AssetManager {
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
         addSound("pipe", Path.of("art", "metal-pipe.wav"));
         addSound("ready", Path.of("art", "sounds", "ready_ding.wav"));
-        addSound("music", Path.of("art", "Sound", "main.wav"));
 
-        addSound("opening", Path.of("art", "Sound","op", "op.wav"));
+        addSound("opening", Path.of("art", "Sound", "op", "op.wav"));
 
+        addSound("music", Path.of("art", "sounds", "music.wav"));
+
+        Path p = Path.of("art", "Sound", "mini game chopping board");
+
+        addSound("chopping_music", p.resolve(Path.of("chopping music .wav")));
+        addSound("chopping_narrator", p.resolve(Path.of("chopping narrator.wav")));
+        addSound("fail_sound", p.resolve(Path.of("fail sound .wav")));
+        addSound("kard_csapas", p.resolve(Path.of("kard csapas.wav")));
+        addSound("vagas_sound", p.resolve(Path.of("vagas.wav")));
+        addSound("win_sound", p.resolve(Path.of("win sound .wav")));
     }
 
     public static BufferedImage getImage(String name) {

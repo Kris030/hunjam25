@@ -1,11 +1,11 @@
 package hu.hunjam25.dlhc.gameplay;
 
-
 import hu.hunjam25.dlhc.*;
 import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Food;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.sound.Sound;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
@@ -15,6 +15,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.stream.Stream;
 
+import javax.sound.sampled.LineUnavailableException;
+
 public class ChoppingBoardMinigame extends Minigame {
 
     private Sprite knife = new Sprite(AssetManager.getImage("minigame.chopping.kes"));
@@ -23,6 +25,14 @@ public class ChoppingBoardMinigame extends Minigame {
 
     private AnimatedSprite tomato = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.pari"), 0);
     private AnimatedSprite rat = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.remi_karddal"), 0);
+
+    private Sound choppingMusic = new Sound(AssetManager.getSound("chopping_music"));
+    // private Sound choppingNarrator = new
+    // Sound(AssetManager.getSound("chopping_narrator"));
+    private Sound failSound = new Sound(AssetManager.getSound("fail_sound"));
+    private Sound kardCsapas = new Sound(AssetManager.getSound("kard_csapas"));
+    private Sound vagasSound = new Sound(AssetManager.getSound("vagas_sound"));
+    private Sound winSound = new Sound(AssetManager.getSound("win_sound"));
 
     private static final int TOMATO_COUNT = 4;
     private static final Rectangle2D.Float TOMATO_BOUNDS = new Rectangle2D.Float(
@@ -58,7 +68,6 @@ public class ChoppingBoardMinigame extends Minigame {
             } while (k != 0 && Stream.of(tomatos)
                     .limit(k - 1)
                     .anyMatch(o -> o.dist(tomatos[k]) <= s));
-
         }
     }
 
@@ -66,7 +75,18 @@ public class ChoppingBoardMinigame extends Minigame {
         return 0.0f;
     }
 
+    private boolean firstTick = true;
     public void tick(float dt) {
+        if (firstTick) {
+            try {
+                choppingMusic.play();
+            } catch (LineUnavailableException e) {
+                e.printStackTrace();
+            }
+
+            firstTick = false;
+        }
+
         boolean click = false;
         if (Game.keysPressed.contains(KeyEvent.VK_SPACE)) {
             if (!previouslyPressed)

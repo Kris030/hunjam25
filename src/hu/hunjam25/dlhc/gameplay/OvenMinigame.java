@@ -50,6 +50,7 @@ public class OvenMinigame extends Minigame {
         rightBurner = Food.r.nextFloat() - 1.1f;
         ratRun.unFreeze();
         ratRun.start();
+        ratRun.freeze();
     }
 
     protected float getResult() {

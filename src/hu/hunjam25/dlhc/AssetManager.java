@@ -77,11 +77,11 @@ public class AssetManager {
         Path veszt = Path.of("art", "minigame_huto_vesztes");
 
         addAnim("huto_minigame_nyer",
-                imgs(89, i -> nyer.resolve(Path.of("patkany_nyer_animacio",
+                imgs(90, i -> nyer.resolve(Path.of("patkany_nyer_animacio",
                         String.format("minigame_huto_patkany_nyer_000%02d.png", i)))));
 
         addAnim("huto_minigame_veszit",
-                imgs(89, i -> veszt.resolve(Path.of("patkany_veszit_animacio",
+                imgs(90, i -> veszt.resolve(Path.of("patkany_veszit_animacio",
                         String.format("minigame_huto_patkany_veszit_000%02d.png", i)))));
 
         addImg("huto_minigame_nyer", img(nyer.resolve(Path.of("patkany_final_win", "patkany_final_win.png"))));
@@ -168,7 +168,7 @@ public class AssetManager {
         addAnim(WorkstationType.Trash.name(), imgs(
                 Path.of("art", "organized", "ego_kuka", "kuka.png")));
 
-        addAnim("Belt", imgs(9, i -> Path.of("art", "organized", "belt", i + ".png")));
+        addAnim("Belt", imgs(8, i -> Path.of("art", "organized", "belt", i + ".png")));
     }
 
     private static void addClockAnimation() throws IOException {

@@ -73,12 +73,13 @@ public class Chef extends GameObject {
         UiElement ratTimer = new UiElement();
         ratTimer.visible = true;
         ratTimer.scale = 0.15f;
-        AnimatedSprite ratSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 2);
+        AnimatedSprite ratSprite = new AnimatedSprite(AssetManager.getAnim("ratMeter"), 0);
         ratSprite.freeze();
         ratSprite.setIdx(0);
         ratTimer.setAnimatedSprite(ratSprite);
         ratTimer.addOffset(new Vec2(min, 0.0f));
         addUiElement(ratTimer);
+        setRatMeter();
     }
 
     private void startNewFood() {
@@ -94,7 +95,6 @@ public class Chef extends GameObject {
         addRatMeter();
         addClockTimer();
         addIngredientSprites();
-
     }
 
     private void addClockTimer() {

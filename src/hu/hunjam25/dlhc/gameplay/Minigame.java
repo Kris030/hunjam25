@@ -4,6 +4,7 @@ import hu.hunjam25.dlhc.*;
 import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Workstation;
+import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.IRenderable;
 
 import java.awt.*;
@@ -131,4 +132,6 @@ public abstract class Minigame implements IRenderable {
     private float age() {
         return (Main.now - animStart) / (state == State.ANIM_IN ? ANIM_IN_LENGTH : ANIM_OUT_LENGTH);
     }
+
+    public abstract SoundBuffer getMusic();
 }

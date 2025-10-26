@@ -135,4 +135,9 @@ public class Main {
         endScreen.setWon(didWin);
         startScreen(endScreen);
     }
+
+    public static void startCredits(){
+        startScreen(creditsScreen);
+    }
+
 }

@@ -5,11 +5,14 @@ import hu.hunjam25.dlhc.gameplay.FridgeMinigame;
 import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.gameplay.OvenMinigame;
 import hu.hunjam25.dlhc.model.*;
+import hu.hunjam25.dlhc.model.Workstation.WorkstationType;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.ParticleEffect;
 import hu.hunjam25.dlhc.view.Sprite;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Kitchen {
@@ -38,7 +41,6 @@ public class Kitchen {
         stars.setScale(0.4f);
     }
 
-
     public static ArrayList<ParticleEffect> particleEffects = new ArrayList<>();
 
     public static ArrayList<ParticleEffect> particleEffectKillList = new ArrayList<>();
@@ -61,56 +63,51 @@ public class Kitchen {
                 .orElse(null);
     }
 
-    public static void minigameEnded(float result) {
-        minigame.chef.pushResult(result);
-    }
-
     public static void init() {
         rat = new Rat();
 
-        //defLaylout();
-        for (int i = 0; i < Game.MAP_WIDTH - 1; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2((float) i, 5f),
+        // defLaylout();
+        List<WorkstationType> topRow = List.of(WorkstationType.Fridge, WorkstationType.ChoppingBoard,
+                WorkstationType.Oven, WorkstationType.Sink, WorkstationType.Stove);
+        List<WorkstationType> randomStations = new ArrayList<>();
+        randomStations.addAll(topRow);
+        Collections.shuffle(randomStations);
+        for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 1) * 2; i++) {
+            randomStations.add(topRow.get(Food.r.nextInt(topRow.size())));
+        }
+        for (int i = 1; i < Game.MAP_WIDTH - 1; ++i) {
+            workstations.add(new Workstation(
+                    randomStations.get(i),
+                    new Vec2((float) i, 5f),
                     new Vec2(0, -0.5f)));
         }
 
-        for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(0f, (float) i),
-                    new Vec2(0.5f, 0f)));
+        List<WorkstationType> bottomRow = List.of(WorkstationType.ChoppingBoard, WorkstationType.Sink);
+        randomStations = new ArrayList<>();
+        randomStations.addAll(bottomRow);
+        Collections.shuffle(randomStations);
+        for (int i = randomStations.size(); i < (Game.MAP_WIDTH - 1) * 2; i++) {
+            randomStations.add(bottomRow.get(Food.r.nextInt(bottomRow.size())));
         }
-
-        for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(Game.MAP_WIDTH - 2f, (float) i),
-                    new Vec2(-0.5f, 0f)));
-        }
-
-        for (int i = 0; i < Game.MAP_WIDTH - 1; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2((float) i, 0f),
+        for (int i = 1; i < Game.MAP_WIDTH - 1; ++i) {
+            workstations.add(new Workstation(
+                    randomStations.get(i),
+                    new Vec2((float) i, 0f),
                     new Vec2(0, 0.5f)));
         }
+
+        workstations.add(
+                new Workstation(WorkstationType.Belt, new Vec2(Game.MAP_WIDTH - 1, 2f), new Vec2(-0.5f, -0.2f)));
+        workstations.add(
+                new Workstation(WorkstationType.Belt, new Vec2(Game.MAP_WIDTH - 1, 3.5f), new Vec2(-0.5f, -0.2f)));
+        workstations.add(
+                new Workstation(WorkstationType.Sink, new Vec2(0f, 2f), new Vec2(0.5f, -0.2f)));
+        workstations.add(
+                new Workstation(WorkstationType.Sink, new Vec2(0f, 3.5f), new Vec2(0.5f, -0.2f)));
 
         for (int i = 0; i < CHEF_COUNT; ++i) {
             chefs.add(new Chef());
         }
-    }
-
-    private static void defLaylout() {
-        // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Trash, new Vec2(2f, 5f),
-                new Vec2(0f, 0.5f)));
-        // trash workstation must be first in Kitchen.workstations!!!
-        workstations.add(new Workstation(Workstation.WorkstationType.Stove, new Vec2(12f, 5f),
-                new Vec2(0f, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Fridge, new Vec2(5f, 5f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Sink, new Vec2(6f, 5f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2(8f, 5f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Oven, new Vec2(9f, 5f),
-                new Vec2(0, -0.5f)));
-        workstations.add(new Workstation(Workstation.WorkstationType.Belt, new Vec2(12f, 5f),
-                new Vec2(-0.5f, 0f)));
     }
 
     public static Stream<GameObject> getGameObjects() {
@@ -146,9 +143,16 @@ public class Kitchen {
             case ChoppingBoard -> new ChoppingBoardMinigame(workstation, chef, ingredient);
             case Stove -> new OvenMinigame(workstation, chef, ingredient);
             case Oven -> new OvenMinigame(workstation, chef, ingredient);
-//            case Trash -> null;
+            // case Trash -> null;
             default -> new ChoppingBoardMinigame(workstation, chef, ingredient);
         };
+
+        Game.playMusic(minigame.getMusic());
+    }
+
+    public static void minigameEnded(float result) {
+        Game.playMusic(Game.backgroundMusic);
+        minigame.chef.pushResult(result);
     }
 
     public static void startFire() {
@@ -156,7 +160,7 @@ public class Kitchen {
         chefs.forEach(c -> c.addHazard(Kitchen.workstations.get(0), Ingredient.TrashFire));
     }
 
-    public static void updateStars(){
-        stars.setIdx((int)(rating * 5f));
+    public static void updateStars() {
+        stars.setIdx((int) (rating * 5f));
     }
 }

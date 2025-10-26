@@ -14,9 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 public class Game implements IScreen {
 
     public static final int SCREEN_WIDTH = 16;
@@ -48,12 +45,13 @@ public class Game implements IScreen {
             .add(new Vec2(2, 2));
 
     private static final List<Integer> winCheatCode = List.of(KeyEvent.VK_W, KeyEvent.VK_I, KeyEvent.VK_N);
-    private static final List<Integer> loseCheatCode = List.of(KeyEvent.VK_L, KeyEvent.VK_O, KeyEvent.VK_S, KeyEvent.VK_E);
+    private static final List<Integer> loseCheatCode = List.of(KeyEvent.VK_L, KeyEvent.VK_O, KeyEvent.VK_S,
+            KeyEvent.VK_E);
 
     public static Vec2 keepOnMap(Vec2 position) {
         return new Vec2(
-                min(Game.MAP_WIDTH - 2, max(0, position.x())),
-                min(Game.MAP_HEIGHT, max(0, position.y())));
+                Math.clamp(position.x(), 1, MAP_WIDTH - 2),
+                Math.clamp(position.y(), 0.5f, MAP_HEIGHT - 0.5f));
     }
 
     public static Vec2 gameToScreen(Vec2 game) {
@@ -101,7 +99,7 @@ public class Game implements IScreen {
         if (keysPressed.containsAll(winCheatCode)) {
             Main.endGame(true);
         }
-        if(keysPressed.containsAll(loseCheatCode)){
+        if (keysPressed.containsAll(loseCheatCode)) {
             Main.endGame(false);
         }
 
@@ -148,7 +146,6 @@ public class Game implements IScreen {
         g.setTransform(transform);
         g.setClip(0, 0, SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE);
 
-
         Kitchen.getGameObjects().sorted(Comparator.comparingDouble(GameObject::getY).reversed()).forEach(o -> {
             g.setTransform(transform);
             o.render(g);
@@ -181,10 +178,10 @@ public class Game implements IScreen {
         }
     };
 
-    static SoundBuffer backgroundMusic;
+    public static SoundBuffer backgroundMusic;
     static Clip currentClip;
 
-    public static void playBackgroundMusic() {
+    public static void playMusic(SoundBuffer music) {
         try {
             currentClip = backgroundMusic.play(null);
             currentClip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -204,8 +201,8 @@ public class Game implements IScreen {
         Kitchen.init();
     }
 
-    public void stopMusic() {
-        if(currentClip != null){
+    public static void stopMusic() {
+        if (currentClip != null) {
             currentClip.close();
         }
     }

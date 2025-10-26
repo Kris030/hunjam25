@@ -20,7 +20,7 @@ public class StartScreen implements IScreen {
     private boolean started = false;
 
     static SoundBuffer menuMusic;
-    static Clip currentClip;
+    public static Clip currentClip;
 
     @Override
     public void init() {

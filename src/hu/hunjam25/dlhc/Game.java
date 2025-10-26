@@ -1,10 +1,10 @@
 package hu.hunjam25.dlhc;
 
 import hu.hunjam25.dlhc.screens.IScreen;
+import hu.hunjam25.dlhc.screens.StartScreen;
 import hu.hunjam25.dlhc.sound.SoundBuffer;
 
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -213,6 +213,11 @@ public class Game implements IScreen {
     }
 
     public static void playMusic(SoundBuffer music) {
+        if (StartScreen.currentClip != null) {
+            fadeOut(StartScreen.currentClip);
+            StartScreen.currentClip = null;
+        }
+
         if (currentClip != null) {
             fadeOut(currentClip);
         }

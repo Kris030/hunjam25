@@ -49,6 +49,8 @@ public class Chef extends GameObject {
 
     public boolean finished = false;
 
+    private UiElement greenMark;
+
     public Chef(int foodCount) {
         ++count;
         animatedSprite = new AnimatedSprite(AssetManager.getAnim("chef" + ((count % 3) + 1)), 0.5f);
@@ -62,6 +64,8 @@ public class Chef extends GameObject {
 
         animatedSprite.freeze();
         animatedSprite.setScale(0.375f);
+
+        makeMark();
 
         ding = AssetManager.getSound("ready");
         startNewFood();
@@ -94,6 +98,19 @@ public class Chef extends GameObject {
         addRatMeter();
         addClockTimers();
         addIngredientSprites();
+
+        addUiElement(greenMark);
+    }
+
+
+    private void makeMark(){
+        greenMark = new UiElement();
+        greenMark.setAnimatedSprite( new AnimatedSprite(AssetManager.getAnim("greenMark") , 0.5f) );
+        greenMark.animatedSprite.start();
+        greenMark.addOffset(new Vec2(0,-1));
+        greenMark.scale = 0.2f;
+        greenMark.animatedSprite.unFreeze();
+        greenMark.visible = true;
     }
 
     private void addClockTimers() {
@@ -149,6 +166,8 @@ public class Chef extends GameObject {
     }
 
     private void working() {
+        workingIdx = facing(currWorkstation.workingOffset.mul(-1f));
+        greenMark.visible = true;
         workingIdx = facing(currWorkstation.workingOffset.neg());
         this.animatedSprite.setIdx(workingIdx);
         // work at workstation

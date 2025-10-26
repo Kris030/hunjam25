@@ -214,6 +214,9 @@ public class AssetManager {
     private static void addStars() throws IOException {
         addAnim("stars",
                 imgs(6, i -> Path.of("art", "ui_ceger_interakcio", "ceger_" + i + "csillag.png" )));
+
+        addAnim("greenMark",
+                imgs(2, i -> Path.of("art", "ui_ceger_interakcio", "interakcio_ikon" + (i+1) + ".png" )));
     }
 
     private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {

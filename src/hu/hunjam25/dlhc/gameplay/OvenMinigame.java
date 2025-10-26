@@ -2,7 +2,6 @@ package hu.hunjam25.dlhc.gameplay;
 
 import hu.hunjam25.dlhc.AssetManager;
 import hu.hunjam25.dlhc.Game;
-import hu.hunjam25.dlhc.Utils;
 import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Food;
 import hu.hunjam25.dlhc.model.Ingredient;
@@ -11,6 +10,7 @@ import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -157,7 +157,14 @@ public class OvenMinigame extends Minigame {
     }
 
     @Override
-    public SoundBuffer getMusic() {
-        return AssetManager.getSound("ovenMusic");
+    public void playMusic() throws LineUnavailableException {
+        SoundBuffer music = AssetManager.getSound("ovenMusic");
+        clip = music.play(null);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    @Override
+    public void stopMusic() {
+        if (clip != null) clip.close();
     }
 }

@@ -10,6 +10,7 @@ import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.ParticleEffect;
 import hu.hunjam25.dlhc.view.Sprite;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -148,7 +149,12 @@ public class Kitchen {
             default -> new OvenMinigame(workstation, chef, ingredient);//new ChoppingBoardMinigame(workstation, chef, ingredient);
         };
 
-        Game.playMusic(minigame.getMusic());
+        //Game.playMusic(minigame.getMusic());
+        try {
+            minigame.playMusic();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void minigameEnded(float result) {

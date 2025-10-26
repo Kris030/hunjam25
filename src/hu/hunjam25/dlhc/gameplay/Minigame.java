@@ -4,9 +4,10 @@ import hu.hunjam25.dlhc.*;
 import hu.hunjam25.dlhc.model.Chef;
 import hu.hunjam25.dlhc.model.Ingredient;
 import hu.hunjam25.dlhc.model.Workstation;
-import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.IRenderable;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -18,6 +19,8 @@ public abstract class Minigame implements IRenderable {
 
     protected Vec2 renderAreaSize;
 
+    protected Clip clip;
+
     private float whMin = Math.min(Game.MINIGAME_CONTENT_SIZE.x(), Game.MINIGAME_CONTENT_SIZE.y());
     private float whMax = Math.max(Game.MINIGAME_CONTENT_SIZE.x(), Game.MINIGAME_CONTENT_SIZE.y());
 
@@ -25,6 +28,8 @@ public abstract class Minigame implements IRenderable {
     protected float worldScale = 1.0f / ndcScale;
 
     private float gameStart = Main.now;
+
+    public abstract void stopMusic();
 
     private enum State {
         ANIM_IN, ANIM_OUT, SHOWN
@@ -52,6 +57,8 @@ public abstract class Minigame implements IRenderable {
         state = State.ANIM_OUT;
 
         Kitchen.minigameEnded(getResult());
+        if (clip != null) clip.close();
+        stopMusic();
     }
 
     public boolean isGameRunning() {
@@ -133,5 +140,5 @@ public abstract class Minigame implements IRenderable {
         return (Main.now - animStart) / (state == State.ANIM_IN ? ANIM_IN_LENGTH : ANIM_OUT_LENGTH);
     }
 
-    public abstract SoundBuffer getMusic();
+    public abstract void playMusic() throws LineUnavailableException;
 }

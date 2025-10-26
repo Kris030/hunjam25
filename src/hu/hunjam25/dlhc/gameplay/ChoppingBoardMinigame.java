@@ -9,6 +9,8 @@ import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.Sprite;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
@@ -142,7 +144,14 @@ public class ChoppingBoardMinigame extends Minigame {
     }
 
     @Override
-    public SoundBuffer getMusic() {
-        return AssetManager.getSound("chopping_music");
+    public void playMusic() throws LineUnavailableException {
+        SoundBuffer music = AssetManager.getSound("chopping_music");
+        clip = music.play(null);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    @Override
+    public void stopMusic() {
+        if (clip != null) clip.close();
     }
 }

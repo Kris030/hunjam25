@@ -54,8 +54,8 @@ public class FridgeMinigame extends Minigame {
 
         var frame = anim[(int) ((anim.length - 1) * Math.abs(state))];
 
-        // setColor, translate(x, y), fill(-1, -1, 2, 2)
-        g.scale(1.0f / frame.getWidth(), 1.0f / frame.getHeight());
+        g.translate(-renderAreaSize.x() * 0.5, -renderAreaSize.y() * 0.5);
+        g.scale(renderAreaSize.x() / frame.getWidth(), renderAreaSize.y() / frame.getHeight());
         g.drawImage(frame, null, 0, 0);
     }
 }

@@ -77,6 +77,6 @@ public class FridgeMinigame extends Minigame {
 
     @Override
     public SoundBuffer getMusic() {
-        return AssetManager.getSound(null);
+        return AssetManager.getSound("fridgeMusic");
     }
 }

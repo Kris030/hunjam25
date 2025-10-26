@@ -273,6 +273,7 @@ public class AssetManager {
         addSound("vagas_sound", p.resolve(Path.of("vagas.wav")));
         addSound("win_sound", p.resolve(Path.of("win sound .wav")));
         addSound("chopping_narrator", p.resolve(Path.of("chopping narrator.wav")));
+        addSound("fridgeMusic", Path.of("art", "Sound", "mini game huto", "zene huto .wav"));
     }
 
     public static BufferedImage getImage(String name) {

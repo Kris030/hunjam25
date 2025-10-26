@@ -16,7 +16,14 @@ public abstract class Minigame implements IRenderable {
     public Ingredient ingredient;
 
     protected Vec2 renderAreaSize;
-    protected float worldScale;
+
+    private float whMin = Math.min(Game.MINIGAME_CONTENT_SIZE.x(), Game.MINIGAME_CONTENT_SIZE.y());
+    private float whMax = Math.max(Game.MINIGAME_CONTENT_SIZE.x(), Game.MINIGAME_CONTENT_SIZE.y());
+
+    private float ndcScale = whMin * 0.5f;
+    protected float worldScale = 1.0f / ndcScale;
+
+    private float gameStart = Main.now;
 
     private enum State {
         ANIM_IN, ANIM_OUT, SHOWN
@@ -46,12 +53,20 @@ public abstract class Minigame implements IRenderable {
         Kitchen.minigameEnded(getResult());
     }
 
+    public boolean isGameRunning() {
+        return state == State.SHOWN;
+    }
+
     public boolean isGameEnded() {
         return state == State.ANIM_OUT;
     }
 
     public boolean isDisappeared() {
         return isGameEnded() && age() >= 1.0f;
+    }
+
+    protected float getGameTime() {
+        return Main.now - gameStart;
     }
 
     // mennyire zavart (0-1)
@@ -85,10 +100,6 @@ public abstract class Minigame implements IRenderable {
         var tf = g.getTransform();
         var clip = g.getClip();
 
-        float whMin = Math.min(Game.MINIGAME_CONTENT_SIZE.x(), Game.MINIGAME_CONTENT_SIZE.y());
-        float whMax = Math.max(Game.MINIGAME_CONTENT_SIZE.x(), Game.MINIGAME_CONTENT_SIZE.y());
-
-        float ndcScale = whMin * 0.5f;
         g.scale(ndcScale * 1.01f, ndcScale * 1.01f);
 
         if (Game.MINIGAME_CONTENT_SIZE.x() > Game.MINIGAME_CONTENT_SIZE.y()) {
@@ -97,7 +108,6 @@ public abstract class Minigame implements IRenderable {
             renderAreaSize = new Vec2(2.0f, 2.0f * (whMax / whMin));
         }
 
-        worldScale = 1.0f / ndcScale;
 
         g.clip(new Rectangle2D.Float(
                 -renderAreaSize.x() * 0.5f * tt, -renderAreaSize.y() * 0.5f * tt,

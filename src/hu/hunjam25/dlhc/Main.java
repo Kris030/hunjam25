@@ -35,6 +35,7 @@ public class Main {
         init();
 
         currentScreen = startScreen;
+        currentScreen.start();
 
         frame = new JFrame("Don't let him cook");
 

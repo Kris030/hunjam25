@@ -68,10 +68,11 @@ public class AssetManager {
 
     private static void addChoppingMinigame() throws IOException {
         addImg("minigame.chopping.kes", img(Path.of("art", "szeleteles", "kes.png")));
-        addImg("minigame.chopping.pari_szelet", img(Path.of("art", "szeleteles", "pari_szelet.png")));
         addImg("minigame.chopping.vagodeszka", img(Path.of("art", "szeleteles", "vagodeszka.png")));
 
-        addAnim("minigame.chopping.pari", imgs(4, i -> Path.of("art", "szeleteles", "pari_" + (i + 1) + ".png")));
+        addAnim("minigame.chopping.pari",
+                Utils.concatArrays(imgs(4, i -> Path.of("art", "szeleteles", "pari_" + (i + 1) + ".png")),
+                        new BufferedImage[] { img(Path.of("art", "szeleteles", "pari_szelet.png")) }));
 
         addAnim("minigame.chopping.remi_karddal",
                 imgs(2, i -> Path.of("art", "szeleteles", "remi_karddal_" + i + ".png")));
@@ -210,6 +211,9 @@ public class AssetManager {
         addAnim("radio",
                 imgs(6, i -> Path.of("art", "radio",
                         "radio_0" + (i + 1) + ".png")));
+
+        addImg("controls",
+                img(Path.of("art", "iranyitas_gombok.png")));
     }
 
     private static void addEndings() throws IOException {
@@ -235,10 +239,10 @@ public class AssetManager {
 
     private static void addStars() throws IOException {
         addAnim("stars",
-                imgs(6, i -> Path.of("art", "ui_ceger_interakcio", "ceger_" + i + "csillag.png" )));
+                imgs(6, i -> Path.of("art", "ui_ceger_interakcio", "ceger_" + i + "csillag.png")));
 
         addAnim("greenMark",
-                imgs(2, i -> Path.of("art", "ui_ceger_interakcio", "interakcio_ikon" + (i+1) + ".png" )));
+                imgs(2, i -> Path.of("art", "ui_ceger_interakcio", "interakcio_ikon" + (i + 1) + ".png")));
     }
 
     private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {
@@ -248,7 +252,19 @@ public class AssetManager {
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
         addSound("pipe", Path.of("art", "metal-pipe.wav"));
         addSound("ready", Path.of("art", "sounds", "ready_ding.wav"));
+
+        addSound("opening", Path.of("art", "Sound", "op", "op.wav"));
+
         addSound("music", Path.of("art", "sounds", "music.wav"));
+
+        Path p = Path.of("art", "Sound", "mini game chopping board");
+
+        addSound("chopping_music", p.resolve(Path.of("chopping music .wav")));
+        addSound("chopping_narrator", p.resolve(Path.of("chopping narrator.wav")));
+        addSound("fail_sound", p.resolve(Path.of("fail sound .wav")));
+        addSound("kard_csapas", p.resolve(Path.of("kard csapas.wav")));
+        addSound("vagas_sound", p.resolve(Path.of("vagas.wav")));
+        addSound("win_sound", p.resolve(Path.of("win sound .wav")));
     }
 
     public static BufferedImage getImage(String name) {

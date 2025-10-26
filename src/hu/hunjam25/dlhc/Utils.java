@@ -1,5 +1,7 @@
 package hu.hunjam25.dlhc;
 
+import java.util.Arrays;
+
 public class Utils {
     // source: raylib easings
     public static float EaseOut(float t, float b, float c, float d) {
@@ -32,9 +34,14 @@ public class Utils {
 //        return (float) (a * Math.pow(2.0f, -10.0f * t) * Math.sin((t * d - s) * (2.0f * Math.PI) / p) + c + b);
 //    }
 
-    public static float interpolateExp(float dt, float start, float end) {
-        var weight = (float) Math.exp(-dt * 100.0f);
-        var iweight = 1.0f - weight;
-        return start * weight + iweight * end;
+    public static float interpolateExp(float t, float c, float start, float end) {
+        var weight = (float) Math.exp(-t * c);
+        return start * weight + (1.0f - weight) * end;
+    }
+
+    public static <T> T[] concatArrays(T[] first, T[] second) {
+        T[] result = Arrays.copyOf(first, first.length + second.length);
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
     }
 }

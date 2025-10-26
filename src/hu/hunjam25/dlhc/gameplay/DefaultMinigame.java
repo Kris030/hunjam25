@@ -26,7 +26,7 @@ public class DefaultMinigame extends Minigame {
             endGame();
         }
 
-        x += dt / 200;
+        x += 2 * dt;
 
         if (x >= 1) {
             x = -1;

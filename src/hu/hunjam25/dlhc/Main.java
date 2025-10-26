@@ -9,7 +9,6 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Main {
@@ -39,13 +38,12 @@ public class Main {
 
         frame = new JFrame("Don't let him cook");
 
-        frame.setUndecorated(true); // removes title bar & borders
-        frame.setBounds(0, 0, Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
-
+        frame.setUndecorated(true);
+        frame.setSize(Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
+        frame.setLocationRelativeTo(null);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // f.setIconImage(ImageIO.read(Main.class.getResource("icon.png")));
-        frame.setLocationRelativeTo(null);
+        // TODO: frame.setIconImage(AssetManager.getImage("game-icon"));
 
         Canvas c = new Canvas();
         frame.add(c);
@@ -71,17 +69,19 @@ public class Main {
                 continue;
             }
 
+            Game.lastTick = Game.now;
             Game.now = (start - gameStart) * 0.000000001f;
-            currentScreen.tick((float) wait);
+            currentScreen.tick(Game.now - Game.lastTick);
 
             Graphics2D g = (Graphics2D) bs.getDrawGraphics();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            g.setColor(Color.ORANGE); // background color
-            g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-            g.scale(Game.GLOBAL_SCALE.x(),Game.GLOBAL_SCALE.y());
+            g.setColor(Color.BLACK);
+            g.clearRect(0, 0, c.getWidth(), c.getHeight());
+
+            // TODO: min, max aspect ratio
+            g.scale(c.getWidth() / 1920f, c.getHeight() / 1080f);
             currentScreen.render(g);
-            //g.drawImage(AssetManager.getImage("tiles"),0,0, null);
 
             bs.show();
             g.dispose();
@@ -104,4 +104,3 @@ public class Main {
         endScreen = new EndScreen();
     }
 }
-

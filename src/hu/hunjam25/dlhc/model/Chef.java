@@ -15,7 +15,7 @@ import static java.lang.Math.abs;
 
 public class Chef extends GameObject {
     private final static int DEFAULT_FOOD_COUNT = 3;
-    private final static float SPEED = 0.005f;
+    private final static float SPEED = 5;
 
     private static int count = 0;
     private int workingIdx = 0;

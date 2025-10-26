@@ -2,7 +2,6 @@ package hu.hunjam25.dlhc.model;
 
 import hu.hunjam25.dlhc.*;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
-import hu.hunjam25.dlhc.view.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,20 +10,14 @@ import static hu.hunjam25.dlhc.Game.keepOnMap;
 
 public class Rat extends GameObject {
 
-    //How close do you have to be to start minigame
+    // How close do you have to be to start minigame
     public static final float RAT_RANGE = 0.9f;
-    static float SPEED = 0.005f;
-
-    private Sprite dot = new Sprite(AssetManager.getImage("dot"));
-    //private Sprite ratView = new Sprite(Game.getImage("rat"));
+    static float SPEED = 5f;
 
     private AnimatedSprite remi;
 
-
     public Rat() {
         positionToCenter();
-        //ratView.spriteScale = 0.25f;
-        //position =  new Vec2(5f, 4f);
         remi = new AnimatedSprite(AssetManager.getAnim("remi"), 2.5f);
         remi.setScale(0.25f);
 
@@ -54,8 +47,7 @@ public class Rat extends GameObject {
                 var chef = Kitchen.chefs.stream()
                         .filter(c -> c.currWorkstation == w)
                         .min((c1, c2) -> Float.compare(
-                                c1.getPosition().dist(this.position), c2.getPosition().dist(this.position)
-                        ))
+                                c1.getPosition().dist(this.position), c2.getPosition().dist(this.position)))
                         .get();
 
                 Kitchen.startMinigame(w, chef, chef.todo[chef.currIngredient]);
@@ -102,11 +94,8 @@ public class Rat extends GameObject {
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
-        //ratView.render(gd);
 
         remi.render(gd);
-        //dot.render(gd);
-
         renderUiElements(gd);
     }
 }

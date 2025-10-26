@@ -28,8 +28,7 @@ public class Game implements IScreen {
     public static final int MAP_WIDTH = 14;
     public static final int MAP_HEIGHT = 5;
 
-    public static final Vec2 GLOBAL_SCALE = new Vec2(1f,1f);
-    public static final Vec2 GLOBAL_SKEW = new Vec2(-0.3f,0f);
+    public static final Vec2 GLOBAL_SKEW = new Vec2(-0.3f, 0f);
 
     public static final Vec2 CENTER = new Vec2(
             Game.MAP_WIDTH / 2f,
@@ -38,8 +37,7 @@ public class Game implements IScreen {
     public static final int TILE_SIZE = 120;
 
     public static final Vec2 SCREEN_SIZE = new Vec2(
-            SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE
-    );
+            SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE);
 
     public static final Vec2 MINIGAME_FRAME_SIZE = new Vec2(1169, 916);
     public static final Vec2 MINIGAME_CONTENT_TOPLEFT_OFFSET = new Vec2(150, 207);
@@ -55,7 +53,8 @@ public class Game implements IScreen {
     }
 
     public static Vec2 gameToScreen(Vec2 game) {
-        return new Vec2((game.x() + MAP_OFFSET_X + GLOBAL_SKEW.x() * -game.y())  , (-MAP_OFFSET_Y + MAP_HEIGHT - game.y()) + GLOBAL_SKEW.y() * game.x() ).mul(TILE_SIZE);
+        return new Vec2((game.x() + MAP_OFFSET_X + GLOBAL_SKEW.x() * -game.y()),
+                (-MAP_OFFSET_Y + MAP_HEIGHT - game.y()) + GLOBAL_SKEW.y() * game.x()).mul(TILE_SIZE);
     }
 
     public static Vec2 screenToGame(Vec2 screen) {
@@ -89,9 +88,10 @@ public class Game implements IScreen {
 
     public static Set<Integer> keysPressed = new HashSet<>();
 
-    public static float now;
+    public static float now, lastTick;
 
-    @Override public void tick(float dt) {
+    @Override
+    public void tick(float dt) {
         if (keysPressed.contains(KeyEvent.VK_F11)) {
             toggleFullscreen();
         }
@@ -109,22 +109,23 @@ public class Game implements IScreen {
         Kitchen.particleEffectKillList.clear();
     }
 
-    @Override public void render(Graphics2D g) {
+    @Override
+    public void render(Graphics2D g) {
         AffineTransform transform = g.getTransform();
 
-
-        //g.translate(1f * Game.TILE_SIZE, 0f);
+        // g.translate(1f * Game.TILE_SIZE, 0f);
         Kitchen.wallpaper.render(g);
         g.setTransform(transform);
 
-        g.clipRect(MAP_OFFSET_X * TILE_SIZE, Math.abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE, MAP_HEIGHT * TILE_SIZE);
+        g.clipRect(MAP_OFFSET_X * TILE_SIZE, Math.abs(MAP_OFFSET_Y * TILE_SIZE), MAP_WIDTH * TILE_SIZE,
+                MAP_HEIGHT * TILE_SIZE);
         g.shear(GLOBAL_SKEW.x(), GLOBAL_SKEW.y());
         Kitchen.floor.render(g);
         g.setTransform(transform);
         g.setClip(0, 0, SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE);
 
         Kitchen.chefs.removeIf(chef -> chef.finished);
-        if(Kitchen.chefs.isEmpty()){
+        if (Kitchen.chefs.isEmpty()) {
             System.exit(0);
         }
 
@@ -170,8 +171,8 @@ public class Game implements IScreen {
         }
     }
 
-    @Override public void init(){
+    @Override
+    public void init() {
         backgroundMusic = AssetManager.getSound("music");
-
     }
 }

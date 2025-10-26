@@ -63,7 +63,9 @@ public class AssetManager {
 
     private static InputStream getResInputStream(Path p) throws FileNotFoundException {
         // FIXME: first line works in jar, second works from IDE
-        // return AssetManager.class.getClassLoader().getResourceAsStream(p.toString());
+        //String path = (".\\" + p.toString());
+        //System.out.println(p.toString());
+        //return AssetManager.class.getClassLoader().getResourceAsStream(path);
         return new FileInputStream(p.toFile());
     }
 

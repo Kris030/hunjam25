@@ -249,9 +249,9 @@ public class AssetManager {
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
         addSound("pipe", Path.of("art", "metal-pipe.wav"));
         addSound("ready", Path.of("art", "sounds", "ready_ding.wav"));
-        addSound("music", Path.of("art", "sound", "main.wav"));
+        addSound("music", Path.of("art", "Sound", "main.wav"));
 
-        addSound("opening", Path.of("art", "sound","op", "op.wav"));
+        addSound("opening", Path.of("art", "Sound","op", "op.wav"));
 
     }
 

@@ -52,7 +52,7 @@ public class OvenMinigame extends Minigame {
     }
 
     protected float getResult() {
-        return Math.max(0f, (leftBurner + rightBurner) * 0.66f);
+        return Math.min(1f, Math.max(0f, (float)(Math.max(-0.5f, leftBurner) + Math.max(-0.5f, rightBurner))));
     }
 
     public void tick(float dt) {

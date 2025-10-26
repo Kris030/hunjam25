@@ -1,13 +1,13 @@
 package hu.hunjam25.dlhc;
 
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
-import hu.hunjam25.dlhc.gameplay.DefaultMinigame;
+import hu.hunjam25.dlhc.gameplay.FridgeMinigame;
 import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.model.*;
 import hu.hunjam25.dlhc.view.ParticleEffect;
 import hu.hunjam25.dlhc.view.Sprite;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class Kitchen {
 
@@ -23,6 +23,7 @@ public class Kitchen {
     public static Sprite floor = new Sprite(AssetManager.getImage("new_tiles2"));
     public static Sprite wallpaper = new Sprite(AssetManager.getImage("wallpaper"));
     public static Sprite woodFrame = new Sprite(AssetManager.getImage("wood"));
+
     static {
         woodFrame.centered = false;
         wallpaper.centered = false;
@@ -60,27 +61,27 @@ public class Kitchen {
         rat = new Rat();
 
         //defLaylout();
-        for (int i = 0; i < Game.MAP_WIDTH-1; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2((float)i, 5f),
+        for (int i = 0; i < Game.MAP_WIDTH - 1; ++i) {
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2((float) i, 5f),
                     new Vec2(0, -0.5f)));
         }
 
         for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(0f,(float) i),
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(0f, (float) i),
                     new Vec2(0.5f, 0f)));
         }
 
         for (int i = 1; i < Game.MAP_HEIGHT; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(Game.MAP_WIDTH-2f,(float) i),
+            workstations.add(new Workstation(Workstation.WorkstationType.values()[Food.r.nextInt(Workstation.WorkstationType.values().length)], new Vec2(Game.MAP_WIDTH - 2f, (float) i),
                     new Vec2(-0.5f, 0f)));
         }
 
-        for (int i = 0; i < Game.MAP_WIDTH-1; ++i) {
-            workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2((float)i, 0f),
+        for (int i = 0; i < Game.MAP_WIDTH - 1; ++i) {
+            workstations.add(new Workstation(Workstation.WorkstationType.ChoppingBoard, new Vec2((float) i, 0f),
                     new Vec2(0, 0.5f)));
         }
 
-        for(int i = 0; i < CHEF_COUNT; ++i){
+        for (int i = 0; i < CHEF_COUNT; ++i) {
             chefs.add(new Chef());
         }
     }
@@ -131,16 +132,15 @@ public class Kitchen {
         rating = Math.clamp(rating, 0.0f, 1.0f);
     }
 
-    public static void startMinigame(Workstation workstation,  Chef chef, Ingredient ingredient) {
-//        minigame = switch (workstation.type) {
-//            case ChoppingBoard -> new DefaultMinigame(workstation, chef, ingredient);
-//            case Fridge -> null;
+    public static void startMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
+        minigame = switch (workstation.type) {
+            case Fridge -> new FridgeMinigame(workstation, chef, ingredient);
+//            case ChoppingBoard -> null;
 //            case Oven -> null;
 //            case Stove -> null;
 //            case Trash -> null;
-//        };
-
-        minigame = new DefaultMinigame(workstation, chef, ingredient);
+            default -> new FridgeMinigame(workstation, chef, ingredient);
+        };
     }
 
     public static void startFire() {

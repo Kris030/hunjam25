@@ -27,7 +27,7 @@ public class Game {
     public static final int MAP_WIDTH = 14;
     public static final int MAP_HEIGHT = 5;
 
-    public static final Vec2 GLOBAL_SCALE = new Vec2(0.8f,0.8f);
+    public static final Vec2 GLOBAL_SCALE = new Vec2(1f,1f);
     public static final Vec2 GLOBAL_SKEW = new Vec2(-0.3f,0f);
 
     public static final Vec2 CENTER = new Vec2(

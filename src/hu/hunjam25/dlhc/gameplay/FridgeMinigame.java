@@ -13,26 +13,30 @@ import java.awt.geom.Rectangle2D;
 public class FridgeMinigame extends Minigame {
 
     private float state = 0.0f;
-    private boolean click = false;
+    private boolean previouslyPressed = false;
 
     public FridgeMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         super(workstation, chef, ingredient);
     }
 
     protected float getResult() {
-        return 0.0f;
+        return (state + 1.0f) * 0.5f;
     }
 
     public void tick(float dt) {
-        if (Game.keysPressed.contains(KeyEvent.VK_SPACE) && !click) {
-            click = true;
+        boolean click = false;
+        if (Game.keysPressed.contains(KeyEvent.VK_SPACE)) {
+            if (!previouslyPressed)
+                click = true;
+            previouslyPressed = true;
         } else {
-            click = false;
+            previouslyPressed = false;
         }
 
         if (click) {
             state += 0.1f;
         }
+        state = Math.clamp(state, -1.0f, 1.0f);
     }
 
     protected void renderGame(Graphics2D g) {

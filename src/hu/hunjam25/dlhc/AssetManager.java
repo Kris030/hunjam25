@@ -174,6 +174,7 @@ public class AssetManager {
 
     private static void addSounds() throws IOException, UnsupportedAudioFileException {
         soundStorage.put("pipe", SoundBuffer.read(Path.of("art", "metal-pipe.wav")));
+        soundStorage.put("ready", SoundBuffer.read(Path.of("art", "sounds", "ready_ding.wav")));
     }
 
     public static BufferedImage getImage(String name) {
@@ -186,5 +187,9 @@ public class AssetManager {
                 imageStorage.get("no_texture"),
                 imageStorage.get("no_texture")
         });
+    }
+
+    public static SoundBuffer getSound(String name){
+        return soundStorage.getOrDefault(name,soundStorage.get("pipe") );
     }
 }

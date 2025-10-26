@@ -3,10 +3,7 @@ package hu.hunjam25.dlhc.sound;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 
 public record SoundBuffer(AudioFormat format, byte[] audioData) {
 
@@ -14,5 +11,14 @@ public record SoundBuffer(AudioFormat format, byte[] audioData) {
         try (AudioInputStream stream = AudioSystem.getAudioInputStream(path.toFile())) {
             return new SoundBuffer(stream.getFormat(), stream.readAllBytes());
         }
+    }
+
+    public Clip play() throws LineUnavailableException {
+        Clip clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class, this.format()));
+
+        clip.open(this.format(), this.audioData(), 0, this.audioData().length);
+        clip.start();
+
+        return clip;
     }
 }

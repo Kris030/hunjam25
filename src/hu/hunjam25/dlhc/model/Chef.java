@@ -1,9 +1,11 @@
 package hu.hunjam25.dlhc.model;
 
 import hu.hunjam25.dlhc.*;
+import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.UiElement;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.Arrays;
@@ -18,6 +20,8 @@ public class Chef extends GameObject {
     private static int count = 0;
     private int workingIdx = 0;
 
+    private SoundBuffer ding;
+
     public Chef(int foodCount) {
         ++count;
         animatedSprite = new AnimatedSprite(AssetManager.getAnim("chef" + ((count % 3) + 1)), 0.5f);
@@ -30,6 +34,7 @@ public class Chef extends GameObject {
         animatedSprite.frozen = true;
         animatedSprite.setScale(0.375f);
 
+        ding = AssetManager.getSound("ready");
         // TODO: real stuff here
         startNewFood();
         addRatMeter();
@@ -130,6 +135,13 @@ public class Chef extends GameObject {
     }
 
     private void finishJob() {
+        try {
+            ding.play();
+        } catch (LineUnavailableException e) {
+            System.err.println("No sound");
+            throw new RuntimeException(e);
+
+        }
         if(Kitchen.minigame != null && !Kitchen.minigame.isGameEnded()){
             Kitchen.minigame.endGame();
         }

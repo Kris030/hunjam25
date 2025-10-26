@@ -20,59 +20,69 @@ import java.util.stream.Stream;
 public class ChoppingBoardMinigame extends Minigame {
 
     private Sprite knife = new Sprite(AssetManager.getImage("minigame.chopping.kes"));
-    private Sprite tomatoSlice = new Sprite(AssetManager.getImage("minigame.chopping.pari_szelet"));
     private Sprite choppingBoard = new Sprite(AssetManager.getImage("minigame.chopping.vagodeszka"));
 
-    private AnimatedSprite tomato = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.pari"), 0);
-    private AnimatedSprite rat = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.remi_karddal"), 0);
+    private AnimatedSprite[] tomatos;
+    private AnimatedSprite rat = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.remi_karddal"), 1.0f);
 
-    // private Sound choppingNarrator = new
-    // Sound(AssetManager.getSound("chopping_narrator"));
     private SoundBuffer failSound = AssetManager.getSound("fail_sound");
-    private SoundBuffer kardCsapas = AssetManager.getSound("kard_csapas");
-    private SoundBuffer vagasSound = AssetManager.getSound("vagas_sound");
+    private SoundBuffer swordSwingSound = AssetManager.getSound("kard_csapas");
+    private SoundBuffer cutSound = AssetManager.getSound("vagas_sound");
     private SoundBuffer winSound = AssetManager.getSound("win_sound");
 
     private static final int TOMATO_COUNT = 4;
     private static final Rectangle2D.Float TOMATO_BOUNDS = new Rectangle2D.Float(
             -0.9f, -0.17f, 1.0f, 0.8f);
 
-    private static final Vec2 KNIFE_POSITION = new Vec2(0.8f, -0.1f);
+    private static final Vec2 KNIFE_POSITION = new Vec2(1.0f, -0.1f);
     private static final Vec2 KNIFE_ROT_OFFSET = new Vec2(0.2f, 0.2f);
+
+    private static final Vec2 RAT_POSITION = new Vec2(0.16f, 0.10f);
+    private static final float RAT_SWING_TIME = 0.5f;
+    private static float ratSwingTime = -RAT_SWING_TIME - 1.0f;
 
     private static final float ANIM_LENGTH = 0.5f;
     private float animStart = -1.0f;
 
-    private static float CUT_INTERVAL = 2.0f * (60.0f / 110.0f);
-    private static int CUT_COUNT = 7; //TODO
-    private static float MISTAKE_DELTA = 0.5f;
+    private static final float CUT_INTERVAL = 2.0f * (60.0f / 110.0f);
+    private static final float MISTAKE_DELTA = 0.5f;
     private int cutCount = 0;
     private float error = 0.0f;
 
     private boolean previouslyPressed = false;
-    private final Vec2 tomatos[];
+    private final Vec2 tomatoPositions[];
 
     public ChoppingBoardMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         super(workstation, chef, ingredient);
 
-        tomatos = new Vec2[TOMATO_COUNT];
+        tomatoPositions = new Vec2[TOMATO_COUNT];
 
-        float s = worldScale * tomato.getCurrFrameSize().maxComp();
+        tomatos = new AnimatedSprite[TOMATO_COUNT];
+        for (int i = 0; i < TOMATO_COUNT; i++) {
+            tomatos[i] = new AnimatedSprite(AssetManager.getAnim("minigame.chopping.pari"), 0.4f);
+            tomatos[i].setLooping(false);
+        }
+
+        float s = worldScale * tomatos[0].getCurrFrameSize().maxComp();
         for (int i = 0; i < TOMATO_COUNT; i++) {
             int k = i;
             do {
-                tomatos[i] = new Vec2(
+                tomatoPositions[i] = new Vec2(
                         Food.r.nextFloat(TOMATO_BOUNDS.x, TOMATO_BOUNDS.x + TOMATO_BOUNDS.width),
                         Food.r.nextFloat(TOMATO_BOUNDS.y, TOMATO_BOUNDS.y + TOMATO_BOUNDS.height));
 
-            } while (k != 0 && Stream.of(tomatos)
+            } while (k != 0 && Stream.of(tomatoPositions)
                     .limit(k - 1)
-                    .anyMatch(o -> o.dist(tomatos[k]) <= s));
+                    .anyMatch(o -> o.dist(tomatoPositions[k]) <= s));
         }
     }
 
     protected float getResult() {
-        return 0.0f;
+        if (cutCount == 0) {
+            return 0.0f;
+        } else {
+            return 1.0f - error / cutCount;
+        }
     }
 
     private boolean firstTick = true;
@@ -93,14 +103,22 @@ public class ChoppingBoardMinigame extends Minigame {
             if (diff > MISTAKE_DELTA)
                 error += 1.0f;
 
-            //System.out.println(error);
+            rat.setIdx(1);
+            ratSwingTime = Main.now;
         }
 
-        if (Math.floor((getGameTime() - ANIM_LENGTH) / CUT_INTERVAL) > cutCount) {
+        if (Main.now - ratSwingTime > RAT_SWING_TIME)
+            rat.setIdx(0);
+
+        if (Math.floor(getGameTime() / CUT_INTERVAL) > cutCount) {
             startCut();
+            tomatos[cutCount].unFreeze();
+            tomatos[cutCount].start();
             cutCount++;
-            tomato.unFreeze();
-            tomato.start();
+
+            if (cutCount == TOMATO_COUNT) {
+                endGame();
+            }
         }
     }
 
@@ -109,9 +127,10 @@ public class ChoppingBoardMinigame extends Minigame {
         choppingBoard.spriteScale = worldScale;
         choppingBoard.render(g);
 
-        tomato.setScale(worldScale);
         for (int i = 0; i < TOMATO_COUNT; i++) {
-            g.translate(tomatos[i].x(), tomatos[i].y());
+            var tomato = tomatos[i];
+            g.translate(tomatoPositions[i].x(), tomatoPositions[i].y());
+            tomato.setScale(worldScale);
             tomato.render(g);
             g.setTransform(tf);
         }
@@ -135,6 +154,9 @@ public class ChoppingBoardMinigame extends Minigame {
         g.fill(new Ellipse2D.Float(0.0f, 0.0f, 0.05f, 0.05f));
 
         g.setTransform(tf);
+        g.translate(RAT_POSITION.x(), RAT_POSITION.y());
+        rat.setScale(worldScale);
+        rat.render(g);
         //g.setColor(Color.RED);
         //g.fill(TOMATO_BOUNDS);
     }

@@ -126,13 +126,13 @@ public class Kitchen {
     public static void decreaseRating(float[] ingredientResults, float timeDelay) {
         float deduction = /*-0.1f; */ 0f;
         if (timeDelay > 9) {
-            deduction += (timeDelay - 6) / 100f;
+            deduction += (timeDelay - 9) / 100f;
         }
         float sum = 0f;
         for (float ir : ingredientResults) {
             sum += ir;
         }
-        deduction += (sum / ingredientResults.length) / 100f * 2f;
+        deduction += (sum / ingredientResults.length) / 100f;
 
         rating -= deduction;
         // keep rating between 0 and 1
@@ -146,7 +146,8 @@ public class Kitchen {
             case Stove -> new OvenMinigame(workstation, chef, ingredient);
             case Oven -> new OvenMinigame(workstation, chef, ingredient);
             // case Trash -> null;
-            default -> new OvenMinigame(workstation, chef, ingredient);//new ChoppingBoardMinigame(workstation, chef, ingredient);
+            default -> new OvenMinigame(workstation, chef, ingredient);// new ChoppingBoardMinigame(workstation, chef,
+                                                                       // ingredient);
         };
 
         //Game.playMusic(minigame.getMusic());

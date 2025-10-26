@@ -41,9 +41,7 @@ public class Main {
 
         frame = new JFrame("Don't let him cook");
 
-        frame.setUndecorated(true);
-        frame.setResizable(false);
-        frame.setSize(Game.SCREEN_WIDTH * Game.TILE_SIZE, Game.SCREEN_HEIGHT * Game.TILE_SIZE);
+        frame.setSize(1280, 720);
         frame.setLocationRelativeTo(null);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

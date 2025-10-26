@@ -19,7 +19,7 @@ public class Main {
     static StartScreen startScreen;
     static EndScreen endScreen;
 
-    static IScreen currentScreen;
+    private static IScreen currentScreen;
     public static float now, lastTick;
 
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {

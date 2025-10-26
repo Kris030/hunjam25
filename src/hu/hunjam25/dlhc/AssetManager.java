@@ -44,6 +44,7 @@ public class AssetManager {
 
         addRemiAnim();
         addRadio();
+        addStars();
 
         addClockAnimation();
 
@@ -208,6 +209,11 @@ public class AssetManager {
 
     private static void addIngredients() throws IOException {
 
+    }
+
+    private static void addStars() throws IOException {
+        addAnim("stars",
+                imgs(6, i -> Path.of("art", "ui_ceger_interakcio", "ceger_" + i + "csillag.png" )));
     }
 
     private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {

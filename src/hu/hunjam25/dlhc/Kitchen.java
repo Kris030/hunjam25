@@ -3,6 +3,7 @@ package hu.hunjam25.dlhc;
 import hu.hunjam25.dlhc.gameplay.FridgeMinigame;
 import hu.hunjam25.dlhc.gameplay.Minigame;
 import hu.hunjam25.dlhc.model.*;
+import hu.hunjam25.dlhc.view.AnimatedSprite;
 import hu.hunjam25.dlhc.view.ParticleEffect;
 import hu.hunjam25.dlhc.view.Sprite;
 
@@ -24,10 +25,15 @@ public class Kitchen {
     public static Sprite wallpaper = new Sprite(AssetManager.getImage("wallpaper"));
     public static Sprite woodFrame = new Sprite(AssetManager.getImage("wood"));
 
+    public static AnimatedSprite stars = new AnimatedSprite(AssetManager.getAnim("stars"), 0);
+
     static {
         woodFrame.centered = false;
         wallpaper.centered = false;
         wallpaper.spriteScale = 1.35f;
+
+        stars.centered = false;
+        stars.setScale(0.4f);
     }
 
 

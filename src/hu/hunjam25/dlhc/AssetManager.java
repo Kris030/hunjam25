@@ -53,6 +53,8 @@ public class AssetManager {
 
         addChefAnimations(3);
 
+        addIngredients();
+
         addImg("minigame_keret", img(Path.of("art", "minigame_keret.png")));
 
         addImg("app_icon", img(Path.of("art", "icon.png")));
@@ -214,7 +216,19 @@ public class AssetManager {
     }
 
     private static void addIngredients() throws IOException {
-
+        addAnim("carrot", img(Path.of("art", "assets", "osszevalo_resized", "carrot.png")));
+        addAnim("cheese", img(Path.of("art", "assets", "osszevalo_resized", "cheese.png")));
+        addAnim("chicken", img(Path.of("art", "assets", "osszevalo_resized", "chicken.png")));
+        addAnim("egg", img(Path.of("art", "assets", "osszevalo_resized", "egg.png")));
+        addAnim("flour", img(Path.of("art", "assets", "osszevalo_resized", "flour.png")));
+        addAnim("lettuce", img(Path.of("art", "assets", "osszevalo_resized", "lettuce.png")));
+        addAnim("meat", img(Path.of("art", "assets", "osszevalo_resized", "meat.png")));
+        addAnim("mushroom", img(Path.of("art", "assets", "osszevalo_resized", "mushroom.png")));
+        addAnim("potato", img(Path.of("art", "assets", "osszevalo_resized", "potato.png")));
+        addAnim("tomato", img(Path.of("art", "assets", "osszevalo_resized", "tomato.png")));
+        addAnim("tomatoes", img(Path.of("art", "assets", "osszevalo_resized", "tomatoes.png")));
+        addAnim("water", img(Path.of("art", "assets", "osszevalo_resized", "water.png")));
+        addAnim("plating", img(Path.of("art", "assets", "osszevalo_resized", "plating.png")));
     }
 
     private static void addStars() throws IOException {
@@ -236,14 +250,14 @@ public class AssetManager {
     }
 
     public static BufferedImage getImage(String name) {
-        if(!imageStorage.containsKey(name)){
+        if (!imageStorage.containsKey(name)) {
             System.out.println(name + " is missing - getimage");
         }
         return imageStorage.getOrDefault(name, imageStorage.get("no_texture"));
     }
 
     public static BufferedImage[] getAnim(String name) {
-        if(!animStorage.containsKey(name)){
+        if (!animStorage.containsKey(name)) {
             System.out.println(name + " is missing - getAnim");
         }
         BufferedImage img = imageStorage.get("no_texture");

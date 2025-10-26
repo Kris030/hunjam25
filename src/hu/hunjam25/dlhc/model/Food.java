@@ -4,10 +4,18 @@ import java.util.Random;
 
 public enum Food {
 
-    Gulyas(new Ingredient[] { Ingredient.Water, Ingredient.Tomato, Ingredient.Chicken, Ingredient.Plating }),
-    Sandwich(new Ingredient[] { Ingredient.Tomato, Ingredient.Egg, Ingredient.Salad, Ingredient.Plating }),
-    Burg(new Ingredient[] { Ingredient.Tomato, Ingredient.Chicken, Ingredient.Salad, Ingredient.Plating }),
-    ScrambledEggs(new Ingredient[] { Ingredient.Egg, Ingredient.Water, Ingredient.Egg, Ingredient.Plating }),
+    Gulyas(new Ingredient[] { Ingredient.Water, Ingredient.Flour, Ingredient.Meat, Ingredient.Carrot,
+            Ingredient.Potato, Ingredient.Plating }),
+    Sandwich(new Ingredient[] { Ingredient.Tomato, Ingredient.Egg, Ingredient.Lettuce, Ingredient.Plating }),
+    Burg(new Ingredient[] { Ingredient.Tomato, Ingredient.Chicken, Ingredient.Lettuce, Ingredient.Meat,
+            Ingredient.Plating }),
+    Eggs(new Ingredient[] { Ingredient.Egg, Ingredient.Water, Ingredient.Egg, Ingredient.Mushroom, Ingredient.Egg,
+            Ingredient.Plating }),
+    Meatballs(new Ingredient[] { Ingredient.Meat, Ingredient.Tomato, Ingredient.Meat, Ingredient.Plating }),
+    Spaghetti(new Ingredient[] { Ingredient.Flour, Ingredient.Water, Ingredient.Meat, Ingredient.Tomato,
+            Ingredient.Plating }),
+    Soup(new Ingredient[] { Ingredient.Water, Ingredient.Tomato, Ingredient.Plating }),
+    
     ;
 
     public static Random r = new Random(System.currentTimeMillis());

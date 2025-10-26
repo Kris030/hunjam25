@@ -1,11 +1,14 @@
 package hu.hunjam25.dlhc.screens;
 
 import hu.hunjam25.dlhc.AssetManager;
+import hu.hunjam25.dlhc.Game;
+import hu.hunjam25.dlhc.Main;
 import hu.hunjam25.dlhc.sound.SoundBuffer;
 import hu.hunjam25.dlhc.view.Sprite;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class EndScreen implements IScreen {
 
@@ -34,9 +37,9 @@ public class EndScreen implements IScreen {
     public void start() {
         try {
             if(didWin){
-                winSound.play(null);
+                winSound.play(Main::startCredits);
             }else{
-                loseSound.play(null);
+                loseSound.play(Main::startCredits);
             }
         } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
@@ -54,6 +57,7 @@ public class EndScreen implements IScreen {
 
     @Override
     public void tick(float dt) {
+
 
     }
 

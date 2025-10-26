@@ -219,6 +219,8 @@ public class AssetManager {
     private static void addEndings() throws IOException {
         addImg("lose", img(Path.of("art", "ending", "ending_lose.jpg")));
         addImg("win", img(Path.of("art", "ending", "ending_win.jpg")));
+
+        addAnim("credits",   imgs(2, i -> Path.of("art", "devteam" + (i+1) + ".png" )));
     }
 
     private static void addIngredients() throws IOException {

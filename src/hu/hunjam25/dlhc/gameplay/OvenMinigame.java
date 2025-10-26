@@ -42,8 +42,8 @@ public class OvenMinigame extends Minigame {
     public OvenMinigame(Workstation workstation, Chef chef, Ingredient ingredient) {
         super(workstation, chef, ingredient);
         onBurner = Food.r.nextInt(2);
-        leftBurner = Food.r.nextFloat();
-        rightBurner = Food.r.nextFloat();
+        leftBurner = Food.r.nextFloat() - 1.1f;
+        rightBurner = Food.r.nextFloat() - 1.1f;
     }
 
     protected float getResult() {

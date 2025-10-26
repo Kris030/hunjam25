@@ -53,6 +53,8 @@ public class Chef extends GameObject {
         ++count;
         animatedSprite = new AnimatedSprite(AssetManager.getAnim("chef" + ((count % 3) + 1)), 0.5f);
         positionToCenter();
+        float maxWidthOffset = Game.MAP_WIDTH / 2.5f;
+        this.position = this.position.add(new Vec2(Food.r.nextFloat(-maxWidthOffset, maxWidthOffset), 0));
         foodTodo = new java.util.ArrayDeque<>();
         for (int i = 0; i < foodCount; i++) {
             foodTodo.add(Food.RandomFood());

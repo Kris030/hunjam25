@@ -43,7 +43,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // TODO: frame.setIconImage(AssetManager.getImage("game-icon"));
+        frame.setIconImage(AssetManager.getImage("app_icon"));
 
         Canvas c = new Canvas();
         frame.add(c);
@@ -69,7 +69,7 @@ public class Main {
                 continue;
             }
 
-            if(!Game.keysPressed.isEmpty()){
+            if (!Game.keysPressed.isEmpty()) {
                 currentScreen = game;
             }
 
@@ -102,10 +102,9 @@ public class Main {
         }
     }
 
-    private static void init(){
+    private static void init() {
         game = new Game();
         startScreen = new StartScreen();
         endScreen = new EndScreen();
     }
 }
-

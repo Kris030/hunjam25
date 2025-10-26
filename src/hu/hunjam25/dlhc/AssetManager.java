@@ -53,6 +53,8 @@ public class AssetManager {
 
         addImg("minigame_keret", img(Path.of("art", "minigame_keret.png")));
 
+        addImg("app_icon", img(Path.of("art", "icon.png")));
+
         addHutoMinigame();
     }
 
@@ -186,7 +188,7 @@ public class AssetManager {
     private static void addRadio() throws IOException {
         addAnim("radio",
                 imgs(6, i -> Path.of("art", "radio",
-                        "radio_0" + (i+1) + ".png")));
+                        "radio_0" + (i + 1) + ".png")));
     }
 
     private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {

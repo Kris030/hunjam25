@@ -285,5 +285,8 @@ public class AssetManager {
         addImg("rightFlame", img(Path.of("art", "minigame_suto", "minigame_suto_jobb_tuz.png")));
         addImg("leftKnob", img(Path.of("art", "minigame_suto", "minigame_suto_bal_gomb.png")));
         addImg("rightKnob", img(Path.of("art", "minigame_suto", "minigame_suto_jobb_gomb.png")));
+        addImg("ratJump", img(Path.of("art", "rat_run", "rat_jump.png")));
+        addAnim("ratRun",
+                imgs(2, i -> Path.of("art", "rat_run", "rat_run_" + (i+1) + ".png" )));
     }
 }

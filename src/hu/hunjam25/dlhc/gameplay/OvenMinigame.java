@@ -30,6 +30,8 @@ public class OvenMinigame extends Minigame {
     private final Sprite rightKnob = new Sprite(AssetManager.getImage("rightKnob"));
     private final Sprite leftFlame = new Sprite(AssetManager.getImage("leftFlame"));
     private final Sprite rightFlame = new Sprite(AssetManager.getImage("rightFlame"));
+    private final Sprite ratJump = new Sprite(AssetManager.getImage("ratJump"));
+    private final AnimatedSprite ratRun = new AnimatedSprite(AssetManager.getAnim("ratRun"), 0.5f);
 
 
 
@@ -44,6 +46,8 @@ public class OvenMinigame extends Minigame {
         onBurner = Food.r.nextInt(2);
         leftBurner = Food.r.nextFloat() - 1.1f;
         rightBurner = Food.r.nextFloat() - 1.1f;
+        ratRun.unFreeze();
+        ratRun.start();
     }
 
     protected float getResult() {
@@ -58,14 +62,18 @@ public class OvenMinigame extends Minigame {
         rightBurner -= dt * back * (0.5f + 0.5f *  Food.r.nextFloat());
 
         jumping -= dt;
-
+        ratRun.freeze();
         if (jumping < 0.0f) {
             float add = 0.0f;
-            if (Game.keysPressed.contains(KeyEvent.VK_RIGHT)) {
+            if (!Game.keysPressed.contains(KeyEvent.VK_RIGHT) && Game.keysPressed.contains(KeyEvent.VK_LEFT)) {
                 add += speed * dt;
+                left = false;
+                ratRun.unFreeze();
             }
-            if (Game.keysPressed.contains(KeyEvent.VK_LEFT)) {
+            if (!Game.keysPressed.contains(KeyEvent.VK_LEFT) && Game.keysPressed.contains(KeyEvent.VK_RIGHT)) {
                 add -= speed * dt;
+                left = true;
+                ratRun.unFreeze();
             }
             if (onBurner == 0) {
                 leftBurner += add;
@@ -78,6 +86,7 @@ public class OvenMinigame extends Minigame {
         {
             jumping = 0.2f;
             onBurner = Math.abs(onBurner - 1);
+            ratRun.freeze();
         }
 
         if (leftBurner < -1f) leftBurner = -1f;
@@ -125,6 +134,18 @@ public class OvenMinigame extends Minigame {
             rightFlame.render(g);
             g.rotate(-rot);
             g.translate(-350f, 150);
+        }
+        g.scale(0.5f, 0.5f);
+        if (jumping > 0.0f) {
+            g.translate(700 * (1 - jumping * 10f) * (onBurner * 2f - 1f), Math.abs(jumping - 0.1f) * 3000f);
+            ratJump.mirrored = onBurner > 0;
+            ratJump.render(g);
+            g.translate(-700 * (1 - jumping * 10f) * (onBurner * 2f - 1f), -Math.abs(jumping - 0.1f) * 3000f);
+        } else {
+            g.translate(700 * (onBurner * 2f - 1f), 300f);
+            ratRun.mirrored = left;
+            ratRun.render(g);
+            g.translate(-700 * (onBurner * 2f - 1f), -300f);
         }
     }
 }

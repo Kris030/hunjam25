@@ -44,7 +44,9 @@ public class StartScreen implements IScreen {
         backg.render(g);
 
         g.translate(Game.SCREEN_WIDTH * Game.TILE_SIZE / 2f, (7+ Game.SCREEN_HEIGHT) * Game.TILE_SIZE / 2f);
-        controls.render(g);
+        if((int)(Main.now * 2f) % 2 == 0){
+            controls.render(g);
+        }
         //g.translate(-Game.SCREEN_WIDTH / 2f, -Game.SCREEN_HEIGHT / 2f);
     }
 
@@ -54,6 +56,8 @@ public class StartScreen implements IScreen {
             Main.startGame();
             started = true;
         }
+
+
 
         if (!Game.keysPressed.isEmpty() && !started) {
             backg.unFreeze();

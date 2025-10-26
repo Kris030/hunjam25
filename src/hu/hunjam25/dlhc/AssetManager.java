@@ -153,6 +153,8 @@ public class AssetManager {
 
         addAnim(WorkstationType.Trash.name(), imgs(
                 Path.of("art", "organized", "ego_kuka", "kuka.png")));
+
+        addAnim("Belt", imgs(9, i -> Path.of("art", "organized", "belt", i + ".png")));
     }
 
     private static void addClockAnimation() throws IOException {
@@ -191,6 +193,10 @@ public class AssetManager {
                         "radio_0" + (i + 1) + ".png")));
     }
 
+    private static void addIngredients() throws IOException {
+
+    }
+
     private static void addSound(String name, Path path) throws IOException, UnsupportedAudioFileException {
         soundStorage.put(name, SoundBuffer.read(getResInputStream(path)));
     }
@@ -202,10 +208,16 @@ public class AssetManager {
     }
 
     public static BufferedImage getImage(String name) {
+        if(!imageStorage.containsKey(name)){
+            System.out.println(name + " is missing - getimage");
+        }
         return imageStorage.getOrDefault(name, imageStorage.get("no_texture"));
     }
 
     public static BufferedImage[] getAnim(String name) {
+        if(!animStorage.containsKey(name)){
+            System.out.println(name + " is missing - getAnim");
+        }
         BufferedImage img = imageStorage.get("no_texture");
         return animStorage.getOrDefault(name, new BufferedImage[] { img, img, img });
     }

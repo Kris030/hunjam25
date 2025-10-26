@@ -144,7 +144,6 @@ public class Chef extends GameObject {
 
     private void working() {
         workingIdx = facing(currWorkstation.workingOffset.mul(-1f));
-        animatedSprite.setIdx(workingIdx);
         // work at workstation
         if (isJobOver()) {
             finishJob();

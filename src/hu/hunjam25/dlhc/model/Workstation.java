@@ -36,33 +36,41 @@ public class Workstation extends GameObject {
         this.position = position;
         this.workingOffset = workingOffset;
 
-        this.animatedSprite = new AnimatedSprite(AssetManager.getAnim(type.name()), 0);
+        this.animatedSprite = new AnimatedSprite(AssetManager.getAnim(type.name()), 1);
         this.animatedSprite.scaleWidth();
         if (type == WorkstationType.Trash) {
             setOnFire();
         }
-        // sprite.scaleToTileMax();
-        // sprite.scaleWidth();
-        // float sc = sprite.getRatio();
-        // System.out.println(sc);
-
-        // if (sc < 1)
-        // this.position.y += (1f - (1f / sc)) / 2f;
-        // else
-        // this.position.y -= (1f - (1f / sc)) / 2f;
+        animatedSprite.start();
     }
 
     @Override
     public void render(Graphics2D gd) {
         super.render(gd);
+        if(type == WorkstationType.Belt){
+            updateFrameForBelt();
+        }else{
+            updateFrame();
+        }
+
+        animatedSprite.render(gd);
+        renderUiElements(gd);
+    }
+
+    private void updateFrame(){
         if (worker != null) {
             animatedSprite.setIdx(1);
         } else {
             animatedSprite.setIdx(0);
         }
+    }
 
-        animatedSprite.render(gd);
-        renderUiElements(gd);
+    private void updateFrameForBelt(){
+        if (worker != null) {
+            animatedSprite.unFreeze();
+        } else {
+            animatedSprite.freeze();
+        }
     }
 
     public boolean hasWorker() {
